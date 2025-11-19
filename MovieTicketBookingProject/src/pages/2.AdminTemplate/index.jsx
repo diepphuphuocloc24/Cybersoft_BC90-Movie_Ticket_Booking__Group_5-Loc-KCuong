@@ -1,11 +1,11 @@
 import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
-import Header from "./_components/1.Header";
+import AdminHeader from "./_components/1.Header";
 
 const AdminTemplate = () => {
     return (
         <div className="flex min-h-screen ">
-            <Header />
+            <AdminHeader />
 
             <div className="flex-5 overflow-y-auto">
                 <header className="bg-gray-100 shadow p-4 flex justify-between items-center sticky top-0 z-10">

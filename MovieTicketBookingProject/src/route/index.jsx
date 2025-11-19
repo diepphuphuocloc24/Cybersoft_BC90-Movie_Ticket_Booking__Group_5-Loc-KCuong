@@ -11,6 +11,9 @@ import Users from "../pages/2.AdminTemplate/2.Users";
 
 import PageNotFound from "../pages/3.PageNotFound";
 
+import HomeHeader from "../pages/1.HomeTemplate/_components/1.Header/index.jsx";
+import AdminHeader from "../pages/2.AdminTemplate/_components/1.Header/index.jsx";
+
 const routes = [
   {
     path: "",
@@ -87,6 +90,15 @@ const renderRoutes = () => {
   });
 };
 
-export { renderRoutes };
+const renderHeader = () => {
+  const path = window.location.pathname;
+  if (path.startsWith("/admin")) {
+    return <AdminHeader />;
+  } else {
+    return <HomeHeader />;
+  }
+}
+
+export { renderRoutes, renderHeader };
 
 export default routes;

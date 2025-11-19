@@ -59,9 +59,8 @@
     $(document).ready(function () {
       $('.owl-carousel').each(function () {
         const $el = $(this);
-        const type = $el.data('type');  // đọc loại
+        const type = $el.data('type');
 
-        // nếu đã load thì destroy để không bị lỗi
         if ($el.hasClass("owl-loaded")) {
           $el.trigger("destroy.owl.carousel");
         }
@@ -73,7 +72,11 @@
             items: 1,
             nav: true,
             dots: true,
-            margin: 10
+            autoplay: true,
+            autoplayTimeout: 6000,
+            margin: 10,
+            animateOut: 'fadeOut', // thêm để fade out khi chuyển slide
+            animateIn: 'fadeIn',   // thêm để fade in khi vào slide
           });
         }
 

@@ -22,6 +22,33 @@ const Home = () => {
     return (
         <>
             <div className="owl-carousel owl-theme relative" data-type="movie">
+                <div className="item relative group">
+                    <img
+                        src="./img/Carousel/carousel0.gif"
+                        className="w-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
+                    <NavLink
+                        to="*"
+                        className="
+    absolute right-[43%] bottom-20
+    flex items-center justify-center gap-3
+    bg-gradient-to-r from-blue-500 to-purple-600
+    text-white px-6 py-3 h-12
+    rounded-full font-semibold shadow-lg
+    opacity-0 translate-y-8 
+    group-hover:opacity-100 group-hover:translate-y-0
+    transition-all duration-500 ease-out
+  "
+                    >
+                        <span className="flex items-center h-full">Book Tickets</span>
+
+                        <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
+                            <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
+                        </span>
+                    </NavLink>
+                </div>
+
                 {/* Phim 1 */}
                 <div className="item relative group">
                     <img
@@ -32,20 +59,18 @@ const Home = () => {
                     <NavLink
                         to="*"
                         className="
-    absolute right-20 bottom-20
+    absolute right-[43%] bottom-20
     flex items-center justify-center gap-3
     bg-gradient-to-r from-blue-500 to-purple-600
     text-white px-6 py-3 h-12
     rounded-full font-semibold shadow-lg
     opacity-0 translate-y-8 
     group-hover:opacity-100 group-hover:translate-y-0
-    transition-all duration-300 ease-out
+    transition-all duration-500 ease-out
   "
                     >
-                        {/* Text */}
                         <span className="flex items-center h-full">Book Tickets</span>
 
-                        {/* Icon trong vòng tròn nhỏ chỉ có viền */}
                         <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
                             <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
                         </span>
@@ -62,20 +87,18 @@ const Home = () => {
                     <NavLink
                         to="*"
                         className="
-    absolute right-20 bottom-20
+    absolute right-[43%] bottom-20
     flex items-center justify-center gap-3
     bg-gradient-to-r from-blue-500 to-purple-600
     text-white px-6 py-3 h-12
     rounded-full font-semibold shadow-lg
     opacity-0 translate-y-8 
     group-hover:opacity-100 group-hover:translate-y-0
-    transition-all duration-300 ease-out
+    transition-all duration-500 ease-out
   "
                     >
-                        {/* Text */}
                         <span className="flex items-center h-full">Book Tickets</span>
 
-                        {/* Icon trong vòng tròn nhỏ chỉ có viền */}
                         <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
                             <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
                         </span>
@@ -92,20 +115,18 @@ const Home = () => {
                     <NavLink
                         to="*"
                         className="
-    absolute right-20 bottom-20
+    absolute right-[43%] bottom-20
     flex items-center justify-center gap-3
     bg-gradient-to-r from-blue-500 to-purple-600
     text-white px-6 py-3 h-12
     rounded-full font-semibold shadow-lg
     opacity-0 translate-y-8 
     group-hover:opacity-100 group-hover:translate-y-0
-    transition-all duration-300 ease-out
+    transition-all duration-500 ease-out
   "
                     >
-                        {/* Text */}
                         <span className="flex items-center h-full">Book Tickets</span>
 
-                        {/* Icon trong vòng tròn nhỏ chỉ có viền */}
                         <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
                             <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
                         </span>
@@ -122,20 +143,18 @@ const Home = () => {
                     <NavLink
                         to="*"
                         className="
-    absolute right-20 bottom-20
+    absolute right-[43%] bottom-20
     flex items-center justify-center gap-3
     bg-gradient-to-r from-blue-500 to-purple-600
     text-white px-6 py-3 h-12
     rounded-full font-semibold shadow-lg
     opacity-0 translate-y-8 
     group-hover:opacity-100 group-hover:translate-y-0
-    transition-all duration-300 ease-out
+    transition-all duration-500 ease-out
   "
                     >
-                        {/* Text */}
                         <span className="flex items-center h-full">Book Tickets</span>
 
-                        {/* Icon trong vòng tròn nhỏ chỉ có viền */}
                         <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
                             <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
                         </span>
@@ -152,20 +171,18 @@ const Home = () => {
                     <NavLink
                         to="*"
                         className="
-    absolute right-20 bottom-20
+    absolute right-[43%] bottom-20
     flex items-center justify-center gap-3
     bg-gradient-to-r from-blue-500 to-purple-600
     text-white px-6 py-3 h-12
     rounded-full font-semibold shadow-lg
     opacity-0 translate-y-8 
     group-hover:opacity-100 group-hover:translate-y-0
-    transition-all duration-300 ease-out
+    transition-all duration-500 ease-out
   "
                     >
-                        {/* Text */}
                         <span className="flex items-center h-full">Book Tickets</span>
 
-                        {/* Icon trong vòng tròn nhỏ chỉ có viền */}
                         <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
                             <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
                         </span>

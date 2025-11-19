@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-const Header = () => {
+const AdminHeader = () => {
     return (
         <aside className="flex-1 bg-black text-white flex flex-col shadow-2xl">
             <div className="py-6 px-2 text-2xl font-extrabold text-blue-400 flex items-center justify-center">
@@ -46,7 +46,7 @@ const Header = () => {
                 </NavLink>
 
                 <NavLink
-                    to="users"
+                    to="/admin/users"
                     className={({ isActive }) =>
                         `flex items-center p-4 transition duration-150 ${isActive
                             ? "bg-white text-black"
@@ -73,4 +73,4 @@ const Header = () => {
     )
 }
 
-export default Header
+export default AdminHeader

@@ -1,11 +1,12 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-import { renderRoutes } from './route/index.jsx'
+import { renderRoutes, renderHeader } from './route/index.jsx'
 
 const App = () => {
   return (
     <BrowserRouter>
+      {/* {renderHeader()} */}
       <Routes>
         {renderRoutes()}
       </Routes>

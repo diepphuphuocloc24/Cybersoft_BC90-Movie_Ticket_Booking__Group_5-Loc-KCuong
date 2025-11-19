@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 
-const Header = () => {
+const HomeHeader = () => {
     return (
         <header className="bg-black text-white shadow-lg shadow-red-900/10 fixed z-10 w-full py-6">
             <div className="container mx-auto flex justify-between items-center ">
@@ -61,4 +61,4 @@ const Header = () => {
     )
 }
 
-export default Header
+export default HomeHeader
