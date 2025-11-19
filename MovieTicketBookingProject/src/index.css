@@ -4,3 +4,62 @@ html,
 body {
     font-family: "Roboto", sans-serif;
 }
+
+.container {
+    width: 90%;
+}
+
+/* NAV BUTTONS */
+.owl-carousel .owl-nav {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+}
+
+.owl-carousel .owl-nav button {
+    pointer-events: auto;
+    background: rgba(0, 0, 0, 0.55) !important;
+    color: #fff !important;
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 50% !important;
+
+    font-size: 22px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    line-height: 0 !important;
+    transition: 0.2s ease;
+}
+
+.owl-carousel .owl-nav button:hover {
+    background: rgba(0, 0, 0, 0.8) !important;
+    transform: scale(1.08);
+}
+
+/* DOTS */
+.owl-carousel .owl-dots {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+}
+
+.owl-carousel .owl-dots .owl-dot span {
+    width: 18px !important;
+    height: 8px !important;
+    background: white !important;
+    border-radius: 4px !important;
+    margin: 3px !important;
+    transition: 0.3s;
+}
+
+.owl-carousel .owl-dots .owl-dot.active span {
+    background: #fb923c !important;
+    width: 30px !important;
+}
