@@ -28,6 +28,23 @@
   <!-- FLATICON CDN -->
   <link rel='stylesheet'
     href='https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
+  <link rel='stylesheet'
+    href='https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
+  <link rel='stylesheet'
+    href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-straight/css/uicons-solid-straight.css'>
+  <link rel='stylesheet'
+    href='https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
+  <link rel='stylesheet'
+    href='https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
+  <link rel='stylesheet'
+    href='https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-straight/css/uicons-regular-straight.css'>
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-thin-straight/css/uicons-thin-straight.css'>
+  <link rel='stylesheet'
+    href='https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
 
   <!-- OWL CAROUSEL CSS -->
   <link rel="stylesheet" href="./public/libs/OwlCarousel2-2.3.4/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css">
@@ -66,7 +83,7 @@
         }
 
         // movie
-        if (type === "movie") {
+        if (type === "carousel") {
           $el.owlCarousel({
             loop: true,
             items: 1,
@@ -75,18 +92,20 @@
             autoplay: true,
             autoplayTimeout: 6000,
             margin: 10,
-            animateOut: 'fadeOut', // thêm để fade out khi chuyển slide
-            animateIn: 'fadeIn',   // thêm để fade in khi vào slide
+            animateOut: 'fadeOut',
+            animateIn: 'fadeIn',
           });
         }
 
-        // product
-        else if (type === "product") {
+        // movies
+        else if (type === "movies") {
           $el.owlCarousel({
-            loop: false,
+            loop: true,
             items: 4,
             nav: true,
-            dots: true,
+            dots: false,
+            autoplay: true,
+            autoplayTimeout: 6000,
             margin: 20,
             responsive: {
               0: { items: 1 },
@@ -96,14 +115,19 @@
           });
         }
 
-        // banner
-        else if (type === "banner") {
+        // upcoming
+        else if (type === "upcoming") {
           $el.owlCarousel({
             loop: true,
-            items: 1,
-            autoplay: true,
-            autoplayTimeout: 3000,
-            nav: false
+            items: 4,
+            nav: true,
+            dots: false,
+            margin: 20,
+            responsive: {
+              0: { items: 1 },
+              600: { items: 2 },
+              1000: { items: 4 }
+            }
           });
         }
       });

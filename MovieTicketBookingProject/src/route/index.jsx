@@ -8,6 +8,7 @@ import TicketBooking from "../pages/1.HomeTemplate/3.TicketBooking";
 import AdminTemplate from "../pages/2.AdminTemplate";
 import Dashboard from "../pages/2.AdminTemplate/1.Dashboard";
 import Users from "../pages/2.AdminTemplate/2.Users";
+import Movies from "../pages/2.AdminTemplate/3.Movies/index.jsx";
 
 import PageNotFound from "../pages/3.PageNotFound";
 
@@ -44,6 +45,10 @@ const routes = [
       {
         path: "users",
         element: <Users />
+      },
+      {
+        path: "movies",
+        element: <Movies />
       },
     ],
   },

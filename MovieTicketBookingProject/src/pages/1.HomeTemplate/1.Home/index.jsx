@@ -21,10 +21,18 @@ const Home = () => {
 
     return (
         <>
-            <div className="owl-carousel owl-theme relative" data-type="movie">
+            <div className="owl-carousel owl-theme relative" data-type="carousel">
+                {/* Intro */}
                 <div className="item relative group">
                     <img
                         src="./img/Carousel/carousel0.gif"
+                        className="w-full object-cover"
+                    />
+                </div>
+
+                <div className="item relative group">
+                    <img
+                        src="./img/Carousel/carousel0-1.jpg"
                         className="w-full object-cover"
                     />
                     <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
@@ -209,15 +217,15 @@ const Home = () => {
                             NOW SHOWING / ADVANCED SALES
                         </h2>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                        <div className="owl-carousel owl-theme relative" data-type="movies">
                             {/* Movie Card 1 */}
-                            <div className="bg-gray-900 rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 hover:shadow-3xl transition duration-300 cursor-pointer">
+                            <div className="bg-gray-900 rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 hover:shadow-3xl transition-all duration-300 cursor-pointer">
                                 <div className="p-4">
-                                    <div className="relative h-64 overflow-hidden rounded-xl">
+                                    <div className="relative overflow-hidden rounded-xl">
                                         <img
-                                            src="./img/559705297_17926020432114954_265302695889768123_n.jpg"
+                                            src="./img/MoviePoster/Predator Badlands.jpg"
                                             alt="Predator: Badlands"
-                                            className="w-full h-full object-cover"
+                                            className="w-full object-cover"
                                         />
                                         <span className="absolute top-3 left-3 bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded">
                                             C16
@@ -236,13 +244,13 @@ const Home = () => {
                             </div>
 
                             {/* Movie Card 2 */}
-                            <div className="bg-gray-900 rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 hover:shadow-3xl transition duration-300 cursor-pointer">
+                            <div className="bg-gray-900 rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 hover:shadow-3xl transition-all duration-300 cursor-pointer">
                                 <div className="p-4">
-                                    <div className="relative h-64 overflow-hidden rounded-xl">
+                                    <div className="relative overflow-hidden rounded-xl">
                                         <img
-                                            src="./img/News/news2.jpg"
-                                            alt="The Lost Dragon"
-                                            className="w-full h-full object-cover"
+                                            src="./img/MoviePoster/The Running Man.jpg"
+                                            alt="The Running Man"
+                                            className="w-full object-cover"
                                         />
                                         <span className="absolute top-3 left-3 bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded">
                                             C16
@@ -250,7 +258,7 @@ const Home = () => {
                                     </div>
                                     <div className="mt-4 flex flex-col gap-2">
                                         <h3 className="text-lg font-bold text-white truncate cursor-pointer">
-                                            The Lost Dragon (2025)
+                                            The Running Man
                                         </h3>
                                         <p className="text-sm text-amber-400 cursor-pointer">Adventure | 135 min</p>
                                         <button className="mt-3 w-full py-2 rounded-lg font-semibold text-white shadow-md transition duration-300 bg-red-500 hover:bg-red-700 cursor-pointer">
@@ -261,13 +269,13 @@ const Home = () => {
                             </div>
 
                             {/* Movie Card 3 */}
-                            <div className="bg-gray-900 rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 hover:shadow-3xl transition duration-300 cursor-pointer">
+                            <div className="bg-gray-900 rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 hover:shadow-3xl transition-all duration-300 cursor-pointer">
                                 <div className="p-4">
-                                    <div className="relative h-64 overflow-hidden rounded-xl">
+                                    <div className="relative overflow-hidden rounded-xl">
                                         <img
-                                            src="./img/News/news3.jpg"
-                                            alt="Broken Hearts"
-                                            className="w-full h-full object-cover"
+                                            src="./img/MoviePoster/Wicked For Good.jpg"
+                                            alt="Wicked For Good"
+                                            className="w-full object-cover"
                                         />
                                         <span className="absolute top-3 left-3 bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded">
                                             C16
@@ -275,9 +283,9 @@ const Home = () => {
                                     </div>
                                     <div className="mt-4 flex flex-col gap-2">
                                         <h3 className="text-lg font-bold text-white truncate cursor-pointer">
-                                            Broken Hearts (2025)
+                                            Wicked: For Good
                                         </h3>
-                                        <p className="text-sm text-amber-400 cursor-pointer">Drama | 110 min</p>
+                                        <p className="text-sm text-amber-400 cursor-pointer">Comedy | 110 min</p>
                                         <button className="mt-3 w-full py-2 rounded-lg font-semibold text-white shadow-md transition duration-300 bg-red-500 hover:bg-red-700 cursor-pointer">
                                             Buy Tickets
                                         </button>
@@ -286,13 +294,13 @@ const Home = () => {
                             </div>
 
                             {/* Movie Card 4 */}
-                            <div className="bg-gray-900 rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 hover:shadow-3xl transition duration-300 cursor-pointer">
+                            <div className="bg-gray-900 rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 hover:shadow-3xl transition-all duration-300 cursor-pointer">
                                 <div className="p-4">
-                                    <div className="relative h-64 overflow-hidden rounded-xl">
+                                    <div className="relative overflow-hidden rounded-xl">
                                         <img
-                                            src="./img/News/news4.jpg"
-                                            alt="Golden Treasure"
-                                            className="w-full h-full object-cover"
+                                            src="./img/MoviePoster/Disney's Zootopia 2.jpg"
+                                            alt="Disney's Zootopia 2"
+                                            className="w-full object-cover"
                                         />
                                         <span className="absolute top-3 left-3 bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded">
                                             C16
@@ -300,9 +308,34 @@ const Home = () => {
                                     </div>
                                     <div className="mt-4 flex flex-col gap-2">
                                         <h3 className="text-lg font-bold text-white truncate cursor-pointer">
-                                            Golden Treasure (2025)
+                                            Disney's Zootopia 2
                                         </h3>
-                                        <p className="text-sm text-amber-400 cursor-pointer">Comedy | 125 min</p>
+                                        <p className="text-sm text-amber-400 cursor-pointer">Cartoon | 125 min</p>
+                                        <button className="mt-3 w-full py-2 rounded-lg font-semibold text-white shadow-md transition duration-300 bg-red-500 hover:bg-red-700 cursor-pointer">
+                                            Buy Tickets
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Movie Card 5 */}
+                            <div className="bg-gray-900 rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 hover:shadow-3xl transition-all duration-300 cursor-pointer">
+                                <div className="p-4">
+                                    <div className="relative overflow-hidden rounded-xl">
+                                        <img
+                                            src="./img/MoviePoster/Now You See Me Now You Don't.jpg"
+                                            alt="Now You See Me Now You Don't"
+                                            className="w-full object-cover"
+                                        />
+                                        <span className="absolute top-3 left-3 bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded">
+                                            C16
+                                        </span>
+                                    </div>
+                                    <div className="mt-4 flex flex-col gap-2">
+                                        <h3 className="text-lg font-bold text-white truncate cursor-pointer">
+                                            Now You See Me: Now You Don't
+                                        </h3>
+                                        <p className="text-sm text-amber-400 cursor-pointer">Drama | 125 min</p>
                                         <button className="mt-3 w-full py-2 rounded-lg font-semibold text-white shadow-md transition duration-300 bg-red-500 hover:bg-red-700 cursor-pointer">
                                             Buy Tickets
                                         </button>
@@ -319,15 +352,15 @@ const Home = () => {
                             UPCOMING MOVIES
                         </h2>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                            {/* Upcoming Movie 1 */}
-                            <div className="bg-gray-900 rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 hover:shadow-3xl transition duration-300 cursor-pointer">
+                        <div className="owl-carousel owl-theme relative" data-type="movies">
+                            {/* Movie Card 1 */}
+                            <div className="bg-gray-900 rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 hover:shadow-3xl transition-all duration-300 cursor-pointer">
                                 <div className="p-4">
-                                    <div className="relative h-64 overflow-hidden rounded-xl">
+                                    <div className="relative overflow-hidden rounded-xl">
                                         <img
-                                            src="./img/News/news5.jpg"
-                                            alt="Space Adventures"
-                                            className="w-full h-full object-cover"
+                                            src="./img/MoviePoster/Predator Badlands.jpg"
+                                            alt="Predator: Badlands"
+                                            className="w-full object-cover"
                                         />
                                         <span className="absolute top-3 left-3 bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded">
                                             C16
@@ -335,21 +368,24 @@ const Home = () => {
                                     </div>
                                     <div className="mt-4 flex flex-col gap-2">
                                         <h3 className="text-lg font-bold text-white truncate cursor-pointer">
-                                            Space Adventures (2025)
+                                            Predator: Badlands (2025)
                                         </h3>
-                                        <p className="text-sm text-amber-400 cursor-pointer">Sci-Fi | 130 min</p>
+                                        <p className="text-sm text-amber-400 cursor-pointer">Action | 120 min</p>
+                                        <button className="mt-3 w-full py-2 rounded-lg font-semibold text-white shadow-md transition duration-300 bg-red-500 hover:bg-red-700 cursor-pointer">
+                                            Buy Tickets
+                                        </button>
                                     </div>
                                 </div>
                             </div>
 
-                            {/* Upcoming Movie 2 */}
-                            <div className="bg-gray-900 rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 hover:shadow-3xl transition duration-300 cursor-pointer">
+                            {/* Movie Card 2 */}
+                            <div className="bg-gray-900 rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 hover:shadow-3xl transition-all duration-300 cursor-pointer">
                                 <div className="p-4">
-                                    <div className="relative h-64 overflow-hidden rounded-xl">
+                                    <div className="relative overflow-hidden rounded-xl">
                                         <img
-                                            src="./img/News/news6.jpg"
-                                            alt="The Lost Kingdom"
-                                            className="w-full h-full object-cover"
+                                            src="./img/MoviePoster/The Running Man.jpg"
+                                            alt="The Running Man"
+                                            className="w-full object-cover"
                                         />
                                         <span className="absolute top-3 left-3 bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded">
                                             C16
@@ -357,21 +393,24 @@ const Home = () => {
                                     </div>
                                     <div className="mt-4 flex flex-col gap-2">
                                         <h3 className="text-lg font-bold text-white truncate cursor-pointer">
-                                            The Lost Kingdom (2025)
+                                            The Running Man
                                         </h3>
-                                        <p className="text-sm text-amber-400 cursor-pointer">Adventure | 125 min</p>
+                                        <p className="text-sm text-amber-400 cursor-pointer">Adventure | 135 min</p>
+                                        <button className="mt-3 w-full py-2 rounded-lg font-semibold text-white shadow-md transition duration-300 bg-red-500 hover:bg-red-700 cursor-pointer">
+                                            Buy Tickets
+                                        </button>
                                     </div>
                                 </div>
                             </div>
 
-                            {/* Upcoming Movie 3 */}
-                            <div className="bg-gray-900 rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 hover:shadow-3xl transition duration-300 cursor-pointer">
+                            {/* Movie Card 3 */}
+                            <div className="bg-gray-900 rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 hover:shadow-3xl transition-all duration-300 cursor-pointer">
                                 <div className="p-4">
-                                    <div className="relative h-64 overflow-hidden rounded-xl">
+                                    <div className="relative overflow-hidden rounded-xl">
                                         <img
-                                            src="./img/News/news7.jpg"
-                                            alt="Haunted Nights"
-                                            className="w-full h-full object-cover"
+                                            src="./img/MoviePoster/Wicked For Good.jpg"
+                                            alt="Wicked For Good"
+                                            className="w-full object-cover"
                                         />
                                         <span className="absolute top-3 left-3 bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded">
                                             C16
@@ -379,21 +418,24 @@ const Home = () => {
                                     </div>
                                     <div className="mt-4 flex flex-col gap-2">
                                         <h3 className="text-lg font-bold text-white truncate cursor-pointer">
-                                            Haunted Nights (2025)
+                                            Wicked: For Good
                                         </h3>
-                                        <p className="text-sm text-amber-400 cursor-pointer">Horror | 110 min</p>
+                                        <p className="text-sm text-amber-400 cursor-pointer">Comedy | 110 min</p>
+                                        <button className="mt-3 w-full py-2 rounded-lg font-semibold text-white shadow-md transition duration-300 bg-red-500 hover:bg-red-700 cursor-pointer">
+                                            Buy Tickets
+                                        </button>
                                     </div>
                                 </div>
                             </div>
 
-                            {/* Upcoming Movie 4 */}
-                            <div className="bg-gray-900 rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 hover:shadow-3xl transition duration-300 cursor-pointer">
+                            {/* Movie Card 4 */}
+                            <div className="bg-gray-900 rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 hover:shadow-3xl transition-all duration-300 cursor-pointer">
                                 <div className="p-4">
-                                    <div className="relative h-64 overflow-hidden rounded-xl">
+                                    <div className="relative overflow-hidden rounded-xl">
                                         <img
-                                            src="./img/News/news8.jpg"
-                                            alt="Comedy Fiesta"
-                                            className="w-full h-full object-cover"
+                                            src="./img/MoviePoster/Disney's Zootopia 2.jpg"
+                                            alt="Disney's Zootopia 2"
+                                            className="w-full object-cover"
                                         />
                                         <span className="absolute top-3 left-3 bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded">
                                             C16
@@ -401,9 +443,37 @@ const Home = () => {
                                     </div>
                                     <div className="mt-4 flex flex-col gap-2">
                                         <h3 className="text-lg font-bold text-white truncate cursor-pointer">
-                                            Comedy Fiesta (2025)
+                                            Disney's Zootopia 2
                                         </h3>
-                                        <p className="text-sm text-amber-400 cursor-pointer">Comedy | 115 min</p>
+                                        <p className="text-sm text-amber-400 cursor-pointer">Cartoon | 125 min</p>
+                                        <button className="mt-3 w-full py-2 rounded-lg font-semibold text-white shadow-md transition duration-300 bg-red-500 hover:bg-red-700 cursor-pointer">
+                                            Buy Tickets
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Movie Card 5 */}
+                            <div className="bg-gray-900 rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 hover:shadow-3xl transition-all duration-300 cursor-pointer">
+                                <div className="p-4">
+                                    <div className="relative overflow-hidden rounded-xl">
+                                        <img
+                                            src="./img/MoviePoster/Now You See Me Now You Don't.jpg"
+                                            alt="Now You See Me Now You Don't"
+                                            className="w-full object-cover"
+                                        />
+                                        <span className="absolute top-3 left-3 bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded">
+                                            C16
+                                        </span>
+                                    </div>
+                                    <div className="mt-4 flex flex-col gap-2">
+                                        <h3 className="text-lg font-bold text-white truncate cursor-pointer">
+                                            Now You See Me: Now You Don't
+                                        </h3>
+                                        <p className="text-sm text-amber-400 cursor-pointer">Drama | 125 min</p>
+                                        <button className="mt-3 w-full py-2 rounded-lg font-semibold text-white shadow-md transition duration-300 bg-red-500 hover:bg-red-700 cursor-pointer">
+                                            Buy Tickets
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -523,7 +593,7 @@ const Home = () => {
                             to="*"
                             className="relative inline-block text-red-500 font-semibold bg-white hover:bg-red-500 border hover:text-white border-red-500 rounded-lg px-6 py-3 shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden cursor-pointer"
                         >
-                            <span className="relative z-10">See More</span>
+                            <span className="relative z-10">Browse all Articles</span>
                             <span className="absolute inset-0 bg-red-500 opacity-0 hover:opacity-20 transition-opacity duration-300 rounded-lg"></span>
                         </NavLink>
                     </div>

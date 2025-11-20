@@ -13,36 +13,125 @@ const HomeHeader = () => {
 
                 <nav>
                     <ul className="flex items-center gap-10">
-                        {[
-                            { to: "/", label: "Home" },
-                            { to: "movie-detail", label: "Movies" },
-                            { to: "*", label: "Cinemas" },
-                            { to: "buy-ticket", label: "Buy Tickets" },
-                            { to: "*", label: "Promotions" },
-                        ].map((item, index) => (
-                            <li key={index}>
-                                <NavLink
-                                    to={item.to}
+
+                        {/* HOME */}
+                        <li>
+                            <NavLink
+                                to="/"
+                                className={({ isActive }) =>
+                                    `group flex flex-col items-center transition-all duration-300 
+                    ${isActive ? "text-red-400" : "text-gray-300 hover:text-red-400"}`
+                                }
+                            >
+                                <div>
+                                    <i className="fa-solid fa-house text-2xl group-hover:text-red-400"></i>
+                                </div>
+                                <span className="text-sm mt-1 group-hover:text-red-400">Home</span>
+                                <span
                                     className={({ isActive }) =>
-                                        `relative text-lg transition-all duration-300 
-                                ${isActive ? "text-red-400 font-semibold" : "text-gray-300 hover:text-red-400"}
-                                after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:bg-red-400
-                                after:w-0 hover:after:w-full after:transition-all after:duration-300
-                                ${isActive ? "after:w-full" : ""}`
+                                        `mt-1 h-0.5 bg-red-400 transition-all duration-300 
+                        ${isActive ? "w-full" : "w-0 group-hover:w-full"}`
                                     }
-                                >
-                                    {item.label}
-                                </NavLink>
-                            </li>
-                        ))}
+                                ></span>
+                            </NavLink>
+                        </li>
+
+                        {/* MOVIES */}
+                        <li>
+                            <NavLink
+                                to="/movie-detail"
+                                className={({ isActive }) =>
+                                    `group flex flex-col items-center transition-all duration-300 
+                    ${isActive ? "text-red-400" : "text-gray-300 hover:text-red-400"}`
+                                }
+                            >
+                                <div>
+                                    <i className="fa-solid fa-film text-2xl group-hover:text-red-400"></i>
+                                </div>
+                                <span className="text-sm mt-1 group-hover:text-red-400">Movies</span>
+                                <span
+                                    className={({ isActive }) =>
+                                        `mt-1 h-0.5 bg-red-400 transition-all duration-300 
+                        ${isActive ? "w-full" : "w-0 group-hover:w-full"}`
+                                    }
+                                ></span>
+                            </NavLink>
+                        </li>
+
+                        {/* CINEMAS */}
+                        <li>
+                            <NavLink
+                                to="*"
+                                className={({ isActive }) =>
+                                    `group flex flex-col items-center transition-all duration-300 
+                    ${isActive ? "text-red-400" : "text-gray-300 hover:text-red-400"}`
+                                }
+                            >
+                                <div>
+                                    <i class="fi fi-sr-land-layer-location text-2xl group-hover:text-red-400"></i>
+                                </div>
+                                <span className="text-sm mt-1 group-hover:text-red-400">Cinemas</span>
+                                <span
+                                    className={({ isActive }) =>
+                                        `mt-1 h-0.5 bg-red-400 transition-all duration-300 
+                        ${isActive ? "w-full" : "w-0 group-hover:w-full"}`
+                                    }
+                                ></span>
+                            </NavLink>
+                        </li>
+
+                        {/* BUY TICKETS */}
+                        <li>
+                            <NavLink
+                                to="/buy-ticket"
+                                className={({ isActive }) =>
+                                    `group flex flex-col items-center transition-all duration-300 
+                    ${isActive ? "text-red-400" : "text-gray-300 hover:text-red-400"}`
+                                }
+                            >
+                                <div>
+                                    <i class="fi fi-rs-ticket text-2xl text-transparent bg-clip-text 
+           bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500"></i>
+                                </div>
+                                <span className="text-sm mt-1 group-hover:text-red-400">Buy Tickets</span>
+                                <span
+                                    className={({ isActive }) =>
+                                        `mt-1 h-0.5 bg-red-400 transition-all duration-300 
+                        ${isActive ? "w-full" : "w-0 group-hover:w-full"}`
+                                    }
+                                ></span>
+                            </NavLink>
+                        </li>
+
+                        {/* PROMOTIONS */}
+                        <li>
+                            <NavLink
+                                to="*"
+                                className={({ isActive }) =>
+                                    `group flex flex-col items-center transition-all duration-300 
+                    ${isActive ? "text-red-400" : "text-gray-300 hover:text-red-400"}`
+                                }
+                            >
+                                <div>
+                                    <i class="fi fi-rs-gift-box-benefits text-2xl group-hover:text-red-400"></i>
+                                </div>
+                                <span className="text-sm mt-1 group-hover:text-red-400">Promotions</span>
+                                <span
+                                    className={({ isActive }) =>
+                                        `mt-1 h-0.5 bg-red-400 transition-all duration-300 
+                        ${isActive ? "w-full" : "w-0 group-hover:w-full"}`
+                                    }
+                                ></span>
+                            </NavLink>
+                        </li>
+
                     </ul>
                 </nav>
 
                 <div className="flex items-center justify-center gap-4">
-                    <span className="text-sm text-gray-400 tracking-wide">
-                        Hi, <strong className="text-white font-semibold text-base">User</strong>
+                    <span className="text-sm text-white tracking-wide font-semibold">
+                        Hi, <strong className="text-amber-500 font-bold text-base">User</strong>
                     </span>
-
 
                     <div className="w-14 h-14 rounded-full border-2 border-red-400 overflow-hidden flex items-center justify-center">
                         <img
@@ -53,7 +142,7 @@ const HomeHeader = () => {
                     </div>
 
                     <button className="text-red-400 hover:text-red-500 transition duration-300 hidden md:block cursor-pointer">
-                        Sign Out
+                        Log Out
                     </button>
                 </div>
             </div>

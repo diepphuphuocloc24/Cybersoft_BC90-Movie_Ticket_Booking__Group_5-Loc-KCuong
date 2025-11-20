@@ -18,7 +18,19 @@ const AdminHeader = () => {
                         }`
                     }
                 >
-                    <span className="mr-3">📊</span> Dashboard
+                    <span className="mr-3"><i class="fi fi-br-stats"></i></span> Dashboard
+                </NavLink>
+
+                <NavLink
+                    to="/admin/movies"
+                    className={({ isActive }) =>
+                        `flex items-center p-4 transition duration-150 ${isActive
+                            ? "bg-white text-black"
+                            : "hover:bg-gray-300 hover:text-black text-white"
+                        }`
+                    }
+                >
+                    <span className="mr-3"><i class="fi fi-ss-clapper-open"></i></span> Movies
                 </NavLink>
 
                 <NavLink
@@ -30,19 +42,7 @@ const AdminHeader = () => {
                         }`
                     }
                 >
-                    <span className="mr-3">🎬</span> Movies
-                </NavLink>
-
-                <NavLink
-                    to="*"
-                    className={({ isActive }) =>
-                        `flex items-center p-4 transition duration-150 ${isActive
-                            ? "bg-white text-black"
-                            : "hover:bg-gray-300 hover:text-black text-white"
-                        }`
-                    }
-                >
-                    <span className="mr-3">🕒</span> Schedule
+                    <span className="mr-3"><i class="fi fi-rr-calendar-clock"></i></span> Schedule
                 </NavLink>
 
                 <NavLink
@@ -54,7 +54,7 @@ const AdminHeader = () => {
                         }`
                     }
                 >
-                    <span className="mr-3">👤</span> Users
+                    <span className="mr-3"><i class="fi fi-sr-user"></i></span> Users
                 </NavLink>
 
                 <NavLink
@@ -66,7 +66,7 @@ const AdminHeader = () => {
                         }`
                     }
                 >
-                    <span className="mr-3">📈</span> Settings
+                    <span className="mr-3"><i class="fi fi-rr-settings-sliders"></i></span> Settings
                 </NavLink>
             </nav>
         </aside>

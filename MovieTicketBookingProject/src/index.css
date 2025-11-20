@@ -51,15 +51,58 @@ body {
 }
 
 .owl-carousel .owl-dots .owl-dot span {
-    width: 18px !important;
+    width: 20px !important;
     height: 8px !important;
-    background: white !important;
+    background: gray !important;
     border-radius: 4px !important;
-    margin: 3px !important;
-    transition: 0.3s;
+    margin: 5px !important;
+    transition: all 0.5s;
 }
 
 .owl-carousel .owl-dots .owl-dot.active span {
-    background: #fb923c !important;
-    width: 30px !important;
+    background: red !important;
+    width: 50px !important;
+}
+
+/* ANIMATIONS */
+@keyframes bell {
+
+    0%,
+    100% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(15deg);
+    }
+
+    50% {
+        transform: rotate(-10deg);
+    }
+
+    75% {
+        transform: rotate(10deg);
+    }
+}
+
+@keyframes breath {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.10);
+    }
+}
+
+.animate-bell {
+    animation: bell 0.5s ease-in-out infinite;
+    display: inline-block;
+}
+
+.animate-breath {
+    animation: breath 0.8s ease-in-out infinite;
+    display: inline-block;
 }

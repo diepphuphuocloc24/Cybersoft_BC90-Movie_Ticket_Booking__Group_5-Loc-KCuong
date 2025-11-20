@@ -7,48 +7,94 @@ const AdminTemplate = () => {
         <div className="flex min-h-screen ">
             <AdminHeader />
 
-            <div className="flex-5 overflow-y-auto">
-                <header className="bg-gray-100 shadow p-4 flex justify-between items-center sticky top-0 z-10">
-                    <div className="flex items-center justtify-btween gap-2">
-                        <input
-                            type="text"
-                            placeholder="Search movies..."
-                            className="px-4 py-2 w-64 md:w-80 bg-white border border-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                        />
-                        <button className="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition duration-300 cursor-pointer">
+            <div className="flex-5 overflow-y-auto bg-gray-50">
+                {/* Header */}
+                <header className="bg-white shadow-md p-4 flex justify-between items-center sticky top-0 z-10">
+                    {/* Search */}
+                    <div className="flex items-center gap-3">
+                        {/* Input with search icon */}
+                        <div className="relative w-64 md:w-80">
+                            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                                <i className="fa-solid fa-magnifying-glass"></i>
+                            </span>
+                            <input
+                                type="text"
+                                placeholder="Search..."
+                                className="pl-10 pr-4 py-2 w-full bg-gray-100 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition duration-300"
+                            />
+                        </div>
+
+                        {/* Search Button */}
+                        <button className="px-5 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-full hover:from-blue-600 hover:to-blue-700 transition duration-300 shadow-md">
                             Search
                         </button>
                     </div>
 
-                    <div className="flex items-center space-x-3">
-                        <button className="relative p-2 bg-white rounded-lg hover:bg-gray-200 transition duration-300 cursor-pointer">
-                            💬
-                            <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+                    {/* User & Notifications */}
+                    <div className="flex items-center gap-4">
+                        {/* Bell */}
+                        <button className="relative p-2 cursor-pointer group">
+                            <i className="fa-solid fa-bell text-gray-600 text-lg animate-bell transition-colors duration-300 group-hover:text-red-500"></i>
+                            <span className="absolute top-1 right-2 w-3 h-3 bg-red-500 rounded-full border-2 border-white"></span>
                         </button>
-                        <button className="relative p-2 bg-white rounded-lg hover:bg-gray-200 transition duration-300 cursor-pointer">
-                            🔔
-                            <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+
+                        {/* Message */}
+                        <button className="relative p-2 cursor-pointer group">
+                            <i className="fi fi-sr-comment-alt-dots text-gray-600 text-lg animate-breath transition-colors duration-300 group-hover:text-cyan-500"></i>
+                            <span className="absolute top-1 right-0 w-3 h-3 bg-red-500 rounded-full border-2 border-white"></span>
                         </button>
+
+                        {/* Greeting */}
                         <span className="text-gray-700">
                             Hi, <strong className="text-gray-900 font-semibold">Admin</strong>
                         </span>
-                        <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-white cursor-pointer">
+
+                        {/* Avatar */}
+                        <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-300 cursor-pointer">
                             <img
                                 src="./img/avatarLogo.jpg"
                                 alt="avatar"
                                 className="w-full h-full object-cover"
                             />
                         </div>
-                        <button className="p-2 bg-white rounded-lg hover:bg-gray-200 transition duration-300 cursor-pointer">
-                            ⚙️
-                        </button>
+
+                        {/* Dropdown Logout */}
+                        <div className="relative inline-block text-left">
+                            <button
+                                id="dropdownDefaultButton"
+                                data-dropdown-toggle="dropdown"
+                                className="flex items-center justify-center p-2 bg-white rounded-full hover:bg-gray-100 transition duration-300 cursor-pointer"
+                            >
+                                <i className="fa-solid fa-chevron-down text-gray-600"></i>
+                            </button>
+
+                            {/* Dropdown Menu */}
+                            <div
+                                id="dropdown"
+                                className="absolute right-0 !mt-3 w-48 bg-white rounded-2xl shadow-xl border border-gray-100 ring-1 ring-gray-200 hidden z-50"
+                            >
+                                <ul className="py-2 text-sm text-gray-700 font-medium">
+                                    <li>
+                                        <a
+                                            href="#"
+                                            className="flex items-center w-full px-4 py-2 hover:bg-gradient-to-r hover:from-blue-50 hover:to-blue-100
+                           hover:text-blue-600 rounded-lg transition-all duration-200"
+                                        >
+                                            Logout
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </header>
 
+                {/* Main Content */}
                 <main className="p-6">
                     <Outlet />
                 </main>
             </div>
+
         </div>
     );
 };

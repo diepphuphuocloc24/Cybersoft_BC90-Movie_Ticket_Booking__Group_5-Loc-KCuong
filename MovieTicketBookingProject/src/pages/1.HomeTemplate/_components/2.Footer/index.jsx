@@ -2,67 +2,119 @@ import React from 'react'
 
 const Footer = () => {
     return (
-        <footer>
-            <div className="bg-gray-900 py-12">
-                <div className="container mx-auto">
-                    <div className="flex flex-col md:flex-row justify-between gap-10">
+        <footer className="bg-gray-950 text-gray-300">
 
-                        {/* Column 1: Logo + Description + Contact */}
-                        <div className="md:w-1/3 flex flex-col gap-6">
-                            <img
-                                src="./img/logo.png"
-                                alt="FeelDiamondCine Logo"
-                                className="w-48 object-contain cursor-pointer"
-                            />
-                            {/* Description under logo */}
-                            <p className="text-gray-400 text-sm max-w-sm">
-                                FeelDiamond Cinema is the first independent cinema bringing immersive experiences to movie lovers everywhere.
+            {/* TOP BORDER LINE */}
+            <div className="h-1 w-full bg-gradient-to-r from-red-600 to-red-400"></div>
+
+            {/* MAIN FOOTER CONTENT */}
+            <div className="container mx-auto py-14">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+
+                    {/* Logo + Info */}
+                    <div className="flex flex-col gap-6">
+                        <img
+                            src="./img/logo.png"
+                            className="w-56 object-contain mx-auto md:mx-0"
+                            alt="FeelDiamondCine Logo"
+                        />
+                        <p className="text-gray-400 text-sm leading-relaxed text-center md:text-left">
+                            Bringing immersive cinematic experiences to every movie lover.
+                        </p>
+
+                        <div className="text-sm flex flex-col gap-2 text-gray-300">
+                            <p>
+                                <span className="font-semibold text-white">Address:</span> 123 Movie St, Cinema City
                             </p>
-                            <div className="text-gray-400 text-sm flex flex-col gap-1 mt-2">
-                                <p><span className="font-semibold text-white">Address:</span> 123 Movie St, Cinema City</p>
-                                <p><span className="font-semibold text-white">Hotline:</span> +1 234 567 890</p>
-                                <p><span className="font-semibold text-white">Email:</span> info@feeldiamondcine.com</p>
-                            </div>
+                            <p>
+                                <span className="font-semibold text-white">Hotline:</span> +1 234 567 890
+                            </p>
+                            <p>
+                                <span className="font-semibold text-white">Email:</span> info@feeldiamondcine.com
+                            </p>
                         </div>
-
-                        {/* Column 2: Menu + Follow */}
-                        <div className="md:w-2/3 flex flex-col justify-between gap-8">
-                            <ul className="flex flex-wrap gap-6 text-sm font-medium tracking-wide text-white">
-                                <li><a href="#" className="hover:text-red-400 transition cursor-pointer">FAQ</a></li>
-                                <li><a href="#" className="hover:text-red-400 transition cursor-pointer">About Us</a></li>
-                                <li><a href="#" className="hover:text-red-400 transition cursor-pointer">Careers</a></li>
-                                <li><a href="#" className="hover:text-red-400 transition cursor-pointer">Terms of Service</a></li>
-                                <li><a href="#" className="hover:text-red-400 transition cursor-pointer">Privacy Policy</a></li>
-                                <li><a href="#" className="hover:text-red-400 transition cursor-pointer">Contact Us</a></li>
-                            </ul>
-
-                            {/* Follow */}
-                            <div className="flex flex-col gap-4 mt-6">
-                                <p className="text-gray-300 font-semibold text-sm">Follow Us</p>
-                                <div className="flex gap-4">
-                                    <div className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-red-500 transition cursor-pointer shadow">
-                                        <i className="fa-brands fa-facebook-f text-white text-sm"></i>
-                                    </div>
-                                    <div className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-red-500 transition cursor-pointer shadow">
-                                        <i className="fa-brands fa-instagram text-white text-sm"></i>
-                                    </div>
-                                    <div className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-red-500 transition cursor-pointer shadow">
-                                        <i className="fa-brands fa-twitter text-white text-sm"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
+
+                    {/* Quick Links */}
+                    <div className="flex flex-col gap-5">
+                        <h3 className="text-white text-lg font-semibold tracking-wide border-b border-gray-700 pb-2">
+                            Quick Links
+                        </h3>
+
+                        <ul className="space-y-3 text-sm">
+                            <li>
+                                <a href="#" className="hover:text-red-400 transition-colors duration-200 flex items-center gap-2">
+                                    FAQ
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" className="hover:text-red-400 transition-colors duration-200 flex items-center gap-2">
+                                    About Us
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" className="hover:text-red-400 transition-colors duration-200 flex items-center gap-2">
+                                    Careers
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" className="hover:text-red-400 transition-colors duration-200 flex items-center gap-2">
+                                    Terms of Service
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" className="hover:text-red-400 transition-colors duration-200 flex items-center gap-2">
+                                    Privacy Policy
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" className="hover:text-red-400 transition-colors duration-200 flex items-center gap-2">
+                                    Contact Us
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" className="hover:text-red-400 transition-colors duration-200 flex items-center gap-2">
+                                    Help
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    {/* Follow Us */}
+                    <div className="flex flex-col gap-5">
+                        <h3 className="text-white text-lg font-semibold tracking-wide border-b border-gray-700 pb-2">
+                            Follow Us
+                        </h3>
+
+                        <p className="text-sm text-gray-400">
+                            Stay connected and join our movie community.
+                        </p>
+
+                        <div className="flex gap-4 mt-2">
+                            <div className="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center
+                        hover:bg-red-600 transition-all duration-300 shadow-lg cursor-pointer">
+                                <i className="fa-brands fa-facebook-f text-white text-lg"></i>
+                            </div>
+                            <div className="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center
+                        hover:bg-red-600 transition-all duration-300 shadow-lg cursor-pointer">
+                                <i className="fa-brands fa-instagram text-white text-lg"></i>
+                            </div>
+                            <div className="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center
+                        hover:bg-red-600 transition-all duration-300 shadow-lg cursor-pointer">
+                                <i className="fa-brands fa-twitter text-white text-lg"></i>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
-            <div className="bg-black text-sm text-white py-4 tracking-wide">
-                <div className="container mx-auto text-center">
-                    &copy; 2025 FeelDiamondCine. All rights reserved.
-                </div>
+            {/* COPYRIGHT */}
+            <div className="bg-black py-4 text-center text-sm tracking-wider text-white">
+                © 2025 FeelDiamondCine. All rights reserved.
             </div>
         </footer>
+
 
     )
 }
