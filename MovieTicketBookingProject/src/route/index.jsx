@@ -2,6 +2,7 @@ import { Route } from "react-router-dom";
 
 import HomeTemplate from "../pages/1.HomeTemplate";
 import Home from "../pages/1.HomeTemplate/1.Home";
+import MovieList from "../pages/1.HomeTemplate/2.MovieDetail";
 import MovieDetail from "../pages/1.HomeTemplate/2.MovieDetail";
 import TicketBooking from "../pages/1.HomeTemplate/3.TicketBooking";
 
@@ -19,14 +20,20 @@ const routes = [
   {
     path: "",
     element: <HomeTemplate />,
-    child: [
+    nested: [
       {
         path: "",
         element: <Home />
       },
       {
-        path: "movie-detail",
-        element: <MovieDetail />
+        path: "movie-list",
+        element: <MovieList />,
+        child: [
+          {
+            path: "movie-detail",
+            element: <MovieDetail />
+          },
+        ]
       },
       {
         path: "buy-ticket",
@@ -37,7 +44,7 @@ const routes = [
   {
     path: "/admin",
     element: <AdminTemplate />,
-    child: [
+    nested: [
       {
         path: "/admin",
         element: <Dashboard />
@@ -60,7 +67,7 @@ const routes = [
 
 const renderRoute = (route) => {
   return (
-    route.child?.map((child) => {
+    route.nested?.map((child) => {
       return (
         <Route
           key={child.path}
@@ -74,7 +81,7 @@ const renderRoute = (route) => {
 
 const renderRoutes = () => {
   return routes.map((route) => {
-    if (route.child) {
+    if (route.nested) {
       return (
         <Route
           key={route.path}
@@ -95,14 +102,7 @@ const renderRoutes = () => {
   });
 };
 
-const renderHeader = () => {
-  const path = window.location.pathname;
-  if (path.startsWith("/admin")) {
-    return <AdminHeader />;
-  } else {
-    return <HomeHeader />;
-  }
-}
+const renderHeader = () => { }
 
 export { renderRoutes, renderHeader };
 
