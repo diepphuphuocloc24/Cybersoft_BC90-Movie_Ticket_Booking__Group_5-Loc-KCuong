@@ -39,7 +39,7 @@ const HomeHeader = () => {
                         {/* MOVIES */}
                         <li>
                             <NavLink
-                                to="/movie-detail"
+                                to="/movie-list"
                                 className={({ isActive }) =>
                                     `group flex flex-col items-center transition-all duration-300 
                     ${isActive ? "text-red-400" : "text-gray-300 hover:text-red-400"}`
@@ -68,7 +68,7 @@ const HomeHeader = () => {
                                 }
                             >
                                 <div>
-                                    <i class="fi fi-sr-land-layer-location text-2xl group-hover:text-red-400"></i>
+                                    <i className="fi fi-sr-land-layer-location text-2xl group-hover:text-red-400"></i>
                                 </div>
                                 <span className="text-sm mt-1 group-hover:text-red-400">Cinemas</span>
                                 <span
@@ -90,7 +90,7 @@ const HomeHeader = () => {
                                 }
                             >
                                 <div>
-                                    <i class="fi fi-rs-ticket text-2xl text-transparent bg-clip-text 
+                                    <i className="fi fi-rs-ticket text-2xl text-transparent bg-clip-text 
            bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500"></i>
                                 </div>
                                 <span className="text-sm mt-1 group-hover:text-red-400">Buy Tickets</span>
@@ -113,7 +113,7 @@ const HomeHeader = () => {
                                 }
                             >
                                 <div>
-                                    <i class="fi fi-rs-gift-box-benefits text-2xl group-hover:text-red-400"></i>
+                                    <i className="fi fi-rs-gift-box-benefits text-2xl group-hover:text-red-400"></i>
                                 </div>
                                 <span className="text-sm mt-1 group-hover:text-red-400">Promotions</span>
                                 <span
@@ -129,20 +129,11 @@ const HomeHeader = () => {
                 </nav>
 
                 <div className="flex items-center justify-center gap-4">
-                    <span className="text-sm text-white tracking-wide font-semibold">
-                        Hi, <strong className="text-amber-500 font-bold text-base">User</strong>
-                    </span>
-
-                    <div className="w-14 h-14 rounded-full border-2 border-red-400 overflow-hidden flex items-center justify-center">
-                        <img
-                            src="./img/avatarLogo.jpg"
-                            alt="avatar"
-                            className="w-[110%] h-[110%] object-cover transition-all duration-500 ease-out hover:scale-120 cursor-pointer"
-                        />
-                    </div>
-
-                    <button className="text-red-400 hover:text-red-500 transition duration-300 hidden md:block cursor-pointer">
-                        Log Out
+                    <button className="px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-orange-600 transition duration-300 cursor-pointer">
+                        Login
+                    </button>
+                    <button className="px-4 py-2 border border-amber-500 text-amber-500 rounded-lg hover:bg-amber-500 hover:text-white transition duration-300 cursor-pointer">
+                        Register
                     </button>
                 </div>
             </div>

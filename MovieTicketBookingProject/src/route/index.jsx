@@ -13,26 +13,23 @@ import Movies from "../pages/2.AdminTemplate/3.Movies/index.jsx";
 
 import PageNotFound from "../pages/3.PageNotFound";
 
-import HomeHeader from "../pages/1.HomeTemplate/_components/1.Header/index.jsx";
-import AdminHeader from "../pages/2.AdminTemplate/_components/1.Header/index.jsx";
-
 const routes = [
   {
-    path: "",
+    path: "/",
     element: <HomeTemplate />,
     nested: [
       {
         path: "",
-        element: <Home />
+        element: <Home />,
       },
       {
         path: "movie-list",
         element: <MovieList />,
-        child: [
+        nested: [
           {
-            path: "movie-detail",
+            path: ":maPhim",
             element: <MovieDetail />
-          },
+          }
         ]
       },
       {
@@ -41,12 +38,13 @@ const routes = [
       },
     ],
   },
+
   {
     path: "/admin",
     element: <AdminTemplate />,
     nested: [
       {
-        path: "/admin",
+        path: "",
         element: <Dashboard />
       },
       {
@@ -59,6 +57,7 @@ const routes = [
       },
     ],
   },
+
   {
     path: "*",
     element: <PageNotFound />
@@ -66,44 +65,29 @@ const routes = [
 ];
 
 const renderRoute = (route) => {
-  return (
-    route.nested?.map((child) => {
-      return (
-        <Route
-          key={child.path}
-          path={child.path}
-          element={child.element}
-        />
-      )
-    })
-  );
+  return route.nested?.map((child) => (
+    <Route
+      key={child.path}
+      path={child.path}
+      element={child.element}
+    >
+      {child.nested && renderRoute(child)}
+    </Route>
+  ));
 };
 
 const renderRoutes = () => {
-  return routes.map((route) => {
-    if (route.nested) {
-      return (
-        <Route
-          key={route.path}
-          path={route.path}
-          element={route.element}
-        >
-          {renderRoute(route)}
-        </Route>
-      )
-    }
-    return (
-      <Route
-        key={route.path}
-        path={route.path}
-        element={route.element}
-      />
-    )
-  });
+  return routes.map((route) => (
+    <Route
+      key={route.path}
+      path={route.path}
+      element={route.element}
+    >
+      {route.nested && renderRoute(route)}
+    </Route>
+  ));
 };
 
-const renderHeader = () => { }
-
-export { renderRoutes, renderHeader };
+export { renderRoutes };
 
 export default routes;

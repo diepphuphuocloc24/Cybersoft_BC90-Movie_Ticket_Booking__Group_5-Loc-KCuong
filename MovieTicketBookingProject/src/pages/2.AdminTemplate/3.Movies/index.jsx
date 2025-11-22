@@ -33,11 +33,11 @@ const Movies = () => {
                                         </button>
 
                                         <button className="cursor-pointer flex items-center gap-1 px-2 py-1 bg-red-50 text-red-500 hover:bg-red-100 hover:text-red-600 rounded-lg transition">
-                                            <i class="fi fi-rr-cross-circle text-lg"></i>
+                                            <i className="fi fi-rr-cross-circle text-lg"></i>
                                         </button>
 
                                         <button className="cursor-pointer flex items-center gap-1 px-2 py-1 bg-blue-50 text-emerald-500 hover:bg-blue-100 hover:text-emerald-600 rounded-lg transition">
-                                            <i class="fa-regular fa-calendar"></i>
+                                            <i className="fa-regular fa-calendar"></i>
                                         </button>
                                     </td>
                                 </tr>
@@ -51,10 +51,10 @@ const Movies = () => {
                                             Edit
                                         </button>
                                         <button className="cursor-pointer flex items-center gap-1 px-2 py-1 bg-red-50 text-red-500 text-lg hover:bg-red-100 hover:text-red-600 rounded-lg transition">
-                                            <i class="fi fi-rr-cross-circle"></i>
+                                            <i className="fi fi-rr-cross-circle"></i>
                                         </button>
                                         <button className="cursor-pointer flex items-center gap-1 px-2 py-1 bg-blue-50 text-emerald-500 hover:bg-blue-100 hover:text-emerald-600 rounded-lg transition">
-                                            <i class="fa-regular fa-calendar"></i>
+                                            <i className="fa-regular fa-calendar"></i>
                                         </button>
                                     </td>
                                 </tr>
@@ -90,11 +90,11 @@ const Movies = () => {
                                         </button>
                                         {/* Delete */}
                                         <button className="cursor-pointer flex items-center gap-1 px-2 py-1 bg-red-50 text-red-500 hover:bg-red-100 hover:text-red-600 rounded-lg transition">
-                                            <i class="fi fi-rr-cross-circle text-lg"></i>
+                                            <i className="fi fi-rr-cross-circle text-lg"></i>
                                         </button>
                                         {/* Calendar */}
                                         <button className="cursor-pointer flex items-center gap-1 px-2 py-1 bg-blue-50 text-emerald-500 hover:bg-blue-100 hover:text-emerald-600 rounded-lg transition">
-                                            <i class="fa-regular fa-calendar"></i>
+                                            <i className="fa-regular fa-calendar"></i>
                                         </button>
                                     </td>
                                 </tr>
@@ -108,10 +108,10 @@ const Movies = () => {
                                             Edit
                                         </button>
                                         <button className="cursor-pointer flex items-center gap-1 px-2 py-1 bg-red-50 text-red-500 hover:bg-red-100 hover:text-red-600 rounded-lg transition">
-                                            <i class="fi fi-rr-cross-circle text-lg"></i>
+                                            <i className="fi fi-rr-cross-circle text-lg"></i>
                                         </button>
                                         <button className="cursor-pointer flex items-center gap-1 px-2 py-1 bg-blue-50 text-emerald-500 hover:bg-blue-100 hover:text-emerald-600 rounded-lg transition">
-                                            <i class="fa-regular fa-calendar"></i>
+                                            <i className="fa-regular fa-calendar"></i>
                                         </button>
                                     </td>
                                 </tr>

@@ -1,44 +1,233 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Outlet } from 'react-router-dom'
 import axios from 'axios'
 
-const Home = () => {
-    const promise = axios(
-        {
-            url: '',
-            method: 'GET',
-        }
-    )
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
-    promise
-        .then((result) => {
-            console.log(result.data)
+import MovieLists from './movieList.json'
+import MovieCarousel from './movieCarousel.json'
+
+const Home = () => {
+    const carouselSlide = {
+        dots: true,
+        arrows: true,
+        infinite: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        speed: 500,
+        autoplaySpeed: 6000,
+        fade: true,
+        cssEase: "linear",
+        waitForAnimate: false
+    };
+
+    const moviesSlide = {
+        dots: false,
+        arrows: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 5000,
+        cssEase: "linear",
+        waitForAnimate: false,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                    infinite: true,
+                    dots: true
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }
+        ]
+    };
+
+    const renderNowMovieList = () => {
+        return MovieLists.content.map((movie) => {
+            if (movie.hot && movie.dangChieu) {
+                return (
+                    <div key={movie.maPhim}>
+                        <div className="group bg-gray-900 rounded-2xl overflow-hidden shadow-lg 
+        hover:shadow-3xl transform hover:-translate-y-1 hover:scale-105 
+        transition-all duration-300 cursor-pointer p-4">
+
+                            <div className="relative rounded-xl overflow-hidden">
+                                <img
+                                    src={movie.hinhAnh}
+                                    alt={movie.tenPhim}
+                                    className="h-100 w-full object-cover"
+                                />
+
+                                <span className="absolute top-3 left-3 bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-lg shadow 
+                opacity-100 group-hover:opacity-0 transition-opacity duration-500">
+                                    C16
+                                </span>
+
+                                <div className="absolute bottom-3 right-3 bg-black/70 text-white text-sm px-2 py-1 rounded-lg flex items-center gap-1 
+                opacity-100 group-hover:opacity-0 transition-opacity duration-500">
+                                    <i className="fa-solid fa-star text-amber-400"></i>
+                                    <span>{movie.danhGia}</span>
+                                </div>
+
+                                <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center gap-3
+                opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                                    <button className="px-4 py-2 bg-amber-500/90 text-black font-semibold rounded-full hover:bg-red-500 transition-all duration-300 cursor-pointer ">
+                                        Trailer
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div className="pt-4 flex flex-col justify-between h-[120px]">
+                                <h3 className="text-lg font-bold text-white leading-tight line-clamp-2">
+                                    {movie.tenPhim}
+                                </h3>
+
+                                <NavLink
+                                    to={`/movie-list/${movie.maPhim}`}
+                                    className="block w-full py-2 rounded-2xl font-semibold text-white bg-red-500 
+             hover:bg-red-600 shadow-md hover:shadow-lg transition-all duration-300 text-center"
+                                >
+                                    Buy Tickets
+                                </NavLink>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+        });
+    };
+
+    const renderUpComingMovieList = () => {
+        return MovieLists.content.map((movie) => {
+            if (movie.hot && !movie.dangChieu) {
+                return (
+                    <div key={movie.maPhim}>
+                        <div className="group bg-gray-900 rounded-2xl overflow-hidden shadow-lg 
+        hover:shadow-3xl transform hover:-translate-y-1 hover:scale-105 
+        transition-all duration-300 cursor-pointer p-4">
+
+                            <div className="relative rounded-xl overflow-hidden">
+                                <img
+                                    src={movie.hinhAnh}
+                                    alt={movie.tenPhim}
+                                    className="h-100 w-full object-cover"
+                                />
+
+                                <span className="absolute top-3 left-3 bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-lg shadow 
+                opacity-100 group-hover:opacity-0 transition-opacity duration-500">
+                                    C16
+                                </span>
+
+                                <div className="absolute bottom-3 right-3 bg-black/70 text-white text-sm px-2 py-1 rounded-lg flex items-center gap-1 
+                opacity-100 group-hover:opacity-0 transition-opacity duration-500">
+                                    <i className="fa-solid fa-star text-amber-400"></i>
+                                    <span>{movie.danhGia}</span>
+                                </div>
+
+                                <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center gap-3
+                opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                                    <button className="px-4 py-2 bg-amber-500/90 text-black font-semibold rounded-full hover:bg-red-500 transition-all duration-300 cursor-pointer ">
+                                        Trailer
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div className="pt-4 flex flex-col justify-between h-[120px]">
+                                <h3 className="text-lg font-bold text-white leading-tight line-clamp-2">
+                                    {movie.tenPhim}
+                                </h3>
+
+                                <NavLink
+                                    to={`/movie-list/${movie.maPhim}`}
+                                    className="block w-full py-2 rounded-2xl font-semibold text-white bg-red-500 
+             hover:bg-red-600 shadow-md hover:shadow-lg transition-all duration-300 text-center"
+                                >
+                                    Buy Tickets
+                                </NavLink>
+                                <Outlet />
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+        });
+    };
+
+    const renderMovieCarousel = () => {
+        return MovieCarousel.content.map((movie) => {
+            return (
+                <div key={movie.maBanner} className="item relative group">
+                    <img
+                        src={movie.hinhAnh}
+                        className="w-full h-135 overflow-hidden object-cover"
+                    />
+                    <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
+                    <NavLink
+                        to="*"
+                        className="
+    absolute right-[43%] bottom-20
+    flex items-center justify-center gap-3
+    bg-gradient-to-r from-blue-500 to-purple-600
+    text-white px-6 py-3 h-12
+    rounded-full font-semibold shadow-lg
+    opacity-0 translate-y-8 
+    group-hover:opacity-100 group-hover:translate-y-0
+    transition-all duration-500 ease-out
+  "
+                    >
+                        <span className="flex items-center h-full">Get Tickets</span>
+
+                        <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
+                            <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
+                        </span>
+                    </NavLink>
+                </div>
+            )
         })
-        .catch((error) => {
-            console.log(error)
-        }
-        )
+    }
 
     return (
         <>
-            <div className="owl-carousel owl-theme relative" data-type="carousel">
-                {/* Intro */}
-                <div className="item relative group">
-                    <img
-                        src="./img/Carousel/carousel0.gif"
-                        className="w-full object-cover"
-                    />
-                </div>
+            <div className="slider-container relative">
+                <Slider {...carouselSlide}>
+                    {/* Intro */}
+                    <div className="item relative group">
+                        <img
+                            src="./img/Carousel/carousel0.gif"
+                            className="w-full object-cover"
+                        />
+                    </div>
 
-                <div className="item relative group">
-                    <img
-                        src="./img/Carousel/carousel0-1.jpg"
-                        className="w-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
-                    <NavLink
-                        to="*"
-                        className="
+                    {/* Phim 1 */}
+                    <div className="item relative group">
+                        <img
+                            src="./img/Carousel/carousel0-1.jpg"
+                            className="w-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
+                        <NavLink
+                            to="*"
+                            className="
     absolute right-[43%] bottom-20
     flex items-center justify-center gap-3
     bg-gradient-to-r from-blue-500 to-purple-600
@@ -48,25 +237,27 @@ const Home = () => {
     group-hover:opacity-100 group-hover:translate-y-0
     transition-all duration-500 ease-out
   "
-                    >
-                        <span className="flex items-center h-full">Book Tickets</span>
+                        >
+                            <span className="flex items-center h-full">Get Tickets</span>
 
-                        <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
-                            <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
-                        </span>
-                    </NavLink>
-                </div>
+                            <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
+                                <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
+                            </span>
+                        </NavLink>
+                    </div>
 
-                {/* Phim 1 */}
-                <div className="item relative group">
-                    <img
-                        src="./img/Carousel/carousel1.jpg"
-                        className="w-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
-                    <NavLink
-                        to="*"
-                        className="
+                    {renderMovieCarousel()}
+
+                    {/* Phim 2 */}
+                    <div className="item relative group">
+                        <img
+                            src="./img/Carousel/carousel1.jpg"
+                            className="w-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
+                        <NavLink
+                            to="*"
+                            className="
     absolute right-[43%] bottom-20
     flex items-center justify-center gap-3
     bg-gradient-to-r from-blue-500 to-purple-600
@@ -76,25 +267,25 @@ const Home = () => {
     group-hover:opacity-100 group-hover:translate-y-0
     transition-all duration-500 ease-out
   "
-                    >
-                        <span className="flex items-center h-full">Book Tickets</span>
+                        >
+                            <span className="flex items-center h-full">Get Tickets</span>
 
-                        <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
-                            <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
-                        </span>
-                    </NavLink>
-                </div>
+                            <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
+                                <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
+                            </span>
+                        </NavLink>
+                    </div>
 
-                {/* Phim 2 */}
-                <div className="item relative group">
-                    <img
-                        src="./img/Carousel/carousel2.jpg"
-                        className="w-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
-                    <NavLink
-                        to="*"
-                        className="
+                    {/* Phim 3 */}
+                    <div className="item relative group">
+                        <img
+                            src="./img/Carousel/carousel2.jpg"
+                            className="w-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
+                        <NavLink
+                            to="*"
+                            className="
     absolute right-[43%] bottom-20
     flex items-center justify-center gap-3
     bg-gradient-to-r from-blue-500 to-purple-600
@@ -104,25 +295,25 @@ const Home = () => {
     group-hover:opacity-100 group-hover:translate-y-0
     transition-all duration-500 ease-out
   "
-                    >
-                        <span className="flex items-center h-full">Book Tickets</span>
+                        >
+                            <span className="flex items-center h-full">Get Tickets</span>
 
-                        <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
-                            <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
-                        </span>
-                    </NavLink>
-                </div>
+                            <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
+                                <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
+                            </span>
+                        </NavLink>
+                    </div>
 
-                {/* Phim 3 */}
-                <div className="item relative group">
-                    <img
-                        src="./img/Carousel/carousel3.jpg"
-                        className="w-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
-                    <NavLink
-                        to="*"
-                        className="
+                    {/* Phim 4 */}
+                    <div className="item relative group">
+                        <img
+                            src="./img/Carousel/carousel3.jpg"
+                            className="w-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
+                        <NavLink
+                            to="*"
+                            className="
     absolute right-[43%] bottom-20
     flex items-center justify-center gap-3
     bg-gradient-to-r from-blue-500 to-purple-600
@@ -132,25 +323,25 @@ const Home = () => {
     group-hover:opacity-100 group-hover:translate-y-0
     transition-all duration-500 ease-out
   "
-                    >
-                        <span className="flex items-center h-full">Book Tickets</span>
+                        >
+                            <span className="flex items-center h-full">Get Tickets</span>
 
-                        <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
-                            <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
-                        </span>
-                    </NavLink>
-                </div>
+                            <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
+                                <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
+                            </span>
+                        </NavLink>
+                    </div>
 
-                {/* Phim 4 */}
-                <div className="item relative group">
-                    <img
-                        src="./img/Carousel/carousel4.jpg"
-                        className="w-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
-                    <NavLink
-                        to="*"
-                        className="
+                    {/* Phim 5 */}
+                    <div className="item relative group">
+                        <img
+                            src="./img/Carousel/carousel4.jpg"
+                            className="w-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
+                        <NavLink
+                            to="*"
+                            className="
     absolute right-[43%] bottom-20
     flex items-center justify-center gap-3
     bg-gradient-to-r from-blue-500 to-purple-600
@@ -160,25 +351,25 @@ const Home = () => {
     group-hover:opacity-100 group-hover:translate-y-0
     transition-all duration-500 ease-out
   "
-                    >
-                        <span className="flex items-center h-full">Book Tickets</span>
+                        >
+                            <span className="flex items-center h-full">Get Tickets</span>
 
-                        <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
-                            <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
-                        </span>
-                    </NavLink>
-                </div>
+                            <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
+                                <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
+                            </span>
+                        </NavLink>
+                    </div>
 
-                {/* Phim 5 */}
-                <div className="item relative group">
-                    <img
-                        src="./img/Carousel/carousel5.jpg"
-                        className="w-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
-                    <NavLink
-                        to="*"
-                        className="
+                    {/* Phim 6 */}
+                    <div className="item relative group">
+                        <img
+                            src="./img/Carousel/carousel5.jpg"
+                            className="w-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
+                        <NavLink
+                            to="*"
+                            className="
     absolute right-[43%] bottom-20
     flex items-center justify-center gap-3
     bg-gradient-to-r from-blue-500 to-purple-600
@@ -188,14 +379,15 @@ const Home = () => {
     group-hover:opacity-100 group-hover:translate-y-0
     transition-all duration-500 ease-out
   "
-                    >
-                        <span className="flex items-center h-full">Book Tickets</span>
+                        >
+                            <span className="flex items-center h-full">Get Tickets</span>
 
-                        <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
-                            <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
-                        </span>
-                    </NavLink>
-                </div>
+                            <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
+                                <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
+                            </span>
+                        </NavLink>
+                    </div>
+                </Slider>
             </div>
 
             <div className="bg-gray-100 transition-all duration-300 py-12">
@@ -217,131 +409,10 @@ const Home = () => {
                             NOW SHOWING / ADVANCED SALES
                         </h2>
 
-                        <div className="owl-carousel owl-theme relative" data-type="movies">
-                            {/* Movie Card 1 */}
-                            <div className="bg-gray-900 rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 hover:shadow-3xl transition-all duration-300 cursor-pointer">
-                                <div className="p-4">
-                                    <div className="relative overflow-hidden rounded-xl">
-                                        <img
-                                            src="./img/MoviePoster/Predator Badlands.jpg"
-                                            alt="Predator: Badlands"
-                                            className="w-full object-cover"
-                                        />
-                                        <span className="absolute top-3 left-3 bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded">
-                                            C16
-                                        </span>
-                                    </div>
-                                    <div className="mt-4 flex flex-col gap-2">
-                                        <h3 className="text-lg font-bold text-white truncate cursor-pointer">
-                                            Predator: Badlands (2025)
-                                        </h3>
-                                        <p className="text-sm text-amber-400 cursor-pointer">Action | 120 min</p>
-                                        <button className="mt-3 w-full py-2 rounded-lg font-semibold text-white shadow-md transition duration-300 bg-red-500 hover:bg-red-700 cursor-pointer">
-                                            Buy Tickets
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Movie Card 2 */}
-                            <div className="bg-gray-900 rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 hover:shadow-3xl transition-all duration-300 cursor-pointer">
-                                <div className="p-4">
-                                    <div className="relative overflow-hidden rounded-xl">
-                                        <img
-                                            src="./img/MoviePoster/The Running Man.jpg"
-                                            alt="The Running Man"
-                                            className="w-full object-cover"
-                                        />
-                                        <span className="absolute top-3 left-3 bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded">
-                                            C16
-                                        </span>
-                                    </div>
-                                    <div className="mt-4 flex flex-col gap-2">
-                                        <h3 className="text-lg font-bold text-white truncate cursor-pointer">
-                                            The Running Man
-                                        </h3>
-                                        <p className="text-sm text-amber-400 cursor-pointer">Adventure | 135 min</p>
-                                        <button className="mt-3 w-full py-2 rounded-lg font-semibold text-white shadow-md transition duration-300 bg-red-500 hover:bg-red-700 cursor-pointer">
-                                            Buy Tickets
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Movie Card 3 */}
-                            <div className="bg-gray-900 rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 hover:shadow-3xl transition-all duration-300 cursor-pointer">
-                                <div className="p-4">
-                                    <div className="relative overflow-hidden rounded-xl">
-                                        <img
-                                            src="./img/MoviePoster/Wicked For Good.jpg"
-                                            alt="Wicked For Good"
-                                            className="w-full object-cover"
-                                        />
-                                        <span className="absolute top-3 left-3 bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded">
-                                            C16
-                                        </span>
-                                    </div>
-                                    <div className="mt-4 flex flex-col gap-2">
-                                        <h3 className="text-lg font-bold text-white truncate cursor-pointer">
-                                            Wicked: For Good
-                                        </h3>
-                                        <p className="text-sm text-amber-400 cursor-pointer">Comedy | 110 min</p>
-                                        <button className="mt-3 w-full py-2 rounded-lg font-semibold text-white shadow-md transition duration-300 bg-red-500 hover:bg-red-700 cursor-pointer">
-                                            Buy Tickets
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Movie Card 4 */}
-                            <div className="bg-gray-900 rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 hover:shadow-3xl transition-all duration-300 cursor-pointer">
-                                <div className="p-4">
-                                    <div className="relative overflow-hidden rounded-xl">
-                                        <img
-                                            src="./img/MoviePoster/Disney's Zootopia 2.jpg"
-                                            alt="Disney's Zootopia 2"
-                                            className="w-full object-cover"
-                                        />
-                                        <span className="absolute top-3 left-3 bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded">
-                                            C16
-                                        </span>
-                                    </div>
-                                    <div className="mt-4 flex flex-col gap-2">
-                                        <h3 className="text-lg font-bold text-white truncate cursor-pointer">
-                                            Disney's Zootopia 2
-                                        </h3>
-                                        <p className="text-sm text-amber-400 cursor-pointer">Cartoon | 125 min</p>
-                                        <button className="mt-3 w-full py-2 rounded-lg font-semibold text-white shadow-md transition duration-300 bg-red-500 hover:bg-red-700 cursor-pointer">
-                                            Buy Tickets
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Movie Card 5 */}
-                            <div className="bg-gray-900 rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 hover:shadow-3xl transition-all duration-300 cursor-pointer">
-                                <div className="p-4">
-                                    <div className="relative overflow-hidden rounded-xl">
-                                        <img
-                                            src="./img/MoviePoster/Now You See Me Now You Don't.jpg"
-                                            alt="Now You See Me Now You Don't"
-                                            className="w-full object-cover"
-                                        />
-                                        <span className="absolute top-3 left-3 bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded">
-                                            C16
-                                        </span>
-                                    </div>
-                                    <div className="mt-4 flex flex-col gap-2">
-                                        <h3 className="text-lg font-bold text-white truncate cursor-pointer">
-                                            Now You See Me: Now You Don't
-                                        </h3>
-                                        <p className="text-sm text-amber-400 cursor-pointer">Drama | 125 min</p>
-                                        <button className="mt-3 w-full py-2 rounded-lg font-semibold text-white shadow-md transition duration-300 bg-red-500 hover:bg-red-700 cursor-pointer">
-                                            Buy Tickets
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                        <div className="slider-container relative">
+                            <Slider className="movies-carousel" {...moviesSlide}>
+                                {renderNowMovieList()}
+                            </Slider>
                         </div>
                     </div>
                 </section>
@@ -352,131 +423,11 @@ const Home = () => {
                             UPCOMING MOVIES
                         </h2>
 
-                        <div className="owl-carousel owl-theme relative" data-type="movies">
-                            {/* Movie Card 1 */}
-                            <div className="bg-gray-900 rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 hover:shadow-3xl transition-all duration-300 cursor-pointer">
-                                <div className="p-4">
-                                    <div className="relative overflow-hidden rounded-xl">
-                                        <img
-                                            src="./img/MoviePoster/Predator Badlands.jpg"
-                                            alt="Predator: Badlands"
-                                            className="w-full object-cover"
-                                        />
-                                        <span className="absolute top-3 left-3 bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded">
-                                            C16
-                                        </span>
-                                    </div>
-                                    <div className="mt-4 flex flex-col gap-2">
-                                        <h3 className="text-lg font-bold text-white truncate cursor-pointer">
-                                            Predator: Badlands (2025)
-                                        </h3>
-                                        <p className="text-sm text-amber-400 cursor-pointer">Action | 120 min</p>
-                                        <button className="mt-3 w-full py-2 rounded-lg font-semibold text-white shadow-md transition duration-300 bg-red-500 hover:bg-red-700 cursor-pointer">
-                                            Buy Tickets
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
 
-                            {/* Movie Card 2 */}
-                            <div className="bg-gray-900 rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 hover:shadow-3xl transition-all duration-300 cursor-pointer">
-                                <div className="p-4">
-                                    <div className="relative overflow-hidden rounded-xl">
-                                        <img
-                                            src="./img/MoviePoster/The Running Man.jpg"
-                                            alt="The Running Man"
-                                            className="w-full object-cover"
-                                        />
-                                        <span className="absolute top-3 left-3 bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded">
-                                            C16
-                                        </span>
-                                    </div>
-                                    <div className="mt-4 flex flex-col gap-2">
-                                        <h3 className="text-lg font-bold text-white truncate cursor-pointer">
-                                            The Running Man
-                                        </h3>
-                                        <p className="text-sm text-amber-400 cursor-pointer">Adventure | 135 min</p>
-                                        <button className="mt-3 w-full py-2 rounded-lg font-semibold text-white shadow-md transition duration-300 bg-red-500 hover:bg-red-700 cursor-pointer">
-                                            Buy Tickets
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Movie Card 3 */}
-                            <div className="bg-gray-900 rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 hover:shadow-3xl transition-all duration-300 cursor-pointer">
-                                <div className="p-4">
-                                    <div className="relative overflow-hidden rounded-xl">
-                                        <img
-                                            src="./img/MoviePoster/Wicked For Good.jpg"
-                                            alt="Wicked For Good"
-                                            className="w-full object-cover"
-                                        />
-                                        <span className="absolute top-3 left-3 bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded">
-                                            C16
-                                        </span>
-                                    </div>
-                                    <div className="mt-4 flex flex-col gap-2">
-                                        <h3 className="text-lg font-bold text-white truncate cursor-pointer">
-                                            Wicked: For Good
-                                        </h3>
-                                        <p className="text-sm text-amber-400 cursor-pointer">Comedy | 110 min</p>
-                                        <button className="mt-3 w-full py-2 rounded-lg font-semibold text-white shadow-md transition duration-300 bg-red-500 hover:bg-red-700 cursor-pointer">
-                                            Buy Tickets
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Movie Card 4 */}
-                            <div className="bg-gray-900 rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 hover:shadow-3xl transition-all duration-300 cursor-pointer">
-                                <div className="p-4">
-                                    <div className="relative overflow-hidden rounded-xl">
-                                        <img
-                                            src="./img/MoviePoster/Disney's Zootopia 2.jpg"
-                                            alt="Disney's Zootopia 2"
-                                            className="w-full object-cover"
-                                        />
-                                        <span className="absolute top-3 left-3 bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded">
-                                            C16
-                                        </span>
-                                    </div>
-                                    <div className="mt-4 flex flex-col gap-2">
-                                        <h3 className="text-lg font-bold text-white truncate cursor-pointer">
-                                            Disney's Zootopia 2
-                                        </h3>
-                                        <p className="text-sm text-amber-400 cursor-pointer">Cartoon | 125 min</p>
-                                        <button className="mt-3 w-full py-2 rounded-lg font-semibold text-white shadow-md transition duration-300 bg-red-500 hover:bg-red-700 cursor-pointer">
-                                            Buy Tickets
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Movie Card 5 */}
-                            <div className="bg-gray-900 rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 hover:shadow-3xl transition-all duration-300 cursor-pointer">
-                                <div className="p-4">
-                                    <div className="relative overflow-hidden rounded-xl">
-                                        <img
-                                            src="./img/MoviePoster/Now You See Me Now You Don't.jpg"
-                                            alt="Now You See Me Now You Don't"
-                                            className="w-full object-cover"
-                                        />
-                                        <span className="absolute top-3 left-3 bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded">
-                                            C16
-                                        </span>
-                                    </div>
-                                    <div className="mt-4 flex flex-col gap-2">
-                                        <h3 className="text-lg font-bold text-white truncate cursor-pointer">
-                                            Now You See Me: Now You Don't
-                                        </h3>
-                                        <p className="text-sm text-amber-400 cursor-pointer">Drama | 125 min</p>
-                                        <button className="mt-3 w-full py-2 rounded-lg font-semibold text-white shadow-md transition duration-300 bg-red-500 hover:bg-red-700 cursor-pointer">
-                                            Buy Tickets
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                        <div className="slider-container relative">
+                            <Slider className="movies-carousel" {...moviesSlide}>
+                                {renderUpComingMovieList()}
+                            </Slider>
                         </div>
                     </div>
                 </section>
@@ -599,6 +550,7 @@ const Home = () => {
                     </div>
                 </section>
             </div>
+            <Outlet />
         </>
     )
 }

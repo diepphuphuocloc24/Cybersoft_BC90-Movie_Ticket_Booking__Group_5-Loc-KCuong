@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
+import CountUp from 'react-countup';
 
 const Dashboard = () => {
     return (
@@ -8,22 +9,47 @@ const Dashboard = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                 <div className="bg-white p-5 rounded-lg shadow-md border-l-4 border-blue-500">
                     <p className="text-sm font-medium text-gray-500">Total Revenue</p>
-                    <p className="text-2xl font-bold text-gray-900 mt-1">$1,250,000</p>
+                    <CountUp
+                        start={0}
+                        end={1250000}
+                        duration={3}
+                        separator=","
+                        prefix="$"
+                        enableScrollSpy={true}
+                        className="text-2xl font-bold text-gray-900 mt-1"></CountUp>
                 </div>
 
                 <div className="bg-white p-5 rounded-lg shadow-md border-l-4 border-green-500">
                     <p className="text-sm font-medium text-gray-500">Tickets Sold</p>
-                    <p className="text-2xl font-bold text-gray-900 mt-1">50,000</p>
+                    <CountUp
+                        start={0}
+                        end={50000}
+                        duration={3}
+                        separator=","
+                        enableScrollSpy={true}
+                        className="text-2xl font-bold text-gray-900 mt-1"></CountUp>
                 </div>
 
                 <div className="bg-white p-5 rounded-lg shadow-md border-l-4 border-yellow-500">
                     <p className="text-sm font-medium text-gray-500">Movies Showing</p>
-                    <p className="text-2xl font-bold text-gray-900 mt-1">75</p>
+                    <CountUp
+                        start={0}
+                        end={75}
+                        duration={3}
+                        separator=","
+                        enableScrollSpy={true}
+                        className="text-2xl font-bold text-gray-900 mt-1"></CountUp>
                 </div>
 
                 <div className="bg-white p-5 rounded-lg shadow-md border-l-4 border-red-500">
                     <p className="text-sm font-medium text-gray-500">New Users</p>
-                    <p className="text-2xl font-bold text-gray-900 mt-1">1,200</p>
+                    <CountUp
+                        start={0}
+                        end={1200}
+                        duration={3}
+                        separator=","
+                        enableScrollSpy={true}
+                        className="text-2xl font-bold text-gray-900 mt-1"></CountUp>
                 </div>
             </div>
         </div>

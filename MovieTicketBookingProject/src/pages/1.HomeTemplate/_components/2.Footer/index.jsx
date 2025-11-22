@@ -15,7 +15,7 @@ const Footer = () => {
                     <div className="flex flex-col gap-6">
                         <img
                             src="./img/logo.png"
-                            className="w-56 object-contain mx-auto md:mx-0"
+                            className="w-80 object-contain mx-auto md:mx-0"
                             alt="FeelDiamondCine Logo"
                         />
                         <p className="text-gray-400 text-sm leading-relaxed text-center md:text-left">
@@ -91,17 +91,17 @@ const Footer = () => {
                         </p>
 
                         <div className="flex gap-4 mt-2">
-                            <div className="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center
-                        hover:bg-red-600 transition-all duration-300 shadow-lg cursor-pointer">
-                                <i className="fa-brands fa-facebook-f text-white text-lg"></i>
+                            <div className="w-10 h-10 rounded-full bg-black border border-white flex items-center justify-center
+      hover:bg-red-600 transition-colors duration-300 shadow-lg cursor-pointer">
+                                <i className="fa-brands fa-facebook-f text-white text-base"></i>
                             </div>
-                            <div className="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center
-                        hover:bg-red-600 transition-all duration-300 shadow-lg cursor-pointer">
-                                <i className="fa-brands fa-instagram text-white text-lg"></i>
+                            <div className="w-10 h-10 rounded-full bg-black border border-white flex items-center justify-center
+      hover:bg-red-600 transition-colors duration-300 shadow-lg cursor-pointer">
+                                <i className="fa-brands fa-instagram text-white text-base"></i>
                             </div>
-                            <div className="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center
-                        hover:bg-red-600 transition-all duration-300 shadow-lg cursor-pointer">
-                                <i className="fa-brands fa-twitter text-white text-lg"></i>
+                            <div className="w-10 h-10 rounded-full bg-black border border-white flex items-center justify-center
+      hover:bg-red-600 transition-colors duration-300 shadow-lg cursor-pointer">
+                                <i className="fa-brands fa-twitter text-white text-base"></i>
                             </div>
                         </div>
                     </div>
@@ -114,8 +114,6 @@ const Footer = () => {
                 © 2025 FeelDiamondCine. All rights reserved.
             </div>
         </footer>
-
-
     )
 }
 

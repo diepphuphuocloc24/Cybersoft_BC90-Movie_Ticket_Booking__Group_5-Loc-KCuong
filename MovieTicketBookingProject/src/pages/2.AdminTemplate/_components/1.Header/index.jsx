@@ -18,7 +18,7 @@ const AdminHeader = () => {
                         }`
                     }
                 >
-                    <span className="mr-3"><i class="fi fi-br-stats"></i></span> Dashboard
+                    <span className="mr-3"><i className="fi fi-br-stats"></i></span> Dashboard
                 </NavLink>
 
                 <NavLink
@@ -30,7 +30,7 @@ const AdminHeader = () => {
                         }`
                     }
                 >
-                    <span className="mr-3"><i class="fi fi-ss-clapper-open"></i></span> Movies
+                    <span className="mr-3"><i className="fi fi-ss-clapper-open"></i></span> Movies
                 </NavLink>
 
                 <NavLink
@@ -42,7 +42,7 @@ const AdminHeader = () => {
                         }`
                     }
                 >
-                    <span className="mr-3"><i class="fi fi-rr-calendar-clock"></i></span> Schedule
+                    <span className="mr-3"><i className="fi fi-rr-calendar-clock"></i></span> Schedule
                 </NavLink>
 
                 <NavLink
@@ -54,7 +54,7 @@ const AdminHeader = () => {
                         }`
                     }
                 >
-                    <span className="mr-3"><i class="fi fi-sr-user"></i></span> Users
+                    <span className="mr-3"><i className="fi fi-sr-user"></i></span> Users
                 </NavLink>
 
                 <NavLink
@@ -66,7 +66,7 @@ const AdminHeader = () => {
                         }`
                     }
                 >
-                    <span className="mr-3"><i class="fi fi-rr-settings-sliders"></i></span> Settings
+                    <span className="mr-3"><i className="fi fi-rr-settings-sliders"></i></span> Settings
                 </NavLink>
             </nav>
         </aside>
