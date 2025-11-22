@@ -129,10 +129,10 @@ const HomeHeader = () => {
                 </nav>
 
                 <div className="flex items-center justify-center gap-4">
-                    <button className="px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-orange-600 transition duration-300 cursor-pointer">
+                    <button data-modal-target="login-modal" data-modal-toggle="login-modal" className="px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-orange-600 transition duration-300 cursor-pointer">
                         Login
                     </button>
-                    <button className="px-4 py-2 border border-amber-500 text-amber-500 rounded-lg hover:bg-amber-500 hover:text-white transition duration-300 cursor-pointer">
+                    <button data-modal-target="register-modal" data-modal-toggle="register-modal" className="px-4 py-2 border border-amber-500 text-amber-500 rounded-lg hover:bg-amber-500 hover:text-white transition duration-300 cursor-pointer">
                         Register
                     </button>
                 </div>
