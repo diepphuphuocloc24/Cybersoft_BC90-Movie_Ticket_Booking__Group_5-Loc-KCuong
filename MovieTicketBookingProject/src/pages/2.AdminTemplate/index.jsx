@@ -7,7 +7,7 @@ const AdminTemplate = () => {
         <div className="flex min-h-screen ">
             <AdminHeader />
 
-            <div className="flex-5 overflow-y-auto bg-gray-50">
+            <div className="flex-5 overflow-y-auto bg-gray-200">
                 {/* Header */}
                 <header className="bg-white shadow-md p-4 flex justify-between items-center sticky top-0 z-10">
                     {/* Search */}

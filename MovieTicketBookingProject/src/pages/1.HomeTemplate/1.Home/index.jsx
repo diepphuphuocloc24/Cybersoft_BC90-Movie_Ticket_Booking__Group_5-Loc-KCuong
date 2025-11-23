@@ -88,13 +88,6 @@ const Home = () => {
                                     <i className="fa-solid fa-star text-amber-400"></i>
                                     <span>{movie.danhGia}</span>
                                 </div>
-
-                                <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center gap-3
-                opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                                    <button className="px-4 py-2 bg-amber-500/90 text-black font-semibold rounded-full hover:bg-red-500 transition-all duration-300 cursor-pointer ">
-                                        Trailer
-                                    </button>
-                                </div>
                             </div>
 
                             <div className="pt-4 flex flex-col justify-between h-[120px]">
@@ -143,13 +136,6 @@ const Home = () => {
                                     <i className="fa-solid fa-star text-amber-400"></i>
                                     <span>{movie.danhGia}</span>
                                 </div>
-
-                                <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center gap-3
-                opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                                    <button className="px-4 py-2 bg-amber-500/90 text-black font-semibold rounded-full hover:bg-red-500 transition-all duration-300 cursor-pointer ">
-                                        Trailer
-                                    </button>
-                                </div>
                             </div>
 
                             <div className="pt-4 flex flex-col justify-between h-[120px]">
@@ -162,7 +148,7 @@ const Home = () => {
                                     className="block w-full py-2 rounded-2xl font-semibold text-white bg-red-500 
              hover:bg-red-600 shadow-md hover:shadow-lg transition-all duration-300 text-center"
                                 >
-                                    Buy Tickets
+                                    Movie Detail
                                 </NavLink>
                                 <Outlet />
                             </div>
