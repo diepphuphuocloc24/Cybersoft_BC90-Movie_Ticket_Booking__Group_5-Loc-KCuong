@@ -68,7 +68,7 @@ const Dashboard = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             setMessagesBuy((previousMessage) => {
-                if (previousMessage.length >= 5) {
+                if (previousMessage.length >= 6) {
                     return previousMessage;
                 } else {
                     return [...previousMessage, "A customer just booked a ticket!"];
@@ -172,7 +172,7 @@ const Dashboard = () => {
                 <div className="w-full lg:w-3/8 flex flex-col gap-6">
                     <div className="bg-white p-4 rounded-xl shadow flex flex-col">
                         <h2 className="text-xl font-semibold mb-3 border-b pb-2">Recent Updates</h2>
-                        <div className="flex flex-col gap-2 h-50 overflow-y-auto mt-2 pr-2">
+                        <div className="flex flex-col gap-2 h-40 overflow-y-auto mt-2 pr-2">
                             {messagesBuy.map((message, index) => (
                                 <div key={index} className="flex items-center text-gray-800 px-3 py-1 gap-2">
                                     <i className="fas fa-circle text-green-500 text-xs"></i>

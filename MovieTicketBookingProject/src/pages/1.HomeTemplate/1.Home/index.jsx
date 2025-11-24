@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import axios from 'axios'
 
 import Slider from "react-slick";
@@ -150,7 +150,6 @@ const Home = () => {
                                 >
                                     Movie Detail
                                 </NavLink>
-                                <Outlet />
                             </div>
                         </div>
                     </div>
@@ -174,7 +173,7 @@ const Home = () => {
     absolute right-[43%] bottom-20
     flex items-center justify-center gap-3
     bg-gradient-to-r from-blue-500 to-purple-600
-    text-white px-6 py-3 h-12
+    text-white px-6 py-3 h-10
     rounded-full font-semibold shadow-lg
     opacity-0 translate-y-8 
     group-hover:opacity-100 group-hover:translate-y-0
@@ -194,7 +193,8 @@ const Home = () => {
 
     return (
         <>
-            <div className="slider-container relative">
+            {/* CAROUSEL */}
+            <div className="slider-container relative pb-10">
                 <Slider {...carouselSlide}>
                     {/* Intro */}
                     <div className="item relative group">
@@ -217,7 +217,7 @@ const Home = () => {
     absolute right-[43%] bottom-20
     flex items-center justify-center gap-3
     bg-gradient-to-r from-blue-500 to-purple-600
-    text-white px-6 py-3 h-12
+    text-white px-6 py-3 h-10
     rounded-full font-semibold shadow-lg
     opacity-0 translate-y-8 
     group-hover:opacity-100 group-hover:translate-y-0
@@ -247,7 +247,7 @@ const Home = () => {
     absolute right-[43%] bottom-20
     flex items-center justify-center gap-3
     bg-gradient-to-r from-blue-500 to-purple-600
-    text-white px-6 py-3 h-12
+    text-white px-6 py-3 h-10
     rounded-full font-semibold shadow-lg
     opacity-0 translate-y-8 
     group-hover:opacity-100 group-hover:translate-y-0
@@ -275,7 +275,7 @@ const Home = () => {
     absolute right-[43%] bottom-20
     flex items-center justify-center gap-3
     bg-gradient-to-r from-blue-500 to-purple-600
-    text-white px-6 py-3 h-12
+    text-white px-6 py-3 h-10
     rounded-full font-semibold shadow-lg
     opacity-0 translate-y-8 
     group-hover:opacity-100 group-hover:translate-y-0
@@ -303,7 +303,7 @@ const Home = () => {
     absolute right-[43%] bottom-20
     flex items-center justify-center gap-3
     bg-gradient-to-r from-blue-500 to-purple-600
-    text-white px-6 py-3 h-12
+    text-white px-6 py-3 h-10
     rounded-full font-semibold shadow-lg
     opacity-0 translate-y-8 
     group-hover:opacity-100 group-hover:translate-y-0
@@ -331,7 +331,7 @@ const Home = () => {
     absolute right-[43%] bottom-20
     flex items-center justify-center gap-3
     bg-gradient-to-r from-blue-500 to-purple-600
-    text-white px-6 py-3 h-12
+    text-white px-6 py-3 h-10
     rounded-full font-semibold shadow-lg
     opacity-0 translate-y-8 
     group-hover:opacity-100 group-hover:translate-y-0
@@ -359,7 +359,7 @@ const Home = () => {
     absolute right-[43%] bottom-20
     flex items-center justify-center gap-3
     bg-gradient-to-r from-blue-500 to-purple-600
-    text-white px-6 py-3 h-12
+    text-white px-6 py-3 h-10
     rounded-full font-semibold shadow-lg
     opacity-0 translate-y-8 
     group-hover:opacity-100 group-hover:translate-y-0
@@ -376,7 +376,8 @@ const Home = () => {
                 </Slider>
             </div>
 
-            <div className="bg-gray-100 transition-all duration-300 py-12">
+            {/* DEAL */}
+            <div className="transition-all duration-300 pb-15">
                 <div className="container mx-auto">
                     <NavLink to="/now-showing">
                         <img
@@ -388,155 +389,287 @@ const Home = () => {
                 </div>
             </div>
 
-            <div className='bg-gray-100 pb-12'>
-                <section className="bg-gray-100 py-12">
-                    <div className="container mx-auto">
-                        <h2 className="text-3xl font-extrabold text-gray-800 mb-6 border-b pb-2">
-                            NOW SHOWING / ADVANCED SALES
-                        </h2>
-
-                        <div className="slider-container relative">
-                            <Slider className="movies-carousel" {...moviesSlide}>
-                                {renderNowMovieList()}
-                            </Slider>
+            {/* TAB MOVIES */}
+            <div className="pb-15">
+                {/* Tabs */}
+                <div className='container relative'>
+                    <div className='absolute top-0 left-0'>
+                        <div className="relative inline px-1 py-10 rounded-l-lg text-white text-xl font-medium bg-black">
+                            SHOW ME
+                            <span
+                                className="absolute top-1/2 right-0 transform translate-x-full -translate-y-1/2"
+                                style={{
+                                    width: 0,
+                                    height: 0,
+                                    borderTop: '52px solid transparent',
+                                    borderBottom: '52px solid transparent',
+                                    borderLeft: '52px solid #000',
+                                }}
+                            ></span>
                         </div>
                     </div>
-                </section>
 
-                <section className="bg-gray-100 py-12">
-                    <div className="container mx-auto">
-                        <h2 className="text-3xl font-extrabold text-gray-800 mb-6 border-b pb-2">
-                            UPCOMING MOVIES
-                        </h2>
+                    <div>
+                        <ul className="flex justify-center text-lg font-bold" id="movie-tab"
+                            data-tabs-toggle="#movie-tab-content"
+                            data-tabs-active-classes="text-red-500 border-b-2 border-red-600"
+                            data-tabs-inactive-classes="text-black border-b-2 border-transparent hover:text-red-600"
+                            role="tablist">
 
+                            <ul className="flex items-center">
+                                <li role="presentation" className="pr-5 relative">
+                                    <button
+                                        className="text-3xl font-extrabold text-gray-800 mb-6 border-b pb-2 cursor-pointer"
+                                        id="now-tab"
+                                        data-tabs-target="#now-showing"
+                                        type="button"
+                                        role="tab"
+                                    >
+                                        NOW SHOWING
+                                    </button>
+                                    {/* Đường ngăn dọc bên phải, cao bằng chữ */}
+                                    <div className="absolute right-0 top-1 h-7 w-px bg-gray-400"></div>
+                                </li>
 
-                        <div className="slider-container relative">
-                            <Slider className="movies-carousel" {...moviesSlide}>
-                                {renderUpComingMovieList()}
-                            </Slider>
+                                <li role="presentation" className="pl-5">
+                                    <button
+                                        className="text-3xl font-extrabold text-gray-800 mb-6 border-b pb-2 cursor-pointer"
+                                        id="upcoming-tab"
+                                        data-tabs-target="#upcoming"
+                                        type="button"
+                                        role="tab"
+                                    >
+                                        UPCOMING
+                                    </button>
+                                </li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+
+                {/* CONTENT */}
+                <div id="movie-tab-content">
+                    {/* NOW SHOWING */}
+                    <div id="now-showing" className="hidden py-8" role="tabpanel">
+                        <div className='container'>
+                            <div className="flex items-center mb-6">
+                                <div className="flex flex-col justify-center flex-1 gap-1">
+                                    <div className="border-t-2 border-black h-0.5"></div>
+                                    <div className="border-t-2 border-black h-0.5"></div>
+                                </div>
+                                <h2 className="text-3xl font-extrabold text-black px-4">
+                                    TOP MOVIES
+                                </h2>
+                                <div className="flex flex-col justify-center flex-1 gap-1">
+                                    <div className="border-t-2 border-black h-0.5"></div>
+                                    <div className="border-t-2 border-black h-0.5"></div>
+                                </div>
+                            </div>
+
+                            <div className="slider-container relative">
+                                <Slider className="movies-carousel" {...moviesSlide}>
+                                    {renderNowMovieList()}
+                                </Slider>
+                            </div>
+
+                            <div className="flex justify-center items-center mt-6">
+                                <NavLink
+                                    to="/movie-list"
+                                    className="relative inline-block text-red-500 font-semibold bg-white hover:bg-red-500 border hover:text-white border-red-500 hover:border-red-500 rounded-lg px-6 py-3 shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden cursor-pointer"
+                                >
+                                    SHOW MORE
+                                </NavLink>
+                            </div>
                         </div>
                     </div>
-                </section>
 
-                <section className="container mx-auto mt-12 px-4">
-                    <h2 className="text-3xl font-extrabold text-gray-800 mb-6 border-b pb-2">
+                    {/* UPCOMING */}
+                    <div id="upcoming" className="hidden py-8 bg-black" role="tabpanel">
+                        <div className='container'>
+                            <div className="flex items-center mb-6">
+                                <div className="flex flex-col justify-center flex-1 gap-1">
+                                    <div className="border-t-2 border-amber-500 h-0.5"></div>
+                                    <div className="border-t-2 border-amber-500 h-0.5"></div>
+                                </div>
+                                <h2 className="text-3xl font-extrabold text-amber-500 px-4">
+                                    COMING SOON
+                                </h2>
+                                <div className="flex flex-col justify-center flex-1 gap-1">
+                                    <div className="border-t-2 border-amber-500 h-0.5"></div>
+                                    <div className="border-t-2 border-amber-500 h-0.5"></div>
+                                </div>
+                            </div>
+
+                            <div className="slider-container relative">
+                                <Slider className="movies-carousel" {...moviesSlide}>
+                                    {renderUpComingMovieList()}
+                                </Slider>
+                            </div>
+
+                            <div className="flex justify-center items-center mt-6">
+                                <NavLink
+                                    to="/movie-list"
+                                    className="relative inline-block text-amber-500 font-semibold bg-black hover:bg-amber-500 border hover:text-black border-amber-500 hover:border-amber-500 rounded-lg px-6 py-3 shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden cursor-pointer"
+                                >
+                                    SHOW MORE
+                                </NavLink>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* NEWS */}
+            <section className="container mx-auto pb-15">
+                <div className="flex items-center mb-6 w-full relative">
+                    <div className="flex-1 h-7 bg-amber-500 relative">
+                        <div
+                            style={{
+                                position: 'absolute',
+                                right: '-20px',
+                                top: '50%',
+                                transform: 'translateY(-50%)',
+                                width: 0,
+                                height: 0,
+                                borderTop: '14px solid transparent',
+                                borderBottom: '14px solid transparent',
+                                borderLeft: '20px solid #f59e0b',
+                            }}
+                        ></div>
+                    </div>
+
+                    <h2 className="text-5xl font-extrabold text-black px-10">
                         NEWS & REVIEWS
                     </h2>
 
-                    <div className="flex flex-wrap gap-8 justify-center">
-                        {/* Tin 1 */}
-                        <div className="flex-1 min-w-[300px]">
-                            <div className="flex flex-col bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer">
-                                <div className="h-90 bg-gray-300 flex items-center justify-center overflow-hidden rounded-xl">
-                                    <img
-                                        src="./img/News/news1.jpg"
-                                        alt="Predator Badlands"
-                                        className="object-cover h-full w-full rounded-xl cursor-pointer"
-                                    />
-                                </div>
-                                <div className="p-4 flex flex-col justify-between">
-                                    <h3 className="text-md font-semibold text-gray-800 mb-2 cursor-pointer">
-                                        [Review] Predator Badlands: Sự Hồi Sinh Của Thương Hiệu Quái Thú Lừng Lẫy
-                                    </h3>
-                                    <div className="flex justify-start">
-                                        <NavLink
-                                            to="*"
-                                            className="text-red-500 font-semibold hover:text-red-700 transition duration-200 cursor-pointer"
-                                        >
-                                            Read more &gt;&gt;
-                                        </NavLink>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div className="flex-1 h-7 bg-amber-500 relative">
+                        <div
+                            style={{
+                                position: 'absolute',
+                                left: '-20px',
+                                top: '50%',
+                                transform: 'translateY(-50%)',
+                                width: 0,
+                                height: 0,
+                                borderTop: '14px solid transparent',
+                                borderBottom: '14px solid transparent',
+                                borderRight: '20px solid #f59e0b',
+                            }}
+                        ></div>
+                    </div>
+                </div>
 
-                        {/* Cột phải: Tin 2 */}
-                        <div className="flex-1 flex flex-col gap-8 min-w-[300px]">
-                            <div className="flex bg-white shadow-lg overflow-hidden rounded-xl transition-all duration-300 cursor-pointer">
-                                <div className="h-[120px] w-auto bg-gray-300 flex items-center justify-center overflow-hidden rounded-xl shrink-0">
-                                    <img
-                                        src="./img/News/news2.jpg"
-                                        alt="Truy Tìm Long Diên Hương"
-                                        className="object-cover h-full w-full rounded-xl cursor-pointer"
-                                    />
-                                </div>
-                                <div className="p-4 flex flex-col justify-between h-[100px] flex-1">
-                                    <h3 className="text-md font-semibold text-gray-800 mb-2 cursor-pointer">
-                                        [Review] Truy Tìm Long Diên Hương: Võ Thuật - Hài Dẫn Đầu Màn Ảnh Việt
-                                    </h3>
-                                    <div className="flex justify-start">
-                                        <NavLink
-                                            to="*"
-                                            className="text-red-500 font-semibold hover:text-red-700 transition duration-200 cursor-pointer"
-                                        >
-                                            Read more &gt;&gt;
-                                        </NavLink>
-                                    </div>
-                                </div>
+                <div className="flex flex-wrap gap-8 justify-center">
+                    {/* Tin 1 */}
+                    <div className="flex-1 min-w-[300px]">
+                        <div className="flex flex-col bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer">
+                            <div className="h-90 bg-gray-300 flex items-center justify-center overflow-hidden rounded-xl">
+                                <img
+                                    src="./img/News/news1.jpg"
+                                    alt="Predator Badlands"
+                                    className="object-cover h-full w-full rounded-xl cursor-pointer"
+                                />
                             </div>
-
-                            {/* Tin 3 */}
-                            <div className="flex bg-white shadow-lg overflow-hidden rounded-xl transition-all duration-300 cursor-pointer">
-                                <div className="h-[120px] w-auto bg-gray-300 flex items-center justify-center overflow-hidden rounded-xl shrink-0">
-                                    <img
-                                        src="./img/News/news3.jpg"
-                                        alt="Trái Tim Què Quặt"
-                                        className="object-cover h-full w-full rounded-xl cursor-pointer"
-                                    />
-                                </div>
-                                <div className="p-4 flex flex-col justify-between h-[100px] flex-1">
-                                    <h3 className="text-md font-semibold text-gray-800 mb-2 cursor-pointer">
-                                        [Review] Trái Tim Què Quặt: Hai Mối Tình Và Một Vụ Án Mạng
-                                    </h3>
-                                    <div className="flex justify-start">
-                                        <NavLink
-                                            to="*"
-                                            className="text-red-500 font-semibold hover:text-red-700 transition duration-200 cursor-pointer"
-                                        >
-                                            Read more &gt;&gt;
-                                        </NavLink>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Tin 4 */}
-                            <div className="flex bg-white shadow-lg overflow-hidden rounded-xl transition-all duration-300 cursor-pointer">
-                                <div className="h-[120px] w-auto bg-gray-300 flex items-center justify-center overflow-hidden rounded-xl shrink-0">
-                                    <img
-                                        src="./img/News/news4.jpg"
-                                        alt="Cục Vàng Của Ngoại"
-                                        className="object-cover h-full w-full rounded-xl cursor-pointer"
-                                    />
-                                </div>
-                                <div className="p-4 flex flex-col justify-between h-[100px] flex-1">
-                                    <h3 className="text-md font-semibold text-gray-800 mb-2 cursor-pointer">
-                                        [Review] Cục Vàng Của Ngoại: Việt Hương - Hồng Đào Lấy Nước Mắt Khán Giả
-                                    </h3>
-                                    <div className="flex justify-start">
-                                        <NavLink
-                                            to="*"
-                                            className="text-red-500 font-semibold hover:text-red-700 transition duration-200 cursor-pointer"
-                                        >
-                                            Read more &gt;&gt;
-                                        </NavLink>
-                                    </div>
+                            <div className="p-4 flex flex-col justify-between">
+                                <h3 className="text-md font-semibold text-gray-800 mb-2 cursor-pointer">
+                                    [Review] Predator Badlands: Sự Hồi Sinh Của Thương Hiệu Quái Thú Lừng Lẫy
+                                </h3>
+                                <div className="flex justify-start">
+                                    <NavLink
+                                        to="*"
+                                        className="text-red-500 font-semibold hover:text-red-700 transition duration-200 cursor-pointer"
+                                    >
+                                        Read more &gt;&gt;
+                                    </NavLink>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div className="flex justify-center items-center mt-6">
-                        <NavLink
-                            to="*"
-                            className="relative inline-block text-red-500 font-semibold bg-white hover:bg-red-500 border hover:text-white border-red-500 rounded-lg px-6 py-3 shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden cursor-pointer"
-                        >
-                            <span className="relative z-10">Browse all Articles</span>
-                            <span className="absolute inset-0 bg-red-500 opacity-0 hover:opacity-20 transition-opacity duration-300 rounded-lg"></span>
-                        </NavLink>
+                    {/* Cột phải: Tin 2 */}
+                    <div className="flex-1 flex flex-col gap-8 min-w-[300px]">
+                        <div className="flex bg-white shadow-lg overflow-hidden rounded-xl transition-all duration-300 cursor-pointer">
+                            <div className="h-[120px] w-auto bg-gray-300 flex items-center justify-center overflow-hidden rounded-xl shrink-0">
+                                <img
+                                    src="./img/News/news2.jpg"
+                                    alt="Truy Tìm Long Diên Hương"
+                                    className="object-cover h-full w-full rounded-xl cursor-pointer"
+                                />
+                            </div>
+                            <div className="p-4 flex flex-col justify-between h-[100px] flex-1">
+                                <h3 className="text-md font-semibold text-gray-800 mb-2 cursor-pointer">
+                                    [Review] Truy Tìm Long Diên Hương: Võ Thuật - Hài Dẫn Đầu Màn Ảnh Việt
+                                </h3>
+                                <div className="flex justify-start">
+                                    <NavLink
+                                        to="*"
+                                        className="text-red-500 font-semibold hover:text-red-700 transition duration-200 cursor-pointer"
+                                    >
+                                        Read more &gt;&gt;
+                                    </NavLink>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Tin 3 */}
+                        <div className="flex bg-white shadow-lg overflow-hidden rounded-xl transition-all duration-300 cursor-pointer">
+                            <div className="h-[120px] w-auto bg-gray-300 flex items-center justify-center overflow-hidden rounded-xl shrink-0">
+                                <img
+                                    src="./img/News/news3.jpg"
+                                    alt="Trái Tim Què Quặt"
+                                    className="object-cover h-full w-full rounded-xl cursor-pointer"
+                                />
+                            </div>
+                            <div className="p-4 flex flex-col justify-between h-[100px] flex-1">
+                                <h3 className="text-md font-semibold text-gray-800 mb-2 cursor-pointer">
+                                    [Review] Trái Tim Què Quặt: Hai Mối Tình Và Một Vụ Án Mạng
+                                </h3>
+                                <div className="flex justify-start">
+                                    <NavLink
+                                        to="*"
+                                        className="text-red-500 font-semibold hover:text-red-700 transition duration-200 cursor-pointer"
+                                    >
+                                        Read more &gt;&gt;
+                                    </NavLink>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Tin 4 */}
+                        <div className="flex bg-white shadow-lg overflow-hidden rounded-xl transition-all duration-300 cursor-pointer">
+                            <div className="h-[120px] w-auto bg-gray-300 flex items-center justify-center overflow-hidden rounded-xl shrink-0">
+                                <img
+                                    src="./img/News/news4.jpg"
+                                    alt="Cục Vàng Của Ngoại"
+                                    className="object-cover h-full w-full rounded-xl cursor-pointer"
+                                />
+                            </div>
+                            <div className="p-4 flex flex-col justify-between h-[100px] flex-1">
+                                <h3 className="text-md font-semibold text-gray-800 mb-2 cursor-pointer">
+                                    [Review] Cục Vàng Của Ngoại: Việt Hương - Hồng Đào Lấy Nước Mắt Khán Giả
+                                </h3>
+                                <div className="flex justify-start">
+                                    <NavLink
+                                        to="*"
+                                        className="text-red-500 font-semibold hover:text-red-700 transition duration-200 cursor-pointer"
+                                    >
+                                        Read more &gt;&gt;
+                                    </NavLink>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </section>
-            </div>
-            <Outlet />
+                </div>
+
+                <div className="flex justify-center items-center mt-6">
+                    <NavLink
+                        to="*"
+                        className="relative inline-block text-gray-500 font-semibold bg-white hover:bg-red-500 border hover:text-white border-gray-500 hover:border-red-500 rounded-lg px-6 py-3 shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden cursor-pointer"
+                    >
+                        SEE MORE NEWS
+                    </NavLink>
+                </div>
+            </section>
         </>
     )
 }

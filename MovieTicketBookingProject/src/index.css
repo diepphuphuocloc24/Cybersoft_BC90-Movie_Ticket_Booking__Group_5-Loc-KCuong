@@ -7,6 +7,7 @@ body {
 
 .container {
     width: 90%;
+    margin: 0 auto;
 }
 
 /* NAV BUTTONS */
@@ -74,7 +75,7 @@ body {
 /* DOTS */
 .slick-dots {
     position: absolute;
-    bottom: 10px !important;
+    bottom: 5px !important;
     width: 100% !important;
     text-align: center !important;
 }
@@ -86,10 +87,10 @@ body {
 
 .slick-dots li button:before {
     display: inline-block;
-    width: 20px !important;
-    height: 10px !important;
+    width: 30px !important;
+    height: 5px !important;
     background: gray !important;
-    border-radius: 4px !important;
+    border-radius: 15% !important;
     content: "" !important;
     opacity: 1 !important;
     transition: transform 0.5s ease, background 0.5s ease !important;
@@ -98,7 +99,6 @@ body {
 
 .slick-dots li.slick-active button:before {
     background: red !important;
-    transform: scaleX(2);
 }
 
 
