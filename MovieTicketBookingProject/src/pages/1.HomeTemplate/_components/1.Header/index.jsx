@@ -83,7 +83,7 @@ const HomeHeader = () => {
                         {/* BUY TICKETS */}
                         <li>
                             <NavLink
-                                to="/buy-ticket"
+                                to="*"
                                 className={({ isActive }) =>
                                     `group flex flex-col items-center transition-all duration-300 
                     ${isActive ? "text-red-400" : "text-gray-300 hover:text-red-400"}`

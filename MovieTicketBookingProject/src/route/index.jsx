@@ -2,14 +2,14 @@ import { Route } from "react-router-dom";
 
 import HomeTemplate from "../pages/1.HomeTemplate";
 import Home from "../pages/1.HomeTemplate/1.Home";
-import MovieList from "../pages/1.HomeTemplate/2.MovieDetail";
-import MovieDetail from "../pages/1.HomeTemplate/2.MovieDetail";
-import TicketBooking from "../pages/1.HomeTemplate/3.TicketBooking";
+import MovieList from "../pages/1.HomeTemplate/2.MovieList";
+import MovieDetail from "../pages/1.HomeTemplate/3.MovieDetail";
+import TicketBooking from "../pages/1.HomeTemplate/4.TicketBooking";
 
 import AdminTemplate from "../pages/2.AdminTemplate";
 import Dashboard from "../pages/2.AdminTemplate/1.Dashboard";
-import Users from "../pages/2.AdminTemplate/2.Users";
-import Movies from "../pages/2.AdminTemplate/3.Movies/index.jsx";
+import Movies from "../pages/2.AdminTemplate/2.Movies";
+import Users from "../pages/2.AdminTemplate/3.Users";
 
 import PageNotFound from "../pages/3.PageNotFound";
 
@@ -25,12 +25,10 @@ const routes = [
       {
         path: "movie-list",
         element: <MovieList />,
-        nested: [
-          {
-            path: ":maPhim",
-            element: <MovieDetail />
-          }
-        ]
+      },
+      {
+        path: "movie-detail/:maPhim",
+        element: <MovieDetail />
       },
       {
         path: "buy-ticket",

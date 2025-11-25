@@ -10,8 +10,8 @@ const HomeTemplate = () => {
             <HomeHeader />
 
             {/* LOGIN MODAL */}
-            <div id="login-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                <div class="relative p-4 w-full max-w-2xl max-h-full">
+            <div id="login-modal" tabIndex="-1" aria-hidden="true" className="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                <div className="relative p-4 w-full max-w-2xl max-h-full">
                     {/* MAIN CONTENT */}
                     <div className="max-w-md mx-auto mt-20 p-8 bg-gray-900 rounded-xl shadow-lg text-white">
                         <h2 className="text-3xl font-bold mb-6 text-center">Login</h2>
@@ -61,8 +61,8 @@ const HomeTemplate = () => {
             </div>
 
             {/* REGISTER MODAL */}
-            <div id="register-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                <div class="relative p-4 w-full max-w-2xl max-h-full">
+            <div id="register-modal" tabIndex="-1" aria-hidden="true" className="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                <div className="relative p-4 w-full max-w-2xl max-h-full">
                     {/* MAIN CONTENT */}
                     <div className="max-w-md mx-auto mt-20 p-8 bg-gray-900 rounded-xl shadow-lg text-white">
                         <h2 className="text-3xl font-bold mb-6 text-center">Register</h2>

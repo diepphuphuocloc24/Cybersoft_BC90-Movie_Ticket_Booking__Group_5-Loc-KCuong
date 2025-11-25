@@ -226,27 +226,27 @@ const TicketBooking = () => {
                 <div className="flex flex-wrap items-center gap-10 pt-10 font-medium">
                     <div className="flex items-center gap-2">
                         <i className="fi fi-ss-couch text-gray-400 text-2xl"></i>
-                        <span className='text-black text-lg ml-2'>Standard</span>
+                        <span className="text-black text-lg ml-2">Standard</span>
                     </div>
 
                     <div className="flex items-center gap-2">
                         <i className="fi fi-ss-couch text-lime-400 text-2xl"></i>
-                        <span className='text-black text-lg ml-2'>Your Seat</span>
+                        <span className="text-black text-lg ml-2">Your Seat</span>
                     </div>
 
                     <div className="flex items-center gap-2">
                         <i className="fi fi-ss-couch text-pink-600 text-2xl"></i>
-                        <span className='text-black text-lg ml-2'>Couple</span>
+                        <span className="text-black text-lg ml-2">Couple</span>
                     </div>
 
                     <div className="flex items-center gap-2">
                         <i className="fi fi-ss-couch text-orange-400 text-2xl"></i>
-                        <span className='text-black text-lg ml-2'>VIP</span>
+                        <span className="text-black text-lg ml-2">VIP</span>
                     </div>
 
                     <div className="flex items-center gap-2">
                         <i className="fi fi-ss-couch text-red-600 text-2xl"></i>
-                        <span className='text-black text-lg ml-2'>Selected</span>
+                        <span className="text-black text-lg ml-2">Selected</span>
                     </div>
                 </div>
             </div>

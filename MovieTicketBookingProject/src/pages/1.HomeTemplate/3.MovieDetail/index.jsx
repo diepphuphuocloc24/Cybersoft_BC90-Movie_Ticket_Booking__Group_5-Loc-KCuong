@@ -1,8 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useParams } from "react-router-dom";
+import { fetchMovieDetail } from './slice'
+import { useDispatch, useSelector } from 'react-redux';
 
 const MovieDetail = () => {
     const { id } = useParams();
+    const dispatch = useDispatch();
+    const state = useSelector((state) => state.movieDetailReducer);
+
+    const { movie, loading } = state
+
+    useEffect(() => {
+        dispatch(fetchMovieDetail(id));
+    }, [dispatch, id]);
+
+    if (loading) return <div>...loading</div>
 
     return (
         <div className="bg-white text-gray-800 py-10">
@@ -13,7 +25,7 @@ const MovieDetail = () => {
                     <div className="lg:w-3/5 flex flex-col">
 
                         <h2 className="text-3xl font-bold border-t-2 border-b-2 border-red-500 py-3 mb-8">
-                            PREDATOR: BADLANDS (2025)
+                            {movie?.tenPhim}
                         </h2>
 
                         <p className="bg-amber-500 text-white font-bold w-max px-4 py-1 rounded mb-10">

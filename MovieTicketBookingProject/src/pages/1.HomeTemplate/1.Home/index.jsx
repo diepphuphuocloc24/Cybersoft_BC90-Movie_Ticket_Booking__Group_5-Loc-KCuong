@@ -1,15 +1,18 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
-import axios from 'axios'
+import React, { useState, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import MovieLists from './movieList.json'
-import MovieCarousel from './movieCarousel.json'
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchMovieList } from './../2.MovieList/slice';
+import { fetchMovieCarousel } from './slice';
+import Movie from '../2.MovieList/movie';
 
 const Home = () => {
+    const [activeTab, setActiveTab] = useState('now');
+
     const carouselSlide = {
         dots: true,
         arrows: true,
@@ -62,104 +65,73 @@ const Home = () => {
         ]
     };
 
+    const dispatch = useDispatch();
+    const stateList = useSelector((state) => state.movieListReducer);
+
+    const stateCarousel = useSelector((state) => state.movieCarouselReducer);
+
+    useEffect(() => {
+        dispatch(fetchMovieList());
+    }, [dispatch]);
+
+    useEffect(() => {
+        dispatch(fetchMovieCarousel());
+    }, [dispatch]);
+
+    const { data, loading } = stateList;
+
+    const { dataCarousel } = stateCarousel;
+
+    if (loading) {
+        return (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 p-4">
+                <div className="animate-pulse space-y-3">
+                    <div className="w-full aspect-3/4 bg-gray-200 rounded-lg" />
+                    <div className="h-4 bg-gray-200 rounded w-3/4" />
+                    <div className="h-3 bg-gray-200 rounded w-1/2" />
+                </div>
+                <div className="animate-pulse space-y-3">
+                    <div className="w-full aspect-3/4 bg-gray-200 rounded-lg" />
+                    <div className="h-4 bg-gray-200 rounded w-2/3" />
+                    <div className="h-3 bg-gray-200 rounded w-1/3" />
+                </div>
+                <div className="animate-pulse space-y-3">
+                    <div className="w-full aspect-3/4 bg-gray-200 rounded-lg" />
+                    <div className="h-4 bg-gray-200 rounded w-1/2" />
+                    <div className="h-3 bg-gray-200 rounded w-3/4" />
+                </div>
+                <div className="animate-pulse space-y-3">
+                    <div className="w-full aspect-3/4 bg-gray-200 rounded-lg" />
+                    <div className="h-4 bg-gray-200 rounded w-4/5" />
+                    <div className="h-3 bg-gray-200 rounded w-2/3" />
+                </div>
+                <div className="animate-pulse space-y-3">
+                    <div className="w-full aspect-3/4 bg-gray-200 rounded-lg" />
+                    <div className="h-4 bg-gray-200 rounded w-3/5" />
+                    <div className="h-3 bg-gray-200 rounded w-1/2" />
+                </div>
+            </div>
+        );
+    }
+
     const renderNowMovieList = () => {
-        return MovieLists.content.map((movie) => {
+        return data?.map((movie) => {
             if (movie.hot && movie.dangChieu) {
-                return (
-                    <div key={movie.maPhim}>
-                        <div className="group bg-gray-900 rounded-2xl overflow-hidden shadow-lg 
-        hover:shadow-3xl transform hover:-translate-y-1 hover:scale-105 
-        transition-all duration-300 cursor-pointer p-4">
-
-                            <div className="relative rounded-xl overflow-hidden">
-                                <img
-                                    src={movie.hinhAnh}
-                                    alt={movie.tenPhim}
-                                    className="h-100 w-full object-cover"
-                                />
-
-                                <span className="absolute top-3 left-3 bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-lg shadow 
-                opacity-100 group-hover:opacity-0 transition-opacity duration-500">
-                                    C16
-                                </span>
-
-                                <div className="absolute bottom-3 right-3 bg-black/70 text-white text-sm px-2 py-1 rounded-lg flex items-center gap-1 
-                opacity-100 group-hover:opacity-0 transition-opacity duration-500">
-                                    <i className="fa-solid fa-star text-amber-400"></i>
-                                    <span>{movie.danhGia}</span>
-                                </div>
-                            </div>
-
-                            <div className="pt-4 flex flex-col justify-between h-[120px]">
-                                <h3 className="text-lg font-bold text-white leading-tight line-clamp-2">
-                                    {movie.tenPhim}
-                                </h3>
-
-                                <NavLink
-                                    to={`/movie-list/${movie.maPhim}`}
-                                    className="block w-full py-2 rounded-2xl font-semibold text-white bg-red-500 
-             hover:bg-red-600 shadow-md hover:shadow-lg transition-all duration-300 text-center"
-                                >
-                                    Buy Tickets
-                                </NavLink>
-                            </div>
-                        </div>
-                    </div>
-                );
+                return <Movie key={movie.maPhim} propMovie={movie} />;
             }
         });
     };
 
     const renderUpComingMovieList = () => {
-        return MovieLists.content.map((movie) => {
-            if (movie.hot && !movie.dangChieu) {
-                return (
-                    <div key={movie.maPhim}>
-                        <div className="group bg-gray-900 rounded-2xl overflow-hidden shadow-lg 
-        hover:shadow-3xl transform hover:-translate-y-1 hover:scale-105 
-        transition-all duration-300 cursor-pointer p-4">
-
-                            <div className="relative rounded-xl overflow-hidden">
-                                <img
-                                    src={movie.hinhAnh}
-                                    alt={movie.tenPhim}
-                                    className="h-100 w-full object-cover"
-                                />
-
-                                <span className="absolute top-3 left-3 bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-lg shadow 
-                opacity-100 group-hover:opacity-0 transition-opacity duration-500">
-                                    C16
-                                </span>
-
-                                <div className="absolute bottom-3 right-3 bg-black/70 text-white text-sm px-2 py-1 rounded-lg flex items-center gap-1 
-                opacity-100 group-hover:opacity-0 transition-opacity duration-500">
-                                    <i className="fa-solid fa-star text-amber-400"></i>
-                                    <span>{movie.danhGia}</span>
-                                </div>
-                            </div>
-
-                            <div className="pt-4 flex flex-col justify-between h-[120px]">
-                                <h3 className="text-lg font-bold text-white leading-tight line-clamp-2">
-                                    {movie.tenPhim}
-                                </h3>
-
-                                <NavLink
-                                    to={`/movie-list/${movie.maPhim}`}
-                                    className="block w-full py-2 rounded-2xl font-semibold text-white bg-red-500 
-             hover:bg-red-600 shadow-md hover:shadow-lg transition-all duration-300 text-center"
-                                >
-                                    Movie Detail
-                                </NavLink>
-                            </div>
-                        </div>
-                    </div>
-                );
+        return data?.map((movie) => {
+            if (!movie.dangChieu) {
+                return <Movie key={movie.maPhim} propMovie={movie} />;
             }
         });
     };
 
     const renderMovieCarousel = () => {
-        return MovieCarousel.content.map((movie) => {
+        return dataCarousel?.map((movie) => {
             return (
                 <div key={movie.maBanner} className="item relative group">
                     <img
@@ -172,7 +144,7 @@ const Home = () => {
                         className="
     absolute right-[43%] bottom-20
     flex items-center justify-center gap-3
-    bg-gradient-to-r from-blue-500 to-purple-600
+    bg-linear-to-r from-blue-500 to-purple-600
     text-white px-6 py-3 h-10
     rounded-full font-semibold shadow-lg
     opacity-0 translate-y-8 
@@ -216,7 +188,7 @@ const Home = () => {
                             className="
     absolute right-[43%] bottom-20
     flex items-center justify-center gap-3
-    bg-gradient-to-r from-blue-500 to-purple-600
+    bg-linear-to-r from-blue-500 to-purple-600
     text-white px-6 py-3 h-10
     rounded-full font-semibold shadow-lg
     opacity-0 translate-y-8 
@@ -246,7 +218,7 @@ const Home = () => {
                             className="
     absolute right-[43%] bottom-20
     flex items-center justify-center gap-3
-    bg-gradient-to-r from-blue-500 to-purple-600
+    bg-linear-to-r from-blue-500 to-purple-600
     text-white px-6 py-3 h-10
     rounded-full font-semibold shadow-lg
     opacity-0 translate-y-8 
@@ -274,7 +246,7 @@ const Home = () => {
                             className="
     absolute right-[43%] bottom-20
     flex items-center justify-center gap-3
-    bg-gradient-to-r from-blue-500 to-purple-600
+    bg-linear-to-r from-blue-500 to-purple-600
     text-white px-6 py-3 h-10
     rounded-full font-semibold shadow-lg
     opacity-0 translate-y-8 
@@ -302,7 +274,7 @@ const Home = () => {
                             className="
     absolute right-[43%] bottom-20
     flex items-center justify-center gap-3
-    bg-gradient-to-r from-blue-500 to-purple-600
+    bg-linear-to-r from-blue-500 to-purple-600
     text-white px-6 py-3 h-10
     rounded-full font-semibold shadow-lg
     opacity-0 translate-y-8 
@@ -330,7 +302,7 @@ const Home = () => {
                             className="
     absolute right-[43%] bottom-20
     flex items-center justify-center gap-3
-    bg-gradient-to-r from-blue-500 to-purple-600
+    bg-linear-to-r from-blue-500 to-purple-600
     text-white px-6 py-3 h-10
     rounded-full font-semibold shadow-lg
     opacity-0 translate-y-8 
@@ -358,7 +330,7 @@ const Home = () => {
                             className="
     absolute right-[43%] bottom-20
     flex items-center justify-center gap-3
-    bg-gradient-to-r from-blue-500 to-purple-600
+    bg-linear-to-r from-blue-500 to-purple-600
     text-white px-6 py-3 h-10
     rounded-full font-semibold shadow-lg
     opacity-0 translate-y-8 
@@ -376,24 +348,23 @@ const Home = () => {
                 </Slider>
             </div>
 
-            {/* DEAL */}
+            {/* DEAL BANNER */}
             <div className="transition-all duration-300 pb-15">
                 <div className="container mx-auto">
                     <NavLink to="/now-showing">
                         <img
                             src="./img/deal1.jpg"
-                            className="w-full bject-cover rounded-xl"
+                            className="w-full object-cover rounded-xl"
                             alt="deal"
                         />
                     </NavLink>
                 </div>
             </div>
 
-            {/* TAB MOVIES */}
+            {/* MOVIES TABS */}
             <div className="pb-15">
-                {/* Tabs */}
-                <div className='container relative'>
-                    <div className='absolute top-0 left-0'>
+                <div className="container relative">
+                    <div className="absolute top-0 left-0">
                         <div className="relative inline px-1 py-10 rounded-l-lg text-white text-xl font-medium bg-black">
                             SHOW ME
                             <span
@@ -409,57 +380,37 @@ const Home = () => {
                         </div>
                     </div>
 
-                    <div>
-                        <ul className="flex justify-center text-lg font-bold" id="movie-tab"
-                            data-tabs-toggle="#movie-tab-content"
-                            data-tabs-active-classes="text-red-500 border-b-2 border-red-600"
-                            data-tabs-inactive-classes="text-black border-b-2 border-transparent hover:text-red-600"
-                            role="tablist">
-
-                            <ul className="flex items-center">
-                                <li role="presentation" className="pr-5 relative">
-                                    <button
-                                        className="text-3xl font-extrabold text-gray-800 mb-6 border-b pb-2 cursor-pointer"
-                                        id="now-tab"
-                                        data-tabs-target="#now-showing"
-                                        type="button"
-                                        role="tab"
-                                    >
-                                        NOW SHOWING
-                                    </button>
-                                    {/* Đường ngăn dọc bên phải, cao bằng chữ */}
-                                    <div className="absolute right-0 top-1 h-7 w-px bg-gray-400"></div>
-                                </li>
-
-                                <li role="presentation" className="pl-5">
-                                    <button
-                                        className="text-3xl font-extrabold text-gray-800 mb-6 border-b pb-2 cursor-pointer"
-                                        id="upcoming-tab"
-                                        data-tabs-target="#upcoming"
-                                        type="button"
-                                        role="tab"
-                                    >
-                                        UPCOMING
-                                    </button>
-                                </li>
-                            </ul>
-                        </ul>
+                    <div className="flex justify-center text-lg font-bold mt-4">
+                        <button
+                            className={`${activeTab === 'now'
+                                ? 'text-red-500 border-b-2 border-red-600 text-3xl font-extrabold mb-6 pb-2'
+                                : 'text-gray-800 text-3xl font-extrabold mb-6 pb-2'
+                                } hover:text-red-600 transition-colors duration-200 cursor-pointer`}
+                            onClick={() => setActiveTab('now')}
+                        >
+                            NOW SHOWING
+                        </button>
+                        <button
+                            className={`${activeTab === 'upcoming'
+                                ? 'text-red-500 border-b-2 border-red-600 text-3xl font-extrabold mb-6 pb-2 ml-5'
+                                : 'text-gray-800 text-3xl font-extrabold mb-6 pb-2 ml-5'
+                                } hover:text-red-600 transition-colors duration-200 cursor-pointer`}
+                            onClick={() => setActiveTab('upcoming')}
+                        >
+                            UPCOMING
+                        </button>
                     </div>
                 </div>
 
-                {/* CONTENT */}
-                <div id="movie-tab-content">
-                    {/* NOW SHOWING */}
-                    <div id="now-showing" className="hidden py-8" role="tabpanel">
+                {activeTab === 'now' && (
+                    <div className="py-8">
                         <div className='container'>
                             <div className="flex items-center mb-6">
                                 <div className="flex flex-col justify-center flex-1 gap-1">
                                     <div className="border-t-2 border-black h-0.5"></div>
                                     <div className="border-t-2 border-black h-0.5"></div>
                                 </div>
-                                <h2 className="text-3xl font-extrabold text-black px-4">
-                                    TOP MOVIES
-                                </h2>
+                                <h2 className="text-3xl font-extrabold text-black px-4">TOP MOVIES</h2>
                                 <div className="flex flex-col justify-center flex-1 gap-1">
                                     <div className="border-t-2 border-black h-0.5"></div>
                                     <div className="border-t-2 border-black h-0.5"></div>
@@ -482,18 +433,17 @@ const Home = () => {
                             </div>
                         </div>
                     </div>
+                )}
 
-                    {/* UPCOMING */}
-                    <div id="upcoming" className="hidden py-8 bg-black" role="tabpanel">
+                {activeTab === 'upcoming' && (
+                    <div className="py-8 bg-black">
                         <div className='container'>
                             <div className="flex items-center mb-6">
                                 <div className="flex flex-col justify-center flex-1 gap-1">
                                     <div className="border-t-2 border-amber-500 h-0.5"></div>
                                     <div className="border-t-2 border-amber-500 h-0.5"></div>
                                 </div>
-                                <h2 className="text-3xl font-extrabold text-amber-500 px-4">
-                                    COMING SOON
-                                </h2>
+                                <h2 className="text-3xl font-extrabold text-amber-500 px-4">COMING SOON</h2>
                                 <div className="flex flex-col justify-center flex-1 gap-1">
                                     <div className="border-t-2 border-amber-500 h-0.5"></div>
                                     <div className="border-t-2 border-amber-500 h-0.5"></div>
@@ -516,7 +466,7 @@ const Home = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                )}
             </div>
 
             {/* NEWS */}
@@ -538,9 +488,7 @@ const Home = () => {
                         ></div>
                     </div>
 
-                    <h2 className="text-5xl font-extrabold text-black px-10">
-                        NEWS & REVIEWS
-                    </h2>
+                    <h2 className="text-5xl font-extrabold text-black px-10">NEWS & REVIEWS</h2>
 
                     <div className="flex-1 h-7 bg-amber-500 relative">
                         <div
@@ -560,25 +508,17 @@ const Home = () => {
                 </div>
 
                 <div className="flex flex-wrap gap-8 justify-center">
-                    {/* Tin 1 */}
                     <div className="flex-1 min-w-[300px]">
                         <div className="flex flex-col bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer">
                             <div className="h-90 bg-gray-300 flex items-center justify-center overflow-hidden rounded-xl">
-                                <img
-                                    src="./img/News/news1.jpg"
-                                    alt="Predator Badlands"
-                                    className="object-cover h-full w-full rounded-xl cursor-pointer"
-                                />
+                                <img src="./img/News/news1.jpg" alt="Predator Badlands" className="object-cover h-full w-full rounded-xl cursor-pointer" />
                             </div>
                             <div className="p-4 flex flex-col justify-between">
                                 <h3 className="text-md font-semibold text-gray-800 mb-2 cursor-pointer">
                                     [Review] Predator Badlands: Sự Hồi Sinh Của Thương Hiệu Quái Thú Lừng Lẫy
                                 </h3>
                                 <div className="flex justify-start">
-                                    <NavLink
-                                        to="*"
-                                        className="text-red-500 font-semibold hover:text-red-700 transition duration-200 cursor-pointer"
-                                    >
+                                    <NavLink to="*" className="text-red-500 font-semibold hover:text-red-700 transition duration-200 cursor-pointer">
                                         Read more &gt;&gt;
                                     </NavLink>
                                 </div>
@@ -586,73 +526,49 @@ const Home = () => {
                         </div>
                     </div>
 
-                    {/* Cột phải: Tin 2 */}
                     <div className="flex-1 flex flex-col gap-8 min-w-[300px]">
                         <div className="flex bg-white shadow-lg overflow-hidden rounded-xl transition-all duration-300 cursor-pointer">
                             <div className="h-[120px] w-auto bg-gray-300 flex items-center justify-center overflow-hidden rounded-xl shrink-0">
-                                <img
-                                    src="./img/News/news2.jpg"
-                                    alt="Truy Tìm Long Diên Hương"
-                                    className="object-cover h-full w-full rounded-xl cursor-pointer"
-                                />
+                                <img src="./img/News/news2.jpg" alt="Truy Tìm Long Diên Hương" className="object-cover h-full w-full rounded-xl cursor-pointer" />
                             </div>
                             <div className="p-4 flex flex-col justify-between h-[100px] flex-1">
                                 <h3 className="text-md font-semibold text-gray-800 mb-2 cursor-pointer">
                                     [Review] Truy Tìm Long Diên Hương: Võ Thuật - Hài Dẫn Đầu Màn Ảnh Việt
                                 </h3>
                                 <div className="flex justify-start">
-                                    <NavLink
-                                        to="*"
-                                        className="text-red-500 font-semibold hover:text-red-700 transition duration-200 cursor-pointer"
-                                    >
+                                    <NavLink to="*" className="text-red-500 font-semibold hover:text-red-700 transition duration-200 cursor-pointer">
                                         Read more &gt;&gt;
                                     </NavLink>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Tin 3 */}
                         <div className="flex bg-white shadow-lg overflow-hidden rounded-xl transition-all duration-300 cursor-pointer">
                             <div className="h-[120px] w-auto bg-gray-300 flex items-center justify-center overflow-hidden rounded-xl shrink-0">
-                                <img
-                                    src="./img/News/news3.jpg"
-                                    alt="Trái Tim Què Quặt"
-                                    className="object-cover h-full w-full rounded-xl cursor-pointer"
-                                />
+                                <img src="./img/News/news3.jpg" alt="Trái Tim Què Quặt" className="object-cover h-full w-full rounded-xl cursor-pointer" />
                             </div>
                             <div className="p-4 flex flex-col justify-between h-[100px] flex-1">
                                 <h3 className="text-md font-semibold text-gray-800 mb-2 cursor-pointer">
                                     [Review] Trái Tim Què Quặt: Hai Mối Tình Và Một Vụ Án Mạng
                                 </h3>
                                 <div className="flex justify-start">
-                                    <NavLink
-                                        to="*"
-                                        className="text-red-500 font-semibold hover:text-red-700 transition duration-200 cursor-pointer"
-                                    >
+                                    <NavLink to="*" className="text-red-500 font-semibold hover:text-red-700 transition duration-200 cursor-pointer">
                                         Read more &gt;&gt;
                                     </NavLink>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Tin 4 */}
                         <div className="flex bg-white shadow-lg overflow-hidden rounded-xl transition-all duration-300 cursor-pointer">
                             <div className="h-[120px] w-auto bg-gray-300 flex items-center justify-center overflow-hidden rounded-xl shrink-0">
-                                <img
-                                    src="./img/News/news4.jpg"
-                                    alt="Cục Vàng Của Ngoại"
-                                    className="object-cover h-full w-full rounded-xl cursor-pointer"
-                                />
+                                <img src="./img/News/news4.jpg" alt="Cục Vàng Của Ngoại" className="object-cover h-full w-full rounded-xl cursor-pointer" />
                             </div>
                             <div className="p-4 flex flex-col justify-between h-[100px] flex-1">
                                 <h3 className="text-md font-semibold text-gray-800 mb-2 cursor-pointer">
                                     [Review] Cục Vàng Của Ngoại: Việt Hương - Hồng Đào Lấy Nước Mắt Khán Giả
                                 </h3>
                                 <div className="flex justify-start">
-                                    <NavLink
-                                        to="*"
-                                        className="text-red-500 font-semibold hover:text-red-700 transition duration-200 cursor-pointer"
-                                    >
+                                    <NavLink to="*" className="text-red-500 font-semibold hover:text-red-700 transition duration-200 cursor-pointer">
                                         Read more &gt;&gt;
                                     </NavLink>
                                 </div>
@@ -671,7 +587,7 @@ const Home = () => {
                 </div>
             </section>
         </>
-    )
-}
+    );
+};
 
-export default Home
+export default Home;
