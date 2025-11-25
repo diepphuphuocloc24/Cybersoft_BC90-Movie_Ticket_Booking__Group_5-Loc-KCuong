@@ -25,7 +25,7 @@ const AdminTemplate = () => {
                         </div>
 
                         {/* Search Button */}
-                        <button className="px-5 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-full hover:from-blue-600 hover:to-blue-700 transition duration-300 shadow-md">
+                        <button className="px-5 py-2 bg-linear-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-full hover:from-blue-600 hover:to-blue-700 transition duration-300 shadow-md">
                             Search
                         </button>
                     </div>
@@ -71,13 +71,13 @@ const AdminTemplate = () => {
                             {/* Dropdown Menu */}
                             <div
                                 id="dropdown"
-                                className="absolute right-0 !mt-3 w-48 bg-white rounded-2xl shadow-xl border border-gray-100 ring-1 ring-gray-200 hidden z-50"
+                                className="absolute right-0 mt-3! w-48 bg-white rounded-2xl shadow-xl border border-gray-100 ring-1 ring-gray-200 hidden z-50"
                             >
                                 <ul className="py-2 text-sm text-gray-700 font-medium">
                                     <li>
                                         <a
                                             href="#"
-                                            className="flex items-center w-full px-4 py-2 hover:bg-gradient-to-r hover:from-blue-50 hover:to-blue-100
+                                            className="flex items-center w-full px-4 py-2 hover:bg-linear-to-r hover:from-blue-50 hover:to-blue-100
                            hover:text-blue-600 rounded-lg transition-all duration-200"
                                         >
                                             Logout

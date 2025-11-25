@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchMovieList } from './../../1.HomeTemplate/2.MovieList/slice'
 import Movie from './movie'
 
 const Movies = () => {
+    const [showModal, setShowModal] = useState(false);
+
     const dispatch = useDispatch()
 
     const state = useSelector((state) => state.movieListReducer)
@@ -78,13 +80,151 @@ const Movies = () => {
                     </button>
                 </div>
 
-                <button className="w-full md:w-auto bg-linear-to-r from-pink-500 to-purple-500 
+                <button
+                    className="w-full md:w-auto bg-linear-to-r from-pink-500 to-purple-500 
     hover:from-pink-600 hover:to-purple-600 text-white font-semibold 
     py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-500 
-    focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2 cursor-pointer">
+    focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2 cursor-pointer"
+                    onClick={() => setShowModal(true)}>
                     Add Movie
                 </button>
             </div>
+
+            {showModal && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+                    <div className="bg-white rounded-2xl shadow-xl w-full max-w-4xl relative">
+
+                        {/* HEADER */}
+                        <div className="flex justify-between items-center p-6 border-b border-gray-200">
+                            <h3 className="text-2xl font-bold text-gray-800 tracking-wide">
+                                Add New Movie
+                            </h3>
+                            <button
+                                className="text-gray-500 hover:text-red-500 transition-colors duration-200 cursor-pointer"
+                                type="button"
+                                onClick={() => setShowModal(false)}
+                            >
+                                <i className="fa-solid fa-x text-lg" />
+                            </button>
+                        </div>
+
+                        {/* BODY */}
+                        <div className="p-6 space-y-6">
+                            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+
+                                <div className="md:col-span-2">
+                                    <label className="block text-gray-700 mb-2" htmlFor="tenPhim">Movie Name</label>
+                                    <input
+                                        id="tenPhim"
+                                        type="text"
+                                        placeholder="Enter movie name"
+                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 cursor-pointer"
+                                    />
+                                </div>
+
+                                <div className="md:col-span-2">
+                                    <label className="block text-gray-700 mb-2" htmlFor="trailer">Trailer URL</label>
+                                    <input
+                                        id="trailer"
+                                        type="text"
+                                        placeholder="Enter trailer URL"
+                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 cursor-pointer"
+                                    />
+                                </div>
+
+                                <div className="md:col-span-2">
+                                    <label className="block text-gray-700 mb-2" htmlFor="hinhAnh">Image URL</label>
+                                    <input
+                                        id="hinhAnh"
+                                        type="text"
+                                        placeholder="Enter image URL"
+                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 cursor-pointer"
+                                    />
+                                </div>
+
+                                <div className="md:col-span-2">
+                                    <label className="block text-gray-700 mb-2" htmlFor="ngayKhoiChieu">Release Date</label>
+                                    <input
+                                        id="ngayKhoiChieu"
+                                        type="date"
+                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 cursor-pointer"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className="block text-gray-700 mb-2" htmlFor="danhGia">Rating</label>
+                                    <input
+                                        id="danhGia"
+                                        type="number"
+                                        min={0}
+                                        max={10}
+                                        placeholder="Enter rating"
+                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 cursor-pointer"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className="block text-gray-700 mb-2" htmlFor="dangChieu">Currently Showing</label>
+                                    <select
+                                        id="dangChieu"
+                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 cursor-pointer"
+                                    >
+                                        <option value="true">Yes</option>
+                                        <option value="false">No</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label className="block text-gray-700 mb-2" htmlFor="sapChieu">Upcoming</label>
+                                    <select
+                                        id="sapChieu"
+                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 cursor-pointer"
+                                    >
+                                        <option value="true">Yes</option>
+                                        <option value="false">No</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label className="block text-gray-700 mb-2" htmlFor="hot">Featured</label>
+                                    <select
+                                        id="hot"
+                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 cursor-pointer"
+                                    >
+                                        <option value="true">Yes</option>
+                                        <option value="false">No</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div>
+                                <label className="block text-gray-700 mb-2" htmlFor="moTa">Description</label>
+                                <textarea
+                                    id="moTa"
+                                    placeholder="Enter movie description"
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 cursor-pointer"
+                                    defaultValue={""}
+                                />
+                            </div>
+                        </div>
+
+                        {/* FOOTER */}
+                        <div className="flex justify-end gap-3 p-6 border-t border-gray-200">
+                            <button
+                                className="px-5 py-2 rounded-lg bg-gray-300 hover:bg-gray-400 transition cursor-pointer"
+                                onClick={() => setShowModal(false)}
+                            >
+                                Close
+                            </button>
+                            <button className="px-5 py-2 rounded-lg bg-red-500 text-white hover:bg-rose-600 transition-all duration-300 cursor-pointer">
+                                Add Movie
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            )}
 
             <div className="space-y-6">
                 <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">

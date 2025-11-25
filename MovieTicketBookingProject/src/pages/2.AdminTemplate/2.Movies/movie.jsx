@@ -37,7 +37,7 @@ const Movie = ({ propMovie }) => {
                     Delete
                 </button>
                 <button className="text-green-600 hover:text-green-800 p-1 rounded-full cursor-pointer bg-gray-100 hover:bg-green-50 transition">
-                    <i class="fa-regular fa-calendar"></i>
+                    <i className="fa-regular fa-calendar"></i>
                 </button>
             </td>
         </tr>

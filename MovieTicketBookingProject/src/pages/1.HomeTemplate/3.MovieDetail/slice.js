@@ -3,7 +3,7 @@ import axios from "axios";
 
 const initialState = {
   loading: false,
-  data: null,
+  dataDetail: null,
   error: null,
 };
 
@@ -38,7 +38,7 @@ const movieDetailSlice = createSlice({
 
     builder.addCase(fetchMovieDetail.fulfilled, (state, action) => {
       state.loading = false;
-      state.data = action.payload;
+      state.dataDetail = action.payload;
     });
 
     builder.addCase(fetchMovieDetail.rejected, (state, action) => {
