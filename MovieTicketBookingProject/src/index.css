@@ -10,6 +10,18 @@ body {
     margin: 0 auto;
 }
 
+/* HEADER */
+.logo-img {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
+    transition: opacity 0.3s ease;
+}
+
+.logo-img:hover {
+    opacity: 0.9;
+}
+
 /* NAV BUTTONS */
 .slick-prev,
 .slick-next {
