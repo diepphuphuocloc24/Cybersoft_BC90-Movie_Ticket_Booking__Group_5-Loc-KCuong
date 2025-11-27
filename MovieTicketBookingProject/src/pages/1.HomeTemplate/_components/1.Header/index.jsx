@@ -5,15 +5,17 @@ const HomeHeader = () => {
     return (
         <header className="bg-black text-white shadow-lg shadow-red-900/10 fixed z-10 w-full py-6">
             <div className="container mx-auto flex justify-between items-center ">
-                <NavLink to="/"><img
-                    src="./img/logo.png"
-                    alt="FielDiamondCine Logo"
-                    className="h-12 w-auto object-contain hover:opacity-90 transition"
-                /></NavLink>
+                {/* LOGO */}
+                <NavLink to="/">
+                    <img
+                        src="./img/logo.png"
+                        alt="FielDiamondCine Logo"
+                        className="logo-img"
+                    />
+                </NavLink>
 
                 <nav>
                     <ul className="flex items-center gap-10">
-
                         {/* HOME */}
                         <li>
                             <NavLink
@@ -91,7 +93,7 @@ const HomeHeader = () => {
                             >
                                 <div>
                                     <i className="fi fi-rs-ticket text-2xl text-transparent bg-clip-text 
-           bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500"></i>
+           bg-linear-to-r from-yellow-300 via-yellow-400 to-yellow-500"></i>
                                 </div>
                                 <span className="text-sm mt-1 group-hover:text-red-400">Buy Tickets</span>
                                 <span
@@ -124,7 +126,6 @@ const HomeHeader = () => {
                                 ></span>
                             </NavLink>
                         </li>
-
                     </ul>
                 </nav>
 

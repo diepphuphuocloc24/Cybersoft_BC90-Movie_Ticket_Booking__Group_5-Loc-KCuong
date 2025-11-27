@@ -1,18 +1,37 @@
-import React, { useEffect } from 'react'
-import { useParams } from "react-router-dom";
-import { fetchMovieDetail } from './slice'
+import React, { useEffect, useState } from 'react';
+import { Link, useParams } from "react-router-dom";
+import { fetchMovieDetail, fetchCinemaList, fetchCinema, fetchTimeShow } from './slice';
 import { useDispatch, useSelector } from 'react-redux';
+import ListCinema from './listcinema';
+import Cinema from './cinema';
+import TimeShow from './timeShow';
 
 const MovieDetail = () => {
     const { maPhim } = useParams();
+
     const dispatch = useDispatch();
+
     const state = useSelector((state) => state.movieDetailReducer);
 
-    const { dataDetail, loading } = state
+    const [selectedMaHeThongRap, setSelectedMaHeThongRap] = useState(null);
+
+    const { dataDetail, dataCinemaList, dataCinema, dataTimeShow, loading } = state;
 
     useEffect(() => {
         dispatch(fetchMovieDetail(maPhim));
+        dispatch(fetchCinemaList());
     }, [dispatch, maPhim]);
+
+    const handleSelectCinemaSystem = (maHeThongRap) => {
+        setSelectedMaHeThongRap(maHeThongRap);
+        dispatch(fetchCinema(maHeThongRap));
+        dispatch(fetchTimeShow(maHeThongRap));
+    };
+
+    useEffect(() => {
+        dispatch(fetchCinema(selectedMaHeThongRap));
+        dispatch(fetchTimeShow(selectedMaHeThongRap));
+    }, [dispatch, selectedMaHeThongRap]);
 
     if (loading) {
         return (
@@ -37,9 +56,42 @@ const MovieDetail = () => {
         return url.replace("youtu.be/", "www.youtube.com/embed/");
     };
 
+    const renderListCinema = () => {
+        return dataCinemaList?.map((cinema) => {
+            return <ListCinema key={cinema.maHeThongRap}
+                propCinema={cinema}
+                onSelectedCinema={handleSelectCinemaSystem}
+            />
+        })
+    }
+
+    const renderEachCinemas = () => {
+        return dataCinema?.map((cinema) => (
+            <Cinema key={cinema.maCumRap} propEachCinema={cinema} />
+        ));
+    };
+
+    const renderTimeShow = () => {
+        return dataTimeShow?.map((heThongRap) => {
+            return heThongRap.lstCumRap.map((cumRap) => {
+                return cumRap.danhSachPhim.map((phim) => {
+                    return phim.lstLichChieuTheoPhim.map((timeShow) => {
+                        return (
+                            <TimeShow
+                                key={timeShow.maLichChieu}
+                                propTimeShow={timeShow}
+                            />
+                        );
+                    });
+                });
+            });
+        });
+    };
+
     return (
         <div className="bg-white text-gray-800 py-10">
             <div className="container mx-auto px-4">
+                {/* DETAIL INFORMATION */}
                 <div className="flex flex-col lg:flex-row gap-15">
 
                     {/* LEFT CONTENT */}
@@ -75,12 +127,14 @@ const MovieDetail = () => {
 
                         <div className="mb-4">
                             <h3 className="text-xl text-red-600 font-semibold mb-3 tracking-wide uppercase">Movie Trailer</h3>
-                            <iframe
-                                className="w-full md:h-80 rounded"
-                                src={toEmbed(dataDetail?.trailer)}
-                                title="Trailer"
-                                allowFullScreen
-                            ></iframe>
+                            {dataDetail?.trailer && (
+                                <iframe
+                                    className="w-full md:h-80 rounded"
+                                    src={toEmbed(dataDetail.trailer)}
+                                    title="Trailer"
+                                    allowFullScreen
+                                ></iframe>
+                            )}
                         </div>
                     </div>
 
@@ -100,7 +154,7 @@ const MovieDetail = () => {
                             <div className="flex flex-col text-center">
                                 <h4 className="text-red-600 font-semibold">RATING</h4>
                                 <p className="text-sm text-gray-700 flex items-center gap-1">
-                                    <i class="fa-solid fa-star text-yellow-500"></i>
+                                    <i className="fa-solid fa-star text-yellow-500"></i>
                                     {dataDetail?.danhGia}
                                 </p>
 
@@ -114,48 +168,26 @@ const MovieDetail = () => {
                 </div>
 
                 {/* SHOWTIME TABLE */}
-                <div className="mt-12 overflow-x-auto space-y-10">
-                    <h3 className="text-xl text-red-600 font-semibold mb-3 tracking-wide uppercase">Times & Tickets</h3>
+                <div className="mt-12 space-y-6">
+                    <h3 className="text-xl text-red-600 font-semibold mb-3 tracking-wide uppercase">
+                        Times & Tickets
+                    </h3>
 
-                    <table className="w-full border-collapse shadow-xl rounded-lg overflow-hidden">
-                        <thead>
-                            <tr className="text-sm text-white">
-                                <th className="px-4 py-3 bg-blue-700 border-r border-white font-bold text-lg">GOLD HALL 1</th>
-                                <th className="px-4 py-3 bg-red-500">MONDAY</th>
-                                <th className="px-4 py-3 bg-gray-800">TUESDAY</th>
-                                <th className="px-4 py-3 bg-gray-800">WEDNESDAY</th>
-                                <th className="px-4 py-3 bg-gray-800">THURSDAY</th>
-                                <th className="px-4 py-3 bg-gray-800">FRIDAY</th>
-                                <th className="px-4 py-3 bg-gray-800">SATURDAY</th>
-                                <th className="px-4 py-3 bg-gray-800">SUNDAY</th>
-                            </tr>
-                        </thead>
+                    <div className='flex flex-col'>
+                        <label className="block mb-2 text-lg font-semibold text-gray-black dark:text-gray-100">
+                            Cinema:
+                        </label>
 
-                        <tbody>
-                            <tr className="border-t border-white">
-                                <td className="px-4 py-4 bg-gray-900 text-white font-semibold border-r border-white">
-                                    Predator: Badlands (2025)
-                                </td>
+                        <div className="flex justify-start items-center gap-5">
+                            {renderListCinema()}
+                        </div>
+                    </div>
 
-                                <td colSpan={7} className="px-4 py-4 bg-gray-900">
-                                    <div className="flex items-center gap-4">
-                                        <button className="px-4 py-2 rounded-lg bg-gray-100 text-black hover:bg-amber-500 transition-all duration-300 cursor-pointer">
-                                            10:50
-                                        </button>
-                                        <button className="px-4 py-2 rounded-lg bg-gray-100 text-black hover:bg-amber-500 transition-all duration-300 cursor-pointer">
-                                            13:25
-                                        </button>
-                                        <button className="px-4 py-2 rounded-lg bg-gray-100 text-black hover:bg-amber-500 transition-all duration-300 cursor-pointer">
-                                            19:00
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    {renderEachCinemas()}
+                    {renderTimeShow()}
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     )
 }
 
