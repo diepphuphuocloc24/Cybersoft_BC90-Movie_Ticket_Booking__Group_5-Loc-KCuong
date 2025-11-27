@@ -15,6 +15,8 @@ const MovieDetail = () => {
 
     const [selectedMaHeThongRap, setSelectedMaHeThongRap] = useState(null);
 
+
+
     const { dataDetail, dataCinemaList, dataCinema, dataTimeShow, loading } = state;
 
     useEffect(() => {
@@ -65,27 +67,35 @@ const MovieDetail = () => {
         })
     }
 
-    const renderEachCinemas = () => {
-        return dataCinema?.map((cinema) => (
-            <Cinema key={cinema.maCumRap} propEachCinema={cinema} />
-        ));
-    };
-
-    const renderTimeShow = () => {
+    const renderTimeShow = (tenRap) => {
         return dataTimeShow?.map((heThongRap) => {
             return heThongRap.lstCumRap.map((cumRap) => {
                 return cumRap.danhSachPhim.map((phim) => {
-                    return phim.lstLichChieuTheoPhim.map((timeShow) => {
-                        return (
-                            <TimeShow
-                                key={timeShow.maLichChieu}
-                                propTimeShow={timeShow}
-                            />
-                        );
-                    });
+                    return phim.lstLichChieuTheoPhim
+                        .filter((timeShow) => {
+                            return timeShow.tenRap === tenRap;
+                        })
+                        .map((timeShow) => {
+                            return (
+                                <TimeShow
+                                    key={timeShow.maLichChieu}
+                                    propTimeShow={timeShow}
+                                />
+                            );
+                        });
                 });
             });
         });
+    };
+
+    const renderEachCinemas = () => {
+        return dataCinema?.map(cinema => (
+            <Cinema
+                key={cinema.maCumRap}
+                propEachCinema={cinema}
+                onSelectEachCinema={renderTimeShow}
+            />
+        ));
     };
 
     return (
@@ -184,7 +194,6 @@ const MovieDetail = () => {
                     </div>
 
                     {renderEachCinemas()}
-                    {renderTimeShow()}
                 </div>
             </div >
         </div >

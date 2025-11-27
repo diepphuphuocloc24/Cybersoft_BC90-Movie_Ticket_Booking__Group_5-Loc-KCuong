@@ -2,18 +2,18 @@ import React, { useState } from 'react'
 import dataSeats from './danhSachGhe.json'
 
 const TicketBooking = () => {
-    const [propSeats, setPropSeats] = useState(dataSeats)
+    const [propSeats, setPropSeats] = useState(dataSeats);
 
     const [activeSeats, setActiveSeats] = useState([]);
 
     const handleSelectSeat = (seat) => {
         if (activeSeats.includes(seat.soGhe)) {
-            setActiveSeats(activeSeats.filter((s) => s !== seat.soGhe));
+            setActiveSeats(activeSeats.filter((ghe) => {
+                return ghe !== seat.soGhe
+            }));
         } else {
             setActiveSeats([...activeSeats, seat.soGhe]);
         }
-
-        onSelectedSeats(seat);
     };
 
     const renderFirstLine = (seatList) => {
@@ -249,9 +249,38 @@ const TicketBooking = () => {
                         <span className="text-black text-lg ml-2">Selected</span>
                     </div>
                 </div>
+
+                <h2 className="text-3xl font-extrabold text-gray-800 mb-6 border-b py-15">
+                    SELECT SEATS
+                </h2>
+
+                <div className="bg-white p-6 rounded-2xl shadow-xl mt-8 flex flex-col gap-5 border border-gray-100">
+                    <div className="flex justify-between items-center">
+                        <h3 className="text-gray-600 font-medium">
+                            Seats:
+                        </h3>
+                        <span className="text-lg font-semibold text-gray-800">
+                            {activeSeats.length > 0 ? activeSeats.join(', ') : 'Not selected'}
+                        </span>
+                    </div>
+
+                    <div className="border-t pt-4 border-red-200 flex justify-between items-center">
+                        <h3 className="text-xl text-red-600 font-bold">
+                            Subtotal:
+                        </h3>
+                        <span className="text-2xl font-extrabold text-red-600">
+                            110.500đ
+                        </span>
+                    </div>
+
+                    <div className="flex justify-end mt-4">
+                        <button className="bg-red-600 text-white font-extrabold py-3 px-6 rounded-xl hover:bg-red-700 transition-all duration-300 shadow-lg shadow-red-300/50 transform hover:scale-105 **w-auto**">
+                            Buy Ticket
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
-
     )
 }
 

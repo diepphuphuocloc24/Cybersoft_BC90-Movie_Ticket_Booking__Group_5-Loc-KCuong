@@ -1,23 +1,24 @@
 import React, { memo } from 'react';
-import TimeShow from './timeShow';
 
-const Cinema = ({ propEachCinema }) => {
+const Cinema = ({ propEachCinema, onSelectEachCinema }) => {
+    const renderTimeShow = (tenRap) => {
+        return onSelectEachCinema(tenRap);
+    }
+
     const renderEachCinema = () => {
-        return propEachCinema.danhSachRap.map((eachCinema) => {
-            return (
-                <tr key={eachCinema.maRap} className="border-t border-white">
-                    <td className="px-10 py-4 bg-gray-900 text-white font-semibold border-r border-white">
-                        {eachCinema.tenRap}
-                    </td>
+        return propEachCinema.danhSachRap.map((eachCinema) => (
+            <tr key={eachCinema.maRap} className="border-t border-white">
+                <td className="px-10 py-4 bg-gray-900 text-white font-semibold border-r border-white">
+                    {eachCinema.tenRap}
+                </td>
 
-                    <td colSpan={7} className="px-4 py-4 bg-gray-900">
-                        <div className="flex items-center gap-4">
-                            {/* <TimeShow /> */}
-                        </div>
-                    </td>
-                </tr>
-            )
-        })
+                <td colSpan={7} className="px-6 py-6 bg-gray-900">
+                    <div className="flex flex-wrap gap-3">
+                        {renderTimeShow(eachCinema.tenRap)}
+                    </div>
+                </td>
+            </tr>
+        ));
     }
 
     return (
