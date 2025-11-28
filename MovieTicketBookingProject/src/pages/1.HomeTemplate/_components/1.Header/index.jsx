@@ -8,7 +8,7 @@ const HomeHeader = () => {
                 {/* LOGO */}
                 <NavLink to="/">
                     <img
-                        src="./img/logo.png"
+                        src="/img/logo.png"
                         alt="FielDiamondCine Logo"
                         className="logo-img"
                     />

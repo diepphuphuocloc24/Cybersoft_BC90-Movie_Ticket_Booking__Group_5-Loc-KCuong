@@ -5,7 +5,7 @@ const Footer = () => {
         <footer className="bg-gray-950 text-gray-300">
 
             {/* TOP BORDER LINE */}
-            <div className="h-1 w-full bg-gradient-to-r from-red-600 to-red-400"></div>
+            <div className="h-1 w-full bg-linear-to-r from-red-600 to-red-400"></div>
 
             {/* MAIN FOOTER CONTENT */}
             <div className="container mx-auto py-14">
@@ -14,7 +14,7 @@ const Footer = () => {
                     {/* Logo + Info */}
                     <div className="flex flex-col gap-6">
                         <img
-                            src="./img/logo.png"
+                            src="/img/logo.png"
                             className="w-80 object-contain mx-auto md:mx-0"
                             alt="FeelDiamondCine Logo"
                         />
