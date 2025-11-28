@@ -52,7 +52,7 @@ const AdminTemplate = () => {
                         {/* Avatar */}
                         <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-300 cursor-pointer">
                             <img
-                                src="./img/avatarLogo.jpg"
+                                src="/img/avatarLogo.jpg"
                                 alt="avatar"
                                 className="w-full h-full object-cover"
                             />

@@ -12,6 +12,7 @@ import Movies from "../pages/2.AdminTemplate/2.Movies";
 import Users from "../pages/2.AdminTemplate/3.Users";
 
 import PageNotFound from "../pages/3.PageNotFound";
+import CheckOut from "../pages/1.HomeTemplate/5.CheckOut";
 
 const routes = [
   {
@@ -33,7 +34,10 @@ const routes = [
       {
         path: "buy-ticket",
         element: <TicketBooking />
-      },
+      }, {
+        path: "check-out",
+        element: <CheckOut />
+      }
     ],
   },
 

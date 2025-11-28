@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import dataSeats from './danhSachGhe.json'
+import { Link } from 'react-router-dom';
 
 const TicketBooking = () => {
     const [propSeats, setPropSeats] = useState(dataSeats);
@@ -184,7 +185,7 @@ const TicketBooking = () => {
                 <div className="flex flex-col items-center bg-gray-300 p-6 gap-6">
 
                     {/* SCREEN */}
-                    <div className="w-full bg-gradient-to-r from-amber-300 via-amber-200 to-amber-300 text-black py-3 rounded-xl text-xl font-extrabold tracking-wider text-center shadow-xl shadow-amber-400/50 border border-amber-400">
+                    <div className="w-full bg-linear-to-r from-amber-300 via-amber-200 to-amber-300 text-black py-3 rounded-xl text-xl font-extrabold tracking-wider text-center shadow-xl shadow-amber-400/50 border border-amber-400">
                         SCREEN
                     </div>
 
@@ -250,35 +251,41 @@ const TicketBooking = () => {
                     </div>
                 </div>
 
-                <h2 className="text-3xl font-extrabold text-gray-800 mb-6 border-b py-15">
-                    SELECT SEATS
+                <h2 className="text-3xl font-extrabold text-gray-800 mb-6 border-b pb-2 pt-15">
+                    SEATS
                 </h2>
 
-                <div className="bg-white p-6 rounded-2xl shadow-xl mt-8 flex flex-col gap-5 border border-gray-100">
+                <div className="bg-white p-7 rounded-3xl shadow-xl mt-8 flex flex-col gap-6 border border-gray-100 transition-all hover:shadow-2xl">
+
                     <div className="flex justify-between items-center">
-                        <h3 className="text-gray-600 font-medium">
-                            Seats:
+                        <h3 className="text-gray-500 font-semibold tracking-wide">
+                            Seats
                         </h3>
-                        <span className="text-lg font-semibold text-gray-800">
+                        <span className="text-xl font-bold text-gray-800 bg-gray-50 px-3 py-1 rounded-lg shadow-sm">
                             {activeSeats.length > 0 ? activeSeats.join(', ') : 'Not selected'}
                         </span>
                     </div>
 
-                    <div className="border-t pt-4 border-red-200 flex justify-between items-center">
-                        <h3 className="text-xl text-red-600 font-bold">
-                            Subtotal:
+                    <div className="border-t pt-5 border-red-200 flex justify-between items-center">
+                        <h3 className="text-2xl text-red-600 font-extrabold tracking-wide">
+                            Subtotal
                         </h3>
-                        <span className="text-2xl font-extrabold text-red-600">
+                        <span className="text-3xl font-extrabold text-red-600 drop-shadow-sm">
                             110.500đ
                         </span>
                     </div>
 
                     <div className="flex justify-end mt-4">
-                        <button className="bg-red-600 text-white font-extrabold py-3 px-6 rounded-xl hover:bg-red-700 transition-all duration-300 shadow-lg shadow-red-300/50 transform hover:scale-105 **w-auto**">
+                        <Link
+                            to="/check-out"
+                            className="bg-red-600 text-white font-extrabold py-3 px-8 rounded-2xl hover:bg-red-700 transition-all duration-300 shadow-lg shadow-red-400/40 transform hover:scale-105 active:scale-95 cursor-pointer text-lg tracking-wide"
+                        >
                             Buy Ticket
-                        </button>
+                        </Link>
                     </div>
+
                 </div>
+
             </div>
         </div>
     )

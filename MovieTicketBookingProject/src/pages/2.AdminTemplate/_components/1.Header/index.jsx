@@ -5,7 +5,7 @@ const AdminHeader = () => {
     return (
         <aside className="flex-1 bg-black text-white flex flex-col shadow-2xl text-xl">
             <div className="py-6 px-2 text-2xl font-extrabold text-blue-400 flex items-center justify-center">
-                <img src="./img/logo.png" alt="Logo" />
+                <img src="/img/logo.png" alt="Logo" />
             </div>
 
             <nav className="flex flex-col py-8 gap-5">
