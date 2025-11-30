@@ -1,14 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
-import movieListReducer from "./../pages/1.HomeTemplate/2.MovieList/slice";
-import movieCarouselReducer from "./../pages/1.HomeTemplate/1.Home/slice";
-import movieDetailReducer from "./../pages/1.HomeTemplate/3.MovieDetail/slice";
-import userManageReducer from "./../pages/2.AdminTemplate/3.Users/slice";
+import movieListReducer from "./../pages/HomeTemplate/MovieList/slice";
+import movieCarouselReducer from "./../pages/HomeTemplate/Home/slice";
+import movieDetailReducer from "./../pages/HomeTemplate/MovieDetail/slice";
+import seatsReducer from "./../pages/HomeTemplate/TicketBooking/slice";
+import userManageReducer from "./../pages/AdminTemplate/Users/slice";
 
 const Store = configureStore({
   reducer: {
     movieListReducer,
     movieCarouselReducer,
     movieDetailReducer,
+    seatsReducer,
     userManageReducer,
   },
 });

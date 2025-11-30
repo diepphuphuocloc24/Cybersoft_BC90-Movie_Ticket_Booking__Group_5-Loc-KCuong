@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from "react-router-dom";
-import { fetchMovieDetail, fetchCinemaList, fetchCinema, fetchTimeShow } from './slice';
+import { fetchMovieDetail } from './slice';
 import { useDispatch, useSelector } from 'react-redux';
 import ListCinema from './listcinema';
 import Cinema from './cinema';
-import TimeShow from './timeShow';
 
 const MovieDetail = () => {
     const { maPhim } = useParams();
@@ -15,25 +14,15 @@ const MovieDetail = () => {
 
     const [selectedMaHeThongRap, setSelectedMaHeThongRap] = useState(null);
 
-
-
-    const { dataDetail, dataCinemaList, dataCinema, dataTimeShow, loading } = state;
+    const { dataDetail, loading } = state;
 
     useEffect(() => {
         dispatch(fetchMovieDetail(maPhim));
-        dispatch(fetchCinemaList());
     }, [dispatch, maPhim]);
 
     const handleSelectCinemaSystem = (maHeThongRap) => {
         setSelectedMaHeThongRap(maHeThongRap);
-        dispatch(fetchCinema(maHeThongRap));
-        dispatch(fetchTimeShow(maHeThongRap));
     };
-
-    useEffect(() => {
-        dispatch(fetchCinema(selectedMaHeThongRap));
-        dispatch(fetchTimeShow(selectedMaHeThongRap));
-    }, [dispatch, selectedMaHeThongRap]);
 
     if (loading) {
         return (
@@ -53,49 +42,60 @@ const MovieDetail = () => {
         )
     }
 
-    const toEmbed = (url) => {
+    const getEmbedUrl = (url) => {
         if (!url) return "";
-        return url.replace("youtu.be/", "www.youtube.com/embed/");
+        if (url.includes("watch?v=")) {
+            return url.replace("watch?v=", "embed/");
+        }
+        return url;
     };
 
     const renderListCinema = () => {
-        return dataCinemaList?.map((cinema) => {
-            return <ListCinema key={cinema.maHeThongRap}
-                propCinema={cinema}
-                onSelectedCinema={handleSelectCinemaSystem}
-            />
-        })
-    }
+        return dataDetail?.heThongRapChieu?.map((chainCinema) => {
+            return (
+                <ListCinema
+                    key={chainCinema.maHeThongRap}
+                    propChainCinema={chainCinema}
+                    onSelectedCinema={() => handleSelectCinemaSystem(chainCinema.maHeThongRap)}
+                    isActive={selectedMaHeThongRap === chainCinema.maHeThongRap}
+                />
 
-    const renderTimeShow = (tenRap) => {
-        return dataTimeShow?.map((heThongRap) => {
-            return heThongRap.lstCumRap.map((cumRap) => {
-                return cumRap.danhSachPhim.map((phim) => {
-                    return phim.lstLichChieuTheoPhim
-                        .filter((timeShow) => {
-                            return timeShow.tenRap === tenRap;
-                        })
-                        .map((timeShow) => {
-                            return (
-                                <TimeShow
-                                    key={timeShow.maLichChieu}
-                                    propTimeShow={timeShow}
-                                />
-                            );
-                        });
-                });
-            });
-        });
+            )
+        })
     };
 
     const renderEachCinemas = () => {
-        return dataCinema?.map(cinema => (
-            <Cinema
-                key={cinema.maCumRap}
-                propEachCinema={cinema}
-                onSelectEachCinema={renderTimeShow}
-            />
+        if (!selectedMaHeThongRap) return null;
+
+        const selected = dataDetail?.heThongRapChieu?.find(
+            (x) => x.maHeThongRap === selectedMaHeThongRap
+        );
+
+        return selected?.cumRapChieu?.map((cinema) => (
+            <Cinema key={cinema.maCumRap} propEachCinema={cinema} />
         ));
+    };
+
+    const renderDuration = () => {
+        const movieSet = new Set();
+        const result = [];
+
+        dataDetail?.heThongRapChieu?.forEach(chainCinema => {
+            chainCinema?.cumRapChieu?.forEach(cinema => {
+                cinema?.lichChieuPhim?.forEach(movieDetail => {
+                    if (!movieSet.has(movieDetail.maPhim)) {
+                        movieSet.add(movieDetail.maPhim);
+                        result.push(
+                            <p key={movieDetail.maPhim} className="text-sm text-gray-700">
+                                {movieDetail.thoiLuong} min
+                            </p>
+                        );
+                    }
+                });
+            });
+        });
+
+        return result;
     };
 
     return (
@@ -140,10 +140,12 @@ const MovieDetail = () => {
                             {dataDetail?.trailer && (
                                 <iframe
                                     className="w-full md:h-80 rounded"
-                                    src={toEmbed(dataDetail.trailer)}
+                                    src={getEmbedUrl(dataDetail?.trailer)}
                                     title="Trailer"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowFullScreen
                                 ></iframe>
+
                             )}
                         </div>
                     </div>
@@ -159,7 +161,7 @@ const MovieDetail = () => {
                         <div className="flex justify-between bg-gray-100 p-4 border-t-2 border-b-2 border-red-500">
                             <div className="flex flex-col text-center">
                                 <h4 className="text-red-600 font-semibold">RUNTIME</h4>
-                                <p className="text-sm text-gray-700">108 mins</p>
+                                {renderDuration()}
                             </div>
                             <div className="flex flex-col text-center">
                                 <h4 className="text-red-600 font-semibold">RATING</h4>

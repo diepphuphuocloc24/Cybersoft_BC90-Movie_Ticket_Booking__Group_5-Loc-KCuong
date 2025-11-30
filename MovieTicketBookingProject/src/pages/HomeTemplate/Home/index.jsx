@@ -6,9 +6,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchMovieList } from './../2.MovieList/slice';
+import { fetchMovieList } from '../MovieList/slice';
 import { fetchMovieCarousel } from './slice';
-import Movie from '../2.MovieList/movie';
+import Movie from '../MovieList/movie';
 
 const Home = () => {
     const [activeTab, setActiveTab] = useState('now');
@@ -72,9 +72,6 @@ const Home = () => {
 
     useEffect(() => {
         dispatch(fetchMovieList());
-    }, [dispatch]);
-
-    useEffect(() => {
         dispatch(fetchMovieCarousel());
     }, [dispatch]);
 
