@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
-import AdminHeader from "./_components/1.Header";
+import AdminHeader from "./_components/Header";
 
 const AdminTemplate = () => {
     return (
