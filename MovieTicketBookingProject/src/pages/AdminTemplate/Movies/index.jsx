@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchMovieList } from './../../1.HomeTemplate/2.MovieList/slice'
+import { fetchMovieList } from '../../HomeTemplate/MovieList/slice'
 import Movie from './movie'
 
 const Movies = () => {

@@ -1,18 +1,20 @@
 import { Route } from "react-router-dom";
 
-import HomeTemplate from "../pages/1.HomeTemplate";
-import Home from "../pages/1.HomeTemplate/1.Home";
-import MovieList from "../pages/1.HomeTemplate/2.MovieList";
-import MovieDetail from "../pages/1.HomeTemplate/3.MovieDetail";
-import TicketBooking from "../pages/1.HomeTemplate/4.TicketBooking";
+import HomeTemplate from "../pages/HomeTemplate";
+import Home from "../pages/HomeTemplate/Home";
+import MovieList from "../pages/HomeTemplate/MovieList";
+import MovieDetail from "../pages/HomeTemplate/MovieDetail";
+import TicketBooking from "../pages/HomeTemplate/TicketBooking";
+import CheckOut from "../pages/HomeTemplate/CheckOut";
 
-import AdminTemplate from "../pages/2.AdminTemplate";
-import Dashboard from "../pages/2.AdminTemplate/1.Dashboard";
-import Movies from "../pages/2.AdminTemplate/2.Movies";
-import Users from "../pages/2.AdminTemplate/3.Users";
+import AdminTemplate from "../pages/AdminTemplate";
+import Dashboard from "../pages/AdminTemplate/Dashboard";
+import Movies from "../pages/AdminTemplate/Movies";
+import Users from "../pages/AdminTemplate/Users";
 
-import PageNotFound from "../pages/3.PageNotFound";
-import CheckOut from "../pages/1.HomeTemplate/5.CheckOut";
+import PageNotFound from "../pages/PageNotFound";
+
+import AuthTemplate from "../pages/AuthTemplate";
 
 const routes = [
   {
@@ -32,9 +34,10 @@ const routes = [
         element: <MovieDetail />
       },
       {
-        path: "buy-ticket",
+        path: "buy-ticket/:maLichChieu",
         element: <TicketBooking />
-      }, {
+      },
+      {
         path: "check-out",
         element: <CheckOut />
       }
@@ -63,6 +66,11 @@ const routes = [
   {
     path: "*",
     element: <PageNotFound />
+  },
+
+  {
+    path: "auth",
+    element: <AuthTemplate />
   },
 ];
 

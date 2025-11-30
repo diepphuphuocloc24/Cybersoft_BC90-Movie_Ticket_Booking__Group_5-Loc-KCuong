@@ -25,6 +25,12 @@ const Movie = ({ propMovie }) => {
                         <i className="fa-solid fa-star text-amber-400"></i>
                         <span>{propMovie.danhGia}</span>
                     </div>
+
+                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <button className="bg-amber-500 text-white text-sm font-bold px-4 py-2 rounded-lg shadow-sm cursor-pointer transition-all duration-300 hover:bg-orange-500">
+                            TRAILER
+                        </button>
+                    </div>
                 </div>
 
                 <div className="pt-4 flex flex-col justify-between h-[120px]">
@@ -35,9 +41,9 @@ const Movie = ({ propMovie }) => {
                     <NavLink
                         to={`/movie-detail/${propMovie.maPhim}`}
                         className="block w-full py-2 rounded-2xl font-semibold text-white bg-red-500 
-             hover:bg-red-600 shadow-md hover:shadow-lg transition-all duration-300 text-center"
+             hover:bg-rose-600 shadow-md hover:shadow-lg transition-all duration-300 text-center"
                     >
-                        Movie Detail
+                        Get Tickets
                     </NavLink>
                 </div>
             </div>
