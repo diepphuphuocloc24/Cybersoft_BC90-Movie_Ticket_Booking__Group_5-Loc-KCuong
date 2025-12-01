@@ -7,7 +7,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMovieList } from '../MovieList/slice';
-import { fetchMovieCarousel } from './slice';
+import { fetchMovieHome } from './slice';
 import Movie from '../MovieList/movie';
 
 const Home = () => {
@@ -66,18 +66,25 @@ const Home = () => {
     };
 
     const dispatch = useDispatch();
+
     const stateList = useSelector((state) => state.movieListReducer);
 
-    const stateCarousel = useSelector((state) => state.movieCarouselReducer);
+    const dataCarousel = useSelector((state) => {
+        return state.movieHomeReducer.dataHome?.dataCarousel
+    });
+
+    const dataChainCinema = useSelector((state) => {
+        return state.movieHomeReducer.dataHome?.dataChainCinema
+    });
+
+    console.log(dataChainCinema);
 
     useEffect(() => {
         dispatch(fetchMovieList());
-        dispatch(fetchMovieCarousel());
+        dispatch(fetchMovieHome());
     }, [dispatch]);
 
     const { data, loading } = stateList;
-
-    const { dataCarousel } = stateCarousel;
 
     if (loading) {
         return (
@@ -111,22 +118,6 @@ const Home = () => {
         );
     }
 
-    const renderNowMovieList = () => {
-        return data?.map((movie) => {
-            if (movie.hot && movie.dangChieu) {
-                return <Movie key={movie.maPhim} propMovie={movie} />;
-            }
-        });
-    };
-
-    const renderUpComingMovieList = () => {
-        return data?.map((movie) => {
-            if (!movie.dangChieu) {
-                return <Movie key={movie.maPhim} propMovie={movie} />;
-            }
-        });
-    };
-
     const renderMovieCarousel = () => {
         return dataCarousel?.map((movie) => {
             return (
@@ -159,6 +150,34 @@ const Home = () => {
             )
         })
     }
+
+    const renderPlanCinema = () => {
+        return dataChainCinema?.map((cinema) => {
+            return (
+                <option
+                    key={cinema.maHeThongRap}
+                    value={cinema.biDanh}>
+                    {cinema.tenHeThongRap}
+                </option>
+            )
+        })
+    }
+
+    const renderNowMovieList = () => {
+        return data?.map((movie) => {
+            if (movie.hot && movie.dangChieu) {
+                return <Movie key={movie.maPhim} propMovie={movie} />;
+            }
+        });
+    };
+
+    const renderUpComingMovieList = () => {
+        return data?.map((movie) => {
+            if (!movie.dangChieu) {
+                return <Movie key={movie.maPhim} propMovie={movie} />;
+            }
+        });
+    };
 
     return (
         <>
@@ -358,8 +377,54 @@ const Home = () => {
                 </div>
             </div>
 
+            {/* QUICK BOOK TICKETS */}
+            <div className="bg-black text-white flex justify-center items-center py-20">
+                <div className="container mx-auto">
+                    <h2 className="text-4xl md:text-5xl font-extrabold mb-8 text-left">
+                        Ready to Grab Your Tickets?
+                    </h2>
+                    <div className="flex flex-col md:flex-row justify-start items-end gap-4 md:gap-6">
+                        <div className="flex flex-col w-full md:w-64">
+                            <label className="text-lg font-semibold text-gray-300 mb-2 text-left">Select Movie</label>
+                            <select
+                                className="w-full p-3 border border-gray-700 rounded-xl shadow-md bg-gray-900 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 cursor-pointer appearance-none transition-all duration-200 hover:shadow-lg"
+                            >
+                                <option value="">-- Select Movie --</option>
+                                <option value="option1">Option 1</option>
+                                <option value="option2">Option 2</option>
+                                <option value="option3">Option 3</option>
+                            </select>
+                        </div>
+                        <div className="flex flex-col w-full md:w-64">
+                            <label className="text-lg font-semibold text-gray-300 mb-2 text-left">Select Cinema</label>
+                            <select
+                                className="w-full p-3 border border-gray-700 rounded-xl shadow-md bg-gray-900 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 cursor-pointer appearance-none transition-all duration-200 hover:shadow-lg"
+                            >
+                                <option value="">-- Select Cinema --</option>
+                                {renderPlanCinema()}
+                            </select>
+                        </div>
+                        <div className="flex flex-col w-full md:w-64">
+                            <label className="text-lg font-semibold text-gray-300 mb-2 text-left">Select Date</label>
+                            <select
+                                className="w-full p-3 border border-gray-700 rounded-xl shadow-md bg-gray-900 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 cursor-pointer appearance-none transition-all duration-200 hover:shadow-lg"
+                            >
+                                <option value="">-- Select Date --</option>
+                                <option value="option1">Option 1</option>
+                                <option value="option2">Option 2</option>
+                                <option value="option3">Option 3</option>
+                            </select>
+                        </div>
+                        <button className="w-full md:w-48 py-3 px-6 bg-amber-500 hover:bg-orange-500 rounded-xl font-bold text-black shadow-lg transition-transform duration-200 hover:scale-105 cursor-pointer">
+                            Book
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
             {/* MOVIES TABS */}
-            <div className="pb-15">
+            <div className="py-15">
                 <div className="container relative">
                     <div className="absolute top-0 left-0">
                         <div className="relative inline px-1 py-10 rounded-l-lg text-white text-xl font-medium bg-black">
