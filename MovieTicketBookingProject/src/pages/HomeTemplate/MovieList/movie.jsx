@@ -40,10 +40,11 @@ const Movie = ({ propMovie }) => {
 
                     <NavLink
                         to={`/movie-detail/${propMovie.maPhim}`}
-                        className="block w-full py-2 rounded-2xl font-semibold text-white bg-red-500 
-             hover:bg-rose-600 shadow-md hover:shadow-lg transition-all duration-300 text-center"
+                        className="flex items-center justify-center gap-2 w-full py-2 rounded-2xl font-semibold text-white bg-red-500 
+        hover:bg-rose-600 shadow-md hover:shadow-lg transition-all duration-300"
                     >
-                        Get Tickets
+                        <i className="fi fi-rs-ticket-alt text-lg leading-none"></i>
+                        <span>Get Tickets</span>
                     </NavLink>
                 </div>
             </div>

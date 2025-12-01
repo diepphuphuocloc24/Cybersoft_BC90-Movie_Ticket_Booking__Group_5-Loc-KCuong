@@ -313,7 +313,7 @@ const TicketBooking = () => {
                             onClick={handleCloseModal}
                             className="absolute -top-4 -right-4 w-8 h-8 flex items-center justify-center bg-black text-white rounded-full ring-2 ring-white transition duration-300 cursor-pointer hover:bg-red-500 hover:text-white"
                         >
-                            <i className="fi fi-rr-cross-small"></i>
+                            <i className="fi fi-rr-cross-small text-base leading-none flex-shrink-0"></i>
                         </button>
 
                         <h2 className="text-2xl font-bold text-gray-900 mb-5 tracking-wide">

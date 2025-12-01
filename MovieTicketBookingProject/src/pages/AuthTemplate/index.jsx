@@ -98,7 +98,7 @@ const AuthTemplate = () => {
                         id="loginBtn"
                         name="loginBtn"
                         type="submit"
-                        className="mt-0.5 w-[75%] mx-auto border-1 border-white/30 bg-white text-xl text-red-600 font-semibold py-2 rounded-b-4xl shadow-lg hover:bg-pink-600 hover:text-white hover:border-pink-600 transition duration-300 cursor-pointer"
+                        className="mt-0.5 w-[75%] mx-auto border border-white/30 bg-white text-xl text-red-600 font-semibold py-2 rounded-b-4xl shadow-lg hover:bg-pink-600 hover:text-white hover:border-pink-600 transition duration-300 cursor-pointer"
                     >
                         Sign In
                     </button>

@@ -3,42 +3,50 @@ import api from "../../../services/api";
 
 const initialState = {
   loading: false,
-  dataCarousel: null,
+  dataHome: null,
   error: null,
 };
 
-export const fetchMovieCarousel = createAsyncThunk(
-  "carousel/fetchMovieCarousel",
+export const fetchMovieHome = createAsyncThunk(
+  "home/fetchMovieHome",
   async (_, { rejectWithValue }) => {
     try {
-      const result = await api.get("/QuanLyPhim/LayDanhSachBanner");
+      const [resultCarousel, resultChainCinema] = await Promise.all([
+        api.get("/QuanLyPhim/LayDanhSachBanner"),
+        api.get("QuanLyRap/LayThongTinHeThongRap"),
+      ]);
 
-      return result.data.content;
+      const result = {
+        dataCarousel: resultCarousel.data.content,
+        dataChainCinema: resultChainCinema.data.content,
+      };
+
+      return result;
     } catch (error) {
       return rejectWithValue(error);
     }
   }
 );
 
-const movieCarouselSlice = createSlice({
-  name: "movieCarouselSlice",
+const movieHomeSlice = createSlice({
+  name: "movieHomeSlice",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchMovieCarousel.pending, (state) => {
+    builder.addCase(fetchMovieHome.pending, (state) => {
       state.loading = true;
     });
 
-    builder.addCase(fetchMovieCarousel.fulfilled, (state, action) => {
+    builder.addCase(fetchMovieHome.fulfilled, (state, action) => {
       state.loading = false;
-      state.dataCarousel = action.payload;
+      state.dataHome = action.payload;
     });
 
-    builder.addCase(fetchMovieCarousel.rejected, (state, action) => {
+    builder.addCase(fetchMovieHome.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });
   },
 });
 
-export default movieCarouselSlice.reducer;
+export default movieHomeSlice.reducer;

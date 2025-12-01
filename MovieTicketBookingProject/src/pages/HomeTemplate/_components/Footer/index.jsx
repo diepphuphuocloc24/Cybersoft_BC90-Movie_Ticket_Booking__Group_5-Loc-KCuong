@@ -1,11 +1,79 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
 const Footer = () => {
+    const dataChainCinema = useSelector((state) => {
+        return state.movieHomeReducer.dataHome?.dataChainCinema
+    });
+
+    const renderChainCinema = () => {
+        return dataChainCinema?.map((cinema) => {
+            return (
+                <div key={cinema.maHeThongRap} className="w-14 h-14 flex items-center justify-center">
+                    <img
+                        src={cinema.logo}
+                        alt={cinema.tenHeThongRap}
+                        className="w-full h-full object-contain"
+                    />
+                </div>
+            );
+        });
+    };
+
     return (
-        <footer className="bg-gray-950 text-gray-300">
+        <footer className="bg-gray-900 text-gray-300">
 
             {/* TOP BORDER LINE */}
             <div className="h-1 w-full bg-linear-to-r from-red-600 to-red-400"></div>
+
+            {/* FOLLOW */}
+            <div className="bg-black text-white flex items-center justify-center gap-6 py-6">
+                <h3 className="text-white text-xl font-semibold tracking-wide">
+                    Follow Us
+                </h3>
+
+                <ul className="flex items-center gap-5">
+                    <li>
+                        <a
+                            href="#"
+                            className="w-12 h-12 rounded-full border border-white flex items-center justify-center
+                hover:bg-red-600 transition-colors duration-300 shadow-md cursor-pointer"
+                        >
+                            <i className="fa-brands fa-facebook-f text-white text-lg"></i>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="#"
+                            className="w-12 h-12 rounded-full border border-white flex items-center justify-center
+                hover:bg-red-600 transition-colors duration-300 shadow-md cursor-pointer"
+                        >
+                            <i className="fa-brands fa-instagram text-white text-lg"></i>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="#"
+                            className="w-12 h-12 rounded-full border border-white flex items-center justify-center
+                hover:bg-red-600 transition-colors duration-300 shadow-md cursor-pointer"
+                        >
+                            <i className="fa-brands fa-tiktok text-white text-lg"></i>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="#"
+                            className="w-12 h-12 rounded-full border border-white flex items-center justify-center
+                hover:bg-red-600 transition-colors duration-300 shadow-md cursor-pointer"
+                        >
+                            <i className="fa-brands fa-youtube text-white text-lg"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
 
             {/* MAIN FOOTER CONTENT */}
             <div className="container mx-auto py-14">
@@ -80,30 +148,21 @@ const Footer = () => {
                         </ul>
                     </div>
 
-                    {/* Follow Us */}
+                    {/* Partners */}
                     <div className="flex flex-col gap-5">
                         <h3 className="text-white text-lg font-semibold tracking-wide border-b border-gray-700 pb-2">
-                            Follow Us
+                            Our Partners
                         </h3>
 
                         <p className="text-sm text-gray-400">
-                            Stay connected and join our movie community.
+                            Collaborating with trusted brands to bring better cinematic experiences.
                         </p>
 
-                        <div className="flex gap-4 mt-2">
-                            <div className="w-10 h-10 rounded-full bg-black border border-white flex items-center justify-center
-      hover:bg-red-600 transition-colors duration-300 shadow-lg cursor-pointer">
-                                <i className="fa-brands fa-facebook-f text-white text-base"></i>
-                            </div>
-                            <div className="w-10 h-10 rounded-full bg-black border border-white flex items-center justify-center
-      hover:bg-red-600 transition-colors duration-300 shadow-lg cursor-pointer">
-                                <i className="fa-brands fa-instagram text-white text-base"></i>
-                            </div>
-                            <div className="w-10 h-10 rounded-full bg-black border border-white flex items-center justify-center
-      hover:bg-red-600 transition-colors duration-300 shadow-lg cursor-pointer">
-                                <i className="fa-brands fa-twitter text-white text-base"></i>
-                            </div>
+                        <div className="flex items-center gap-4 mt-2">
+                            {renderChainCinema()}
                         </div>
+
+
                     </div>
 
                 </div>
