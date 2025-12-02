@@ -28,10 +28,10 @@ const BackToTopButton = () => {
             {showButton && (
                 <button
                     onClick={scrollToTop}
-                    className="fixed bottom-6 right-4 w-12 h-12 bg-black text-white flex items-center justify-center rounded-full shadow-lg hover:bg-red-500 hover:scale-110 transition-all duration-500 z-50 cursor-pointer opacity-50 hover:opacity-100"
-                >
-                    <i className="fa-solid fa-chevron-up text-lg"></i>
+                    className="fixed bottom-6 right-6 w-10 h-10 lg:w-12 lg:h-12 bg-black/80 backdrop-blur text-white flex items-center justify-center rounded-full shadow-xl hover:bg-red-500 hover:shadow-2xl hover:scale-110 transition-all duration-300 z-50 cursor-pointer opacity-60 hover:opacity-100">
+                    <i className="fa-solid fa-chevron-up text-sm sm:text-lg md:text-xl"></i>
                 </button>
+
             )}
         </>
     );

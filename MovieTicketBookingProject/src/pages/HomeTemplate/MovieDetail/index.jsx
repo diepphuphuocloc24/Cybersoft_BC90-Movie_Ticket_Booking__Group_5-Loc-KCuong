@@ -27,17 +27,17 @@ const MovieDetail = () => {
     if (loading) {
         return (
             <div className="p-6 space-y-6 animate-pulse">
-                <div className="w-full h-80 bg-gray-300/70 rounded-xl"></div>
+                <div className="w-full h-80 bg-[#C6C6C6]/70 rounded-xl"></div>
 
-                <div className="h-7 bg-gray-300/70 rounded w-2/3"></div>
+                <div className="h-7 bg-[#C6C6C6]/70 rounded w-2/3"></div>
 
                 <div className="space-y-3">
-                    <div className="h-4 bg-gray-300/70 rounded w-full"></div>
-                    <div className="h-4 bg-gray-300/70 rounded w-5/6"></div>
-                    <div className="h-4 bg-gray-300/70 rounded w-4/6"></div>
+                    <div className="h-4 bg-[#C6C6C6]/70 rounded w-full"></div>
+                    <div className="h-4 bg-[#C6C6C6]/70 rounded w-5/6"></div>
+                    <div className="h-4 bg-[#C6C6C6]/70 rounded w-4/6"></div>
                 </div>
 
-                <div className="h-12 bg-gray-300/70 rounded-xl w-40"></div>
+                <div className="h-12 bg-[#C6C6C6]/70 rounded-xl w-40"></div>
             </div>
         )
     }
@@ -106,6 +106,15 @@ const MovieDetail = () => {
 
                     {/* LEFT CONTENT */}
                     <div className="lg:w-3/5 flex flex-col">
+                        {dataDetail?.dangChieu ? (
+                            <p className="bg-amber-500 text-black font-bold w-max p-2 rounded-full mb-5 shadow-lg border-black">
+                                NOW SHOWING
+                            </p>
+                        ) : (
+                            <p className="bg-black text-amber-500 font-semibold w-max p-2 rounded-full mb-5 border border-orange-500 shadow-inner">
+                                COMING SOON
+                            </p>
+                        )}
 
                         <h2 className="text-3xl font-bold border-t-2 border-b-2 border-red-500 py-3 mb-8">
                             {dataDetail?.tenPhim}

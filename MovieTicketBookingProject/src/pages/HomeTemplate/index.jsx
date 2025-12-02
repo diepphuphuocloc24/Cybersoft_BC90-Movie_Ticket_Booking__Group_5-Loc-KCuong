@@ -13,19 +13,19 @@ const HomeTemplate = () => {
             <div id="login-modal" tabIndex="-1" aria-hidden="true" className="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                 <div className="relative p-4 w-full max-w-2xl max-h-full">
                     {/* MAIN CONTENT */}
-                    <div className="max-w-md mx-auto mt-20 p-8 bg-gray-900 rounded-xl shadow-lg text-white">
+                    <div className="max-w-md mx-auto mt-20 p-8 bg-[#1C1C1C] rounded-xl shadow-lg text-white">
                         <h2 className="text-3xl font-bold mb-6 text-center">Login</h2>
 
                         <form className="flex flex-col gap-4">
                             <input
                                 type="email"
                                 placeholder="Email"
-                                className="p-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:border-red-500"
+                                className="p-3 rounded-lg bg-[#383838] border border-gray-700 focus:outline-none focus:border-red-500"
                             />
                             <input
                                 type="password"
                                 placeholder="Password"
-                                className="p-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:border-red-500"
+                                className="p-3 rounded-lg bg-[#383838] border border-gray-700 focus:outline-none focus:border-red-500"
                             />
 
                             <button
@@ -64,29 +64,29 @@ const HomeTemplate = () => {
             <div id="register-modal" tabIndex="-1" aria-hidden="true" className="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                 <div className="relative p-4 w-full max-w-2xl max-h-full">
                     {/* MAIN CONTENT */}
-                    <div className="max-w-md mx-auto mt-20 p-8 bg-gray-900 rounded-xl shadow-lg text-white">
+                    <div className="max-w-md mx-auto mt-20 p-8 bg-[#1C1C1C] rounded-xl shadow-lg text-white">
                         <h2 className="text-3xl font-bold mb-6 text-center">Register</h2>
 
                         <form className="flex flex-col gap-4">
                             <input
                                 type="text"
                                 placeholder="Full Name"
-                                className="p-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:border-red-500"
+                                className="p-3 rounded-lg bg-[#383838] border border-gray-700 focus:outline-none focus:border-red-500"
                             />
                             <input
                                 type="email"
                                 placeholder="Email"
-                                className="p-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:border-red-500"
+                                className="p-3 rounded-lg bg-[#383838] border border-gray-700 focus:outline-none focus:border-red-500"
                             />
                             <input
                                 type="password"
                                 placeholder="Password"
-                                className="p-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:border-red-500"
+                                className="p-3 rounded-lg bg-[#383838] border border-gray-700 focus:outline-none focus:border-red-500"
                             />
                             <input
                                 type="password"
                                 placeholder="Confirm Password"
-                                className="p-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:border-red-500"
+                                className="p-3 rounded-lg bg-[#383838] border border-gray-700 focus:outline-none focus:border-red-500"
                             />
 
                             <button

@@ -2,7 +2,7 @@ import React from 'react'
 
 const Movie = ({ propMovie }) => {
     return (
-        <tr key={propMovie.maPhim} className="hover:bg-gray-50 transition-colors duration-200">
+        <tr key={propMovie.maPhim} className="hover:bg-gray-50 transition-colors duration-300">
             <td className="px-6 py-4 text-sm text-black text-center font-bold">{propMovie.maPhim}</td>
 
             <td className="px-6 py-4 text-center">

@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 const Movie = ({ propMovie }) => {
     return (
         <div key={propMovie.maPhim}>
-            <div className="group bg-gray-900 rounded-2xl overflow-hidden shadow-lg 
+            <div className="group bg-[#1C1C1C] rounded-2xl overflow-hidden shadow-lg 
         hover:shadow-3xl transform hover:-translate-y-1 hover:scale-105 
         transition-all duration-300 cursor-pointer p-4">
 

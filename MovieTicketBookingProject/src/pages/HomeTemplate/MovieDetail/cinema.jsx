@@ -16,11 +16,11 @@ const Cinema = ({ propEachCinema }) => {
 
         return Object.entries(grouped).map(([tenRap, list]) => (
             <tr key={tenRap} className="border-t border-white">
-                <td className="px-10 py-4 bg-gray-900 text-white font-semibold border-r border-white">
+                <td className="px-10 py-4 bg-[#1C1C1C] text-white font-semibold border-r border-white">
                     {tenRap}
                 </td>
 
-                <td colSpan={7} className="px-6 py-6 bg-gray-900">
+                <td colSpan={7} className="px-6 py-6 bg-[#1C1C1C]">
                     <div className="flex flex-wrap gap-3">
                         {list.map((item) =>
                             renderTimeShow(

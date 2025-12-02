@@ -31,14 +31,14 @@ const SeatList = ({ propSeats, activeSeats, onSelectSeat }) => {
                     onClick={() => !seat.daDat && handleSelectSeat(seat)}
                     className={`
                     relative flex items-center justify-center
-                    transition-all duration-200 active:scale-95
+                    transition-all duration-300 active:scale-95
                     px-3
                     ${seat.daDat ? "cursor-not-allowed" : "cursor-pointer"}
                 `}
                 >
                     <i
                         className={`
-                        fa-solid fa-couch text-3xl transition-colors duration-200
+                        fa-solid fa-couch text-3xl transition-colors duration-300
                         ${getSeatColor()}
                     `}
                     ></i>
