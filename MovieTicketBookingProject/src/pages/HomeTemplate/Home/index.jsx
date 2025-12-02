@@ -6,8 +6,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchMovieList } from '../MovieList/slice';
 import { fetchMovieHome } from './slice';
+import { fetchMovieList } from '../MovieList/slice';
 import Movie from '../MovieList/movie';
 
 const Home = () => {
@@ -160,6 +160,16 @@ const Home = () => {
                     {cinema.tenHeThongRap}
                 </option>
             )
+        })
+    }
+
+    const renderPlanMovie = () => {
+        return data?.map((movie) => {
+            if (movie.dangChieu) {
+                return (
+                    <option key={movie.maPhim} value="option1">{movie.tenPhim} </option>
+                )
+            }
         })
     }
 
@@ -387,18 +397,16 @@ const Home = () => {
                         <div className="flex flex-col w-full md:w-64">
                             <label className="text-lg font-semibold text-gray-300 mb-2 text-left">Select Movie</label>
                             <select
-                                className="w-full p-3 border border-gray-700 rounded-xl shadow-md bg-gray-900 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 cursor-pointer appearance-none transition-all duration-200 hover:shadow-lg"
+                                className="w-full p-3 border border-gray-700 rounded-xl shadow-md bg-[#1C1C1C] text-white focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 cursor-pointer appearance-none transition-all duration-300 hover:shadow-lg"
                             >
                                 <option value="">-- Select Movie --</option>
-                                <option value="option1">Option 1</option>
-                                <option value="option2">Option 2</option>
-                                <option value="option3">Option 3</option>
+                                {renderPlanMovie()}
                             </select>
                         </div>
                         <div className="flex flex-col w-full md:w-64">
                             <label className="text-lg font-semibold text-gray-300 mb-2 text-left">Select Cinema</label>
                             <select
-                                className="w-full p-3 border border-gray-700 rounded-xl shadow-md bg-gray-900 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 cursor-pointer appearance-none transition-all duration-200 hover:shadow-lg"
+                                className="w-full p-3 border border-gray-700 rounded-xl shadow-md bg-[#1C1C1C] text-white focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 cursor-pointer appearance-none transition-all duration-300 hover:shadow-lg"
                             >
                                 <option value="">-- Select Cinema --</option>
                                 {renderPlanCinema()}
@@ -407,7 +415,7 @@ const Home = () => {
                         <div className="flex flex-col w-full md:w-64">
                             <label className="text-lg font-semibold text-gray-300 mb-2 text-left">Select Date</label>
                             <select
-                                className="w-full p-3 border border-gray-700 rounded-xl shadow-md bg-gray-900 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 cursor-pointer appearance-none transition-all duration-200 hover:shadow-lg"
+                                className="w-full p-3 border border-gray-700 rounded-xl shadow-md bg-[#1C1C1C] text-white focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 cursor-pointer appearance-none transition-all duration-300 hover:shadow-lg"
                             >
                                 <option value="">-- Select Date --</option>
                                 <option value="option1">Option 1</option>
@@ -415,13 +423,12 @@ const Home = () => {
                                 <option value="option3">Option 3</option>
                             </select>
                         </div>
-                        <button className="w-full md:w-48 py-3 px-6 bg-amber-500 hover:bg-orange-500 rounded-xl font-bold text-black shadow-lg transition-transform duration-200 hover:scale-105 cursor-pointer">
+                        <button className="w-full md:w-48 py-3 px-6 bg-amber-500 hover:bg-orange-500 rounded-xl font-bold text-black shadow-lg transition-transform duration-300 hover:scale-105 cursor-pointer">
                             Book
                         </button>
                     </div>
                 </div>
             </div>
-
 
             {/* MOVIES TABS */}
             <div className="py-15">
@@ -447,7 +454,7 @@ const Home = () => {
                             className={`${activeTab === 'now'
                                 ? 'text-red-500 border-b-2 border-red-600 text-3xl font-extrabold mb-6 pb-2'
                                 : 'text-gray-800 text-3xl font-extrabold mb-6 pb-2'
-                                } hover:text-red-600 transition-colors duration-200 cursor-pointer`}
+                                } hover:text-red-600 transition-colors duration-300 cursor-pointer`}
                             onClick={() => setActiveTab('now')}
                         >
                             NOW SHOWING
@@ -456,7 +463,7 @@ const Home = () => {
                             className={`${activeTab === 'upcoming'
                                 ? 'text-red-500 border-b-2 border-red-600 text-3xl font-extrabold mb-6 pb-2 ml-5'
                                 : 'text-gray-800 text-3xl font-extrabold mb-6 pb-2 ml-5'
-                                } hover:text-red-600 transition-colors duration-200 cursor-pointer`}
+                                } hover:text-red-600 transition-colors duration-300 cursor-pointer`}
                             onClick={() => setActiveTab('upcoming')}
                         >
                             UPCOMING
@@ -572,7 +579,7 @@ const Home = () => {
                 <div className="flex flex-wrap gap-8 justify-center">
                     <div className="flex-1 min-w-[300px]">
                         <div className="flex flex-col bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer">
-                            <div className="h-90 bg-gray-300 flex items-center justify-center overflow-hidden rounded-xl">
+                            <div className="h-90 bg-[#C6C6C6] flex items-center justify-center overflow-hidden rounded-xl">
                                 <img src="./img/News/news1.jpg" alt="Predator Badlands" className="object-cover h-full w-full rounded-xl cursor-pointer" />
                             </div>
                             <div className="p-4 flex flex-col justify-between">
@@ -580,7 +587,7 @@ const Home = () => {
                                     [Review] Predator Badlands: Sự Hồi Sinh Của Thương Hiệu Quái Thú Lừng Lẫy
                                 </h3>
                                 <div className="flex justify-start">
-                                    <NavLink to="*" className="text-red-500 font-semibold hover:text-red-700 transition duration-200 cursor-pointer">
+                                    <NavLink to="*" className="text-red-500 font-semibold hover:text-red-700 transition duration-300 cursor-pointer">
                                         Read more &gt;&gt;
                                     </NavLink>
                                 </div>
@@ -590,7 +597,7 @@ const Home = () => {
 
                     <div className="flex-1 flex flex-col gap-8 min-w-[300px]">
                         <div className="flex bg-white shadow-lg overflow-hidden rounded-xl transition-all duration-300 cursor-pointer">
-                            <div className="h-[120px] w-auto bg-gray-300 flex items-center justify-center overflow-hidden rounded-xl shrink-0">
+                            <div className="h-[120px] w-auto bg-[#C6C6C6] flex items-center justify-center overflow-hidden rounded-xl shrink-0">
                                 <img src="./img/News/news2.jpg" alt="Truy Tìm Long Diên Hương" className="object-cover h-full w-full rounded-xl cursor-pointer" />
                             </div>
                             <div className="p-4 flex flex-col justify-between h-[100px] flex-1">
@@ -598,7 +605,7 @@ const Home = () => {
                                     [Review] Truy Tìm Long Diên Hương: Võ Thuật - Hài Dẫn Đầu Màn Ảnh Việt
                                 </h3>
                                 <div className="flex justify-start">
-                                    <NavLink to="*" className="text-red-500 font-semibold hover:text-red-700 transition duration-200 cursor-pointer">
+                                    <NavLink to="*" className="text-red-500 font-semibold hover:text-red-700 transition duration-300 cursor-pointer">
                                         Read more &gt;&gt;
                                     </NavLink>
                                 </div>
@@ -606,7 +613,7 @@ const Home = () => {
                         </div>
 
                         <div className="flex bg-white shadow-lg overflow-hidden rounded-xl transition-all duration-300 cursor-pointer">
-                            <div className="h-[120px] w-auto bg-gray-300 flex items-center justify-center overflow-hidden rounded-xl shrink-0">
+                            <div className="h-[120px] w-auto bg-[#C6C6C6] flex items-center justify-center overflow-hidden rounded-xl shrink-0">
                                 <img src="./img/News/news3.jpg" alt="Trái Tim Què Quặt" className="object-cover h-full w-full rounded-xl cursor-pointer" />
                             </div>
                             <div className="p-4 flex flex-col justify-between h-[100px] flex-1">
@@ -614,7 +621,7 @@ const Home = () => {
                                     [Review] Trái Tim Què Quặt: Hai Mối Tình Và Một Vụ Án Mạng
                                 </h3>
                                 <div className="flex justify-start">
-                                    <NavLink to="*" className="text-red-500 font-semibold hover:text-red-700 transition duration-200 cursor-pointer">
+                                    <NavLink to="*" className="text-red-500 font-semibold hover:text-red-700 transition duration-300 cursor-pointer">
                                         Read more &gt;&gt;
                                     </NavLink>
                                 </div>
@@ -622,7 +629,7 @@ const Home = () => {
                         </div>
 
                         <div className="flex bg-white shadow-lg overflow-hidden rounded-xl transition-all duration-300 cursor-pointer">
-                            <div className="h-[120px] w-auto bg-gray-300 flex items-center justify-center overflow-hidden rounded-xl shrink-0">
+                            <div className="h-[120px] w-auto bg-[#C6C6C6] flex items-center justify-center overflow-hidden rounded-xl shrink-0">
                                 <img src="./img/News/news4.jpg" alt="Cục Vàng Của Ngoại" className="object-cover h-full w-full rounded-xl cursor-pointer" />
                             </div>
                             <div className="p-4 flex flex-col justify-between h-[100px] flex-1">
@@ -630,7 +637,7 @@ const Home = () => {
                                     [Review] Cục Vàng Của Ngoại: Việt Hương - Hồng Đào Lấy Nước Mắt Khán Giả
                                 </h3>
                                 <div className="flex justify-start">
-                                    <NavLink to="*" className="text-red-500 font-semibold hover:text-red-700 transition duration-200 cursor-pointer">
+                                    <NavLink to="*" className="text-red-500 font-semibold hover:text-red-700 transition duration-300 cursor-pointer">
                                         Read more &gt;&gt;
                                     </NavLink>
                                 </div>

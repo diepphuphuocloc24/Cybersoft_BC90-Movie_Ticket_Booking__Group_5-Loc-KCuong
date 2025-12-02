@@ -1,76 +1,62 @@
 import { Route } from "react-router-dom";
 
-import HomeTemplate from "../pages/HomeTemplate";
-import Home from "../pages/HomeTemplate/Home";
-import MovieList from "../pages/HomeTemplate/MovieList";
-import MovieDetail from "../pages/HomeTemplate/MovieDetail";
-import TicketBooking from "../pages/HomeTemplate/TicketBooking";
-import CheckOut from "../pages/HomeTemplate/CheckOut";
-
-import AdminTemplate from "../pages/AdminTemplate";
-import Dashboard from "../pages/AdminTemplate/Dashboard";
-import Movies from "../pages/AdminTemplate/Movies";
-import Users from "../pages/AdminTemplate/Users";
-
-import PageNotFound from "../pages/PageNotFound";
-
-import AuthTemplate from "../pages/AuthTemplate";
+import React, { lazy } from "react";
 
 const routes = [
   {
     path: "/",
-    element: <HomeTemplate />,
+    element: React.createElement(lazy(() => import("../pages/HomeTemplate"))),
     nested: [
       {
         path: "",
-        element: <Home />,
+        element: React.createElement(lazy(() => import("../pages/HomeTemplate/Home"))),
       },
       {
         path: "movie-list",
-        element: <MovieList />,
+        element: React.createElement(lazy(() => import("../pages/HomeTemplate/MovieList"))),
       },
       {
         path: "movie-detail/:maPhim",
-        element: <MovieDetail />
+        element: React.createElement(lazy(() => import("../pages/HomeTemplate/MovieDetail"))),
       },
       {
         path: "buy-ticket/:maLichChieu",
-        element: <TicketBooking />
+        element: React.createElement(lazy(() => import("../pages/HomeTemplate/TicketBooking"))),
       },
       {
         path: "check-out",
-        element: <CheckOut />
+        element: React.createElement(lazy(() => import("../pages/HomeTemplate/CheckOut"))),
       }
     ],
   },
 
   {
     path: "/admin",
-    element: <AdminTemplate />,
+    element: React.createElement(lazy(() => import("../pages/AdminTemplate"))),
     nested: [
       {
         path: "",
-        element: <Dashboard />
+        element: React.createElement(lazy(() => import("../pages/AdminTemplate/Dashboard"))),
       },
       {
         path: "users",
-        element: <Users />
+        element: React.createElement(lazy(() => import("../pages/AdminTemplate/Users"))),
       },
       {
         path: "movies",
-        element: <Movies />
+        element: React.createElement(lazy(() => import("../pages/AdminTemplate/Movies"))),
       },
     ],
   },
 
   {
     path: "*",
-    element: <PageNotFound />
+    element: React.createElement(lazy(() => import("../pages/PageNotFound"))),
   },
 
   {
     path: "auth",
-    element: <AuthTemplate />
+    element: React.createElement(lazy(() => import("../pages/AdminTemplate/Auth"))),
   },
 ];
 

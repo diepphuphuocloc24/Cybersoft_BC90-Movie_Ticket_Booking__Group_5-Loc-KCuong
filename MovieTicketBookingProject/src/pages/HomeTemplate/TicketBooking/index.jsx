@@ -15,13 +15,17 @@ const TicketBooking = () => {
 
     const { dataSeats, loading } = stateSeats;
 
-    const [activeSeats, setActiveSeats] = useState([]);
+    const [activeSeats, setActiveSeats] = useState([
+        {
+            "maGhe": null,
+            "giaVe": null
+        }
+    ]);
 
     const [modalConfirmOpen, setModalConfirmOpen] = useState(false);
 
     console.log('Mã lịch chiếu truyền qua:', maLichChieu);
     console.log('Data Seat tương đương là:', dataSeats);
-    console.log(activeSeats);
 
     useEffect(() => {
         dispatch(fetchSeats(maLichChieu));
@@ -271,7 +275,7 @@ const TicketBooking = () => {
                 {/* RIGHT */}
                 <div className='w-2/7'>
 
-                    <div className="bg-gray-700 text-white p-7 rounded-3xl shadow-xl flex flex-col gap-6 border border-gray-100 transition-all hover:shadow-2xl">
+                    <div className="bg-[#555555] text-white p-7 rounded-3xl shadow-xl flex flex-col gap-6 border border-gray-100 transition-all hover:shadow-2xl">
                         <div>
                             {renderMovieInformation()}
                         </div>
@@ -313,10 +317,10 @@ const TicketBooking = () => {
                             onClick={handleCloseModal}
                             className="absolute -top-4 -right-4 w-8 h-8 flex items-center justify-center bg-black text-white rounded-full ring-2 ring-white transition duration-300 cursor-pointer hover:bg-red-500 hover:text-white"
                         >
-                            <i className="fi fi-rr-cross-small text-base leading-none flex-shrink-0"></i>
+                            <i className="fi fi-rr-cross-small text-base leading-none shrink-0"></i>
                         </button>
 
-                        <h2 className="text-2xl font-bold text-gray-900 mb-5 tracking-wide">
+                        <h2 className="text-2xl font-bold text-black mb-5 tracking-wide">
                             Confirm Booking
                         </h2>
 
@@ -366,7 +370,7 @@ const TicketBooking = () => {
                                 <div className="flex items-center justify-between">
                                     <div>
                                         <p className="text-sm text-gray-600">Selected Seats</p>
-                                        <p className="text-2xl font-semibold text-gray-900">
+                                        <p className="text-2xl font-semibold text-black">
                                             {activeSeats.length > 0 ? activeSeats.join(', ') : 'None'}
                                         </p>
                                     </div>

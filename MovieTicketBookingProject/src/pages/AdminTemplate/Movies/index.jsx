@@ -62,7 +62,7 @@ const Movies = () => {
 
     return (
         <div className="p-6">
-            <h1 className="text-3xl font-bold text-gray-900 mb-6">Movies Management</h1>
+            <h1 className="text-3xl font-bold text-black mb-6">Movies Management</h1>
 
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
                 <div className="flex flex-col md:flex-row md:items-center gap-4 w-full md:w-2/3">
@@ -74,7 +74,7 @@ const Movies = () => {
                     <button className="flex items-center gap-2 px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-700 
     hover:bg-indigo-50 hover:border-indigo-300 hover:text-indigo-600 
     focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-1 
-    transition-all duration-200 shadow-sm cursor-pointer font-medium">
+    transition-all duration-300 shadow-sm cursor-pointer font-medium">
                         <i className="fi fi-rr-bars-filter"></i>
                         Filter
                     </button>
@@ -100,7 +100,7 @@ const Movies = () => {
                                 Add New Movie
                             </h3>
                             <button
-                                className="text-gray-500 hover:text-red-500 transition-colors duration-200 cursor-pointer"
+                                className="text-gray-500 hover:text-red-500 transition-colors duration-300 cursor-pointer"
                                 type="button"
                                 onClick={() => setShowModal(false)}
                             >
@@ -212,7 +212,7 @@ const Movies = () => {
                         {/* FOOTER */}
                         <div className="flex justify-end gap-3 p-6 border-t border-gray-200">
                             <button
-                                className="px-5 py-2 rounded-lg bg-gray-300 hover:bg-gray-400 transition cursor-pointer"
+                                className="px-5 py-2 rounded-lg bg-[#C6C6C6] hover:bg-[#AAAAAA] transition cursor-pointer"
                                 onClick={() => setShowModal(false)}
                             >
                                 Close

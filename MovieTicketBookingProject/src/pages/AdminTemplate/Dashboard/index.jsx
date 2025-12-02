@@ -42,32 +42,32 @@ const Dashboard = () => {
 
     return (
         <div className="p-6">
-            <h1 className="text-3xl font-bold text-gray-900 mb-6">Dashboard</h1>
+            <h1 className="text-3xl font-bold text-black mb-6">Dashboard</h1>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mb-8">
                 <div className="bg-white p-5 rounded-xl shadow-md border-l-4 border-blue-500 hover:shadow-xl transition-shadow duration-300">
                     <p className="text-sm font-medium text-gray-500">Total Revenue</p>
-                    <CountUp start={0} end={12500} duration={3} separator="," prefix="$" enableScrollSpy preserveValue className="text-2xl font-bold text-gray-900 mt-1" />
+                    <CountUp start={0} end={12500} duration={3} separator="," prefix="$" enableScrollSpy preserveValue className="text-2xl font-bold text-black mt-1" />
                 </div>
                 <div className="bg-white p-5 rounded-xl shadow-md border-l-4 border-green-500 hover:shadow-xl transition-shadow duration-300">
                     <p className="text-sm font-medium text-gray-500">Tickets Sold</p>
-                    <CountUp start={0} end={500} duration={3} separator="," enableScrollSpy preserveValue className="text-2xl font-bold text-gray-900 mt-1" />
+                    <CountUp start={0} end={500} duration={3} separator="," enableScrollSpy preserveValue className="text-2xl font-bold text-black mt-1" />
                 </div>
                 <div className="bg-white p-5 rounded-xl shadow-md border-l-4 border-yellow-500 hover:shadow-xl transition-shadow duration-300">
                     <p className="text-sm font-medium text-gray-500">Movies Showing</p>
-                    <CountUp start={0} end={5} duration={3} separator="," enableScrollSpy preserveValue className="text-2xl font-bold text-gray-900 mt-1" />
+                    <CountUp start={0} end={5} duration={3} separator="," enableScrollSpy preserveValue className="text-2xl font-bold text-black mt-1" />
                 </div>
                 <div className="bg-white p-5 rounded-xl shadow-md border-l-4 border-red-500 hover:shadow-xl transition-shadow duration-300">
                     <p className="text-sm font-medium text-gray-500">New Users</p>
-                    <CountUp start={0} end={50} duration={3} separator="," enableScrollSpy preserveValue className="text-2xl font-bold text-gray-900 mt-1" />
+                    <CountUp start={0} end={50} duration={3} separator="," enableScrollSpy preserveValue className="text-2xl font-bold text-black mt-1" />
                 </div>
                 <div className="bg-white p-5 rounded-xl shadow-md border-l-4 border-purple-500 hover:shadow-xl transition-shadow duration-300">
                     <p className="text-sm font-medium text-gray-500">Active Screens</p>
-                    <CountUp start={0} end={8} duration={3} enableScrollSpy preserveValue className="text-2xl font-bold text-gray-900 mt-1" />
+                    <CountUp start={0} end={8} duration={3} enableScrollSpy preserveValue className="text-2xl font-bold text-black mt-1" />
                 </div>
                 <div className="bg-white p-5 rounded-xl shadow-md border-l-4 border-pink-500 hover:shadow-xl transition-shadow duration-300">
                     <p className="text-sm font-medium text-gray-500">Bookings Today</p>
-                    <CountUp start={0} end={120} duration={3} enableScrollSpy preserveValue className="text-2xl font-bold text-gray-900 mt-1" />
+                    <CountUp start={0} end={120} duration={3} enableScrollSpy preserveValue className="text-2xl font-bold text-black mt-1" />
                 </div>
             </div>
 

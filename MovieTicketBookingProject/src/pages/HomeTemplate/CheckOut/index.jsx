@@ -9,7 +9,7 @@ const CheckOut = () => {
                 <div className="lg:col-span-2 bg-white rounded-3xl p-10 shadow-xl border border-gray-100 transition-all hover:shadow-2xl">
                     <div className="flex items-start justify-between">
                         <div>
-                            <h1 className="text-3xl font-bold text-gray-900">Review & Payment</h1>
+                            <h1 className="text-3xl font-bold text-black">Review & Payment</h1>
                             <p className="text-sm text-gray-500 mt-1">Verify your details and complete your order.</p>
                         </div>
 
@@ -35,7 +35,7 @@ const CheckOut = () => {
                 </div>
 
                 <div className="bg-white rounded-3xl p-10 shadow-xl border border-gray-100 transition-all hover:shadow-2xl">
-                    <h3 className="text-xl font-bold text-gray-900">Order Summary</h3>
+                    <h3 className="text-xl font-bold text-black">Order Summary</h3>
 
                     <div className="mt-6 space-y-4">
                         <div className="flex justify-between text-sm text-gray-600 hover:text-gray-800 transition cursor-pointer">
@@ -58,7 +58,7 @@ const CheckOut = () => {
                         <div className="flex justify-between items-center">
                             <div>
                                 <div className="text-sm text-gray-500">Total Payment</div>
-                                <div className="text-2xl font-bold text-gray-900">153,000 VND</div>
+                                <div className="text-2xl font-bold text-black">153,000 VND</div>
                             </div>
                         </div>
 
@@ -71,7 +71,7 @@ const CheckOut = () => {
                                     className="w-4/7 px-4 py-2 border rounded-xl bg-gray-50 focus:ring-2 focus:ring-red-500 transition outline-none"
                                 />
                                 <button
-                                    className="w-3/7 ml-3 px-5 py-2 bg-black text-white rounded-xl font-medium hover:bg-gray-800 transition cursor-pointer"
+                                    className="w-3/7 ml-3 px-5 py-2 bg-black text-white rounded-xl font-medium hover:bg-[#383838] transition cursor-pointer"
                                 >
                                     Apply
                                 </button>

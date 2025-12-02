@@ -1,64 +1,72 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React from "react";
+import { NavLink } from "react-router-dom";
 
-const AdminHeader = () => {
+const AdminHeader = ({ collapsed = false }) => {
     return (
-        <aside className="flex-1 bg-black text-white flex flex-col shadow-2xl text-xl">
-            <div className="py-6 px-2 text-2xl font-extrabold text-blue-400 flex items-center justify-center">
-                <img src="/img/logo.png" alt="Logo" />
+        <aside className="h-full bg-black text-white flex flex-col shadow-2xl">
+            <div className="py-6 flex items-center justify-center">
+                <img src="/img/logo.png" alt="Logo" className="w-[85%]" />
             </div>
 
-            <nav className="flex flex-col py-8 gap-5">
+            <nav className="flex flex-col py-5 gap-3">
                 <NavLink
                     to="/admin"
                     end
                     className={({ isActive }) =>
-                        `flex items-center p-4 transition duration-150 ${isActive ? "bg-white text-black"
-                            : "hover:bg-gray-300 hover:text-black text-white"
+                        `flex items-center gap-3 p-4 text-lg transition ${isActive ? "bg-white text-black" : "hover:bg-[#AAAAAA] hover:text-black"
                         }`
                     }
                 >
-                    <span className="mr-3"><i className="fi fi-br-stats"></i></span> Dashboard
+                    <i className="fi fi-br-stats"></i>
+                    {!collapsed && <span>Dashboard</span>}
                 </NavLink>
 
                 <NavLink
                     to="/admin/movies"
                     className={({ isActive }) =>
-                        `flex items-center p-4 transition duration-150 ${isActive
-                            ? "bg-white text-black"
-                            : "hover:bg-gray-300 hover:text-black text-white"
+                        `flex items-center gap-3 p-4 text-lg transition ${isActive ? "bg-white text-black" : "hover:bg-[#AAAAAA] hover:text-black"
                         }`
                     }
                 >
-                    <span className="mr-3"><i className="fi fi-ss-clapper-open"></i></span> Movies
+                    <i className="fi fi-ss-clapper-open"></i>
+                    {!collapsed && <span>Movies</span>}
                 </NavLink>
 
                 <NavLink
                     to="/admin/users"
                     className={({ isActive }) =>
-                        `flex items-center p-4 transition duration-150 ${isActive
-                            ? "bg-white text-black"
-                            : "hover:bg-gray-300 hover:text-black text-white"
+                        `flex items-center gap-3 p-4 text-lg transition ${isActive ? "bg-white text-black" : "hover:bg-[#AAAAAA] hover:text-black"
                         }`
                     }
                 >
-                    <span className="mr-3"><i className="fi fi-sr-user"></i></span> Users
+                    <i className="fi fi-sr-user"></i>
+                    {!collapsed && <span>Users</span>}
+                </NavLink>
+
+                <NavLink
+                    to="/admin/settings"
+                    className={({ isActive }) =>
+                        `flex items-center gap-3 p-4 text-lg transition ${isActive ? "bg-white text-black" : "hover:bg-[#AAAAAA] hover:text-black"
+                        }`
+                    }
+                >
+                    <i className="fi fi-rr-settings-sliders"></i>
+                    {!collapsed && <span>Settings</span>}
                 </NavLink>
 
                 <NavLink
                     to="*"
                     className={({ isActive }) =>
-                        `flex items-center p-4 transition duration-150 ${isActive
-                            ? "bg-white text-black"
-                            : "hover:bg-gray-300 hover:text-black text-white"
+                        `flex items-center gap-3 p-4 text-lg transition ${isActive ? "bg-white text-black" : "hover:bg-[#AAAAAA] hover:text-black"
                         }`
                     }
                 >
-                    <span className="mr-3"><i className="fi fi-rr-settings-sliders"></i></span> Settings
+                    <i className="fi fi-rs-sign-out-alt"></i>
+                    {!collapsed && <span>Logout</span>}
                 </NavLink>
             </nav>
         </aside>
-    )
-}
+    );
+};
 
-export default AdminHeader
+export default AdminHeader;
