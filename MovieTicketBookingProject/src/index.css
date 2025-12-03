@@ -11,16 +11,6 @@ body {
 }
 
 /* HEADER */
-.logo-img {
-    height: 48px;
-    width: auto;
-    object-fit: contain;
-    transition: opacity 0.3s ease;
-}
-
-.logo-img:hover {
-    opacity: 0.9;
-}
 
 /* NAV BUTTONS */
 .slick-prev,
@@ -29,8 +19,8 @@ body {
     top: 50% !important;
     transform: translateY(-50%);
     pointer-events: auto;
-    width: 50px !important;
-    height: 50px !important;
+    width: 40px !important;
+    height: 40px !important;
     border-radius: 50% !important;
     display: flex !important;
     justify-content: center !important;
@@ -43,20 +33,68 @@ body {
     opacity: 0.5;
 }
 
+@media (min-width: 640px) {
+
+    .slick-prev,
+    .slick-next {
+        width: 45px !important;
+        height: 45px !important;
+    }
+
+    .slick-prev:before,
+    .slick-next:before {
+        font-size: 20px !important;
+    }
+}
+
+@media (min-width: 768px) {
+
+    .slick-prev,
+    .slick-next {
+        width: 50px !important;
+        height: 50px !important;
+    }
+
+    .slick-prev:before,
+    .slick-next:before {
+        font-size: 22px !important;
+    }
+}
+
+@media (min-width: 1024px) {
+
+    .slick-prev,
+    .slick-next {
+        width: 55px !important;
+        height: 55px !important;
+    }
+
+    .slick-prev:before,
+    .slick-next:before {
+        font-size: 24px !important;
+    }
+}
+
+@media (min-width: 1280px) {
+
+    .slick-prev,
+    .slick-next {
+        width: 60px !important;
+        height: 60px !important;
+    }
+
+    .slick-prev:before,
+    .slick-next:before {
+        font-size: 26px !important;
+    }
+}
+
 .slick-prev {
     left: 20px !important;
 }
 
 .slick-next {
     right: 20px !important;
-}
-
-.slick-prev:before,
-.slick-next:before {
-    font-size: 24px !important;
-    color: gray !important;
-    line-height: 0 !important;
-    transition: 0.3s ease;
 }
 
 .slick-prev:hover,
@@ -99,8 +137,8 @@ body {
 
 .slick-dots li button:before {
     display: inline-block;
-    width: 30px !important;
-    height: 5px !important;
+    width: 20px !important;
+    height: 4px !important;
     background: gray !important;
     border-radius: 15% !important;
     content: "" !important;
@@ -113,6 +151,66 @@ body {
     background: red !important;
 }
 
+@media (min-width: 640px) {
+
+    .slick-dots li button:before {
+        width: 22px !important;
+        height: 4px !important;
+    }
+
+    .slick-dots {
+        bottom: 4px !important;
+    }
+
+    .slick-dots li {
+        margin: 8px !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .slick-dots li button:before {
+        width: 25px !important;
+        height: 5px !important;
+    }
+
+    .slick-dots {
+        bottom: 3px !important;
+    }
+
+    .slick-dots li {
+        margin: 6px !important;
+    }
+}
+
+@media (min-width: 1024px) {
+    .slick-dots li button:before {
+        width: 28px !important;
+        height: 5px !important;
+    }
+
+    .slick-dots {
+        bottom: 3px !important;
+    }
+
+    .slick-dots li {
+        margin: 6px !important;
+    }
+}
+
+@media (min-width: 1280px) {
+    .slick-dots li button:before {
+        width: 30px !important;
+        height: 5px !important;
+    }
+
+    .slick-dots {
+        bottom: 5px !important;
+    }
+
+    .slick-dots li {
+        margin: 10px !important;
+    }
+}
 
 /* ANIMATIONS */
 @keyframes bell {

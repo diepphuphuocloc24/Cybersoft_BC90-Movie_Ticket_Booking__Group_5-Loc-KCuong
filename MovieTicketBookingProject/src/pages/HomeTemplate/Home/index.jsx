@@ -1,662 +1,934 @@
-import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchMovieHome } from './slice';
-import { fetchMovieList } from '../MovieList/slice';
-import Movie from '../MovieList/movie';
+import { useDispatch, useSelector } from "react-redux";
+import { fetchMovieHome } from "./slice";
+import { fetchMovieList } from "../MovieList/slice";
+import Movie from "../MovieList/movie";
 
 const Home = () => {
-    const [activeTab, setActiveTab] = useState('now');
+  const [activeTab, setActiveTab] = useState("now");
 
-    const carouselSlide = {
-        dots: true,
-        arrows: true,
-        infinite: true,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: true,
-        speed: 500,
-        autoplaySpeed: 6000,
-        fade: true,
-        cssEase: "linear",
-        waitForAnimate: false
-    };
+  const carouselSlide = {
+    dots: true,
+    arrows: true,
+    infinite: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    speed: 500,
+    autoplaySpeed: 6000,
+    fade: true,
+    cssEase: "linear",
+    waitForAnimate: false,
+  };
 
-    const moviesSlide = {
-        dots: false,
-        arrows: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 4,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 5000,
-        cssEase: "linear",
-        waitForAnimate: false,
-        responsive: [
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 1,
-                    infinite: true,
-                    dots: true
-                }
-            },
-            {
-                breakpoint: 600,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1
-                }
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1
-                }
-            }
-        ]
-    };
+  const moviesSlide = {
+    arrows: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 5000,
+    cssEase: "linear",
+    waitForAnimate: false,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          infinite: true,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          infinite: true,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          infinite: true,
+        },
+      },
+    ],
+  };
 
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    const stateList = useSelector((state) => state.movieListReducer);
+  const stateList = useSelector((state) => state.movieListReducer);
 
-    const dataCarousel = useSelector((state) => {
-        return state.movieHomeReducer.dataHome?.dataCarousel
-    });
+  const dataChainCinema = useSelector((state) => {
+    return state.movieHomeReducer.dataHome?.dataChainCinema;
+  });
 
-    const dataChainCinema = useSelector((state) => {
-        return state.movieHomeReducer.dataHome?.dataChainCinema
-    });
+  console.log(dataChainCinema);
 
-    console.log(dataChainCinema);
+  useEffect(() => {
+    dispatch(fetchMovieList());
+    dispatch(fetchMovieHome());
+  }, [dispatch]);
 
-    useEffect(() => {
-        dispatch(fetchMovieList());
-        dispatch(fetchMovieHome());
-    }, [dispatch]);
+  const { data, loading } = stateList;
 
-    const { data, loading } = stateList;
-
-    if (loading) {
-        return (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 p-4">
-                <div className="animate-pulse space-y-3">
-                    <div className="w-full aspect-3/4 bg-gray-200 rounded-lg" />
-                    <div className="h-4 bg-gray-200 rounded w-3/4" />
-                    <div className="h-3 bg-gray-200 rounded w-1/2" />
-                </div>
-                <div className="animate-pulse space-y-3">
-                    <div className="w-full aspect-3/4 bg-gray-200 rounded-lg" />
-                    <div className="h-4 bg-gray-200 rounded w-2/3" />
-                    <div className="h-3 bg-gray-200 rounded w-1/3" />
-                </div>
-                <div className="animate-pulse space-y-3">
-                    <div className="w-full aspect-3/4 bg-gray-200 rounded-lg" />
-                    <div className="h-4 bg-gray-200 rounded w-1/2" />
-                    <div className="h-3 bg-gray-200 rounded w-3/4" />
-                </div>
-                <div className="animate-pulse space-y-3">
-                    <div className="w-full aspect-3/4 bg-gray-200 rounded-lg" />
-                    <div className="h-4 bg-gray-200 rounded w-4/5" />
-                    <div className="h-3 bg-gray-200 rounded w-2/3" />
-                </div>
-                <div className="animate-pulse space-y-3">
-                    <div className="w-full aspect-3/4 bg-gray-200 rounded-lg" />
-                    <div className="h-4 bg-gray-200 rounded w-3/5" />
-                    <div className="h-3 bg-gray-200 rounded w-1/2" />
-                </div>
-            </div>
-        );
-    }
-
-    const renderMovieCarousel = () => {
-        return dataCarousel?.map((movie) => {
-            return (
-                <div key={movie.maBanner} className="item relative group">
-                    <img
-                        src={movie.hinhAnh}
-                        className="w-full h-135 overflow-hidden object-cover"
-                    />
-                    <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
-                    <NavLink
-                        to="*"
-                        className="
-    absolute right-[43%] bottom-20
-    flex items-center justify-center gap-3
-    bg-linear-to-r from-blue-500 to-purple-600
-    text-white px-6 py-3 h-10
-    rounded-full font-semibold shadow-lg
-    opacity-0 translate-y-8 
-    group-hover:opacity-100 group-hover:translate-y-0
-    transition-all duration-500 ease-out
-  "
-                    >
-                        <span className="flex items-center h-full">Get Tickets</span>
-
-                        <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
-                            <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
-                        </span>
-                    </NavLink>
-                </div>
-            )
-        })
-    }
-
-    const renderPlanCinema = () => {
-        return dataChainCinema?.map((cinema) => {
-            return (
-                <option
-                    key={cinema.maHeThongRap}
-                    value={cinema.biDanh}>
-                    {cinema.tenHeThongRap}
-                </option>
-            )
-        })
-    }
-
-    const renderPlanMovie = () => {
-        return data?.map((movie) => {
-            if (movie.dangChieu) {
-                return (
-                    <option key={movie.maPhim} value="option1">{movie.tenPhim} </option>
-                )
-            }
-        })
-    }
-
-    const renderNowMovieList = () => {
-        return data?.map((movie) => {
-            if (movie.hot && movie.dangChieu) {
-                return <Movie key={movie.maPhim} propMovie={movie} />;
-            }
-        });
-    };
-
-    const renderUpComingMovieList = () => {
-        return data?.map((movie) => {
-            if (!movie.dangChieu) {
-                return <Movie key={movie.maPhim} propMovie={movie} />;
-            }
-        });
-    };
-
+  if (loading) {
     return (
-        <>
-            {/* CAROUSEL */}
-            <div className="slider-container relative pb-10">
-                <Slider {...carouselSlide}>
-                    {/* Intro */}
-                    <div className="item relative group">
-                        <img
-                            src="./img/Carousel/carousel0.gif"
-                            className="w-full object-cover"
-                        />
-                    </div>
-
-                    {/* Phim 1 */}
-                    <div className="item relative group">
-                        <img
-                            src="./img/Carousel/carousel0-1.jpg"
-                            className="w-full object-cover"
-                        />
-                        <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
-                        <NavLink
-                            to="*"
-                            className="
-    absolute right-[43%] bottom-20
-    flex items-center justify-center gap-3
-    bg-linear-to-r from-blue-500 to-purple-600
-    text-white px-6 py-3 h-10
-    rounded-full font-semibold shadow-lg
-    opacity-0 translate-y-8 
-    group-hover:opacity-100 group-hover:translate-y-0
-    transition-all duration-500 ease-out
-  "
-                        >
-                            <span className="flex items-center h-full">Get Tickets</span>
-
-                            <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
-                                <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
-                            </span>
-                        </NavLink>
-                    </div>
-
-                    {renderMovieCarousel()}
-
-                    {/* Phim 2 */}
-                    <div className="item relative group">
-                        <img
-                            src="./img/Carousel/carousel1.jpg"
-                            className="w-full object-cover"
-                        />
-                        <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
-                        <NavLink
-                            to="*"
-                            className="
-    absolute right-[43%] bottom-20
-    flex items-center justify-center gap-3
-    bg-linear-to-r from-blue-500 to-purple-600
-    text-white px-6 py-3 h-10
-    rounded-full font-semibold shadow-lg
-    opacity-0 translate-y-8 
-    group-hover:opacity-100 group-hover:translate-y-0
-    transition-all duration-500 ease-out
-  "
-                        >
-                            <span className="flex items-center h-full">Get Tickets</span>
-
-                            <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
-                                <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
-                            </span>
-                        </NavLink>
-                    </div>
-
-                    {/* Phim 3 */}
-                    <div className="item relative group">
-                        <img
-                            src="./img/Carousel/carousel2.jpg"
-                            className="w-full object-cover"
-                        />
-                        <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
-                        <NavLink
-                            to="*"
-                            className="
-    absolute right-[43%] bottom-20
-    flex items-center justify-center gap-3
-    bg-linear-to-r from-blue-500 to-purple-600
-    text-white px-6 py-3 h-10
-    rounded-full font-semibold shadow-lg
-    opacity-0 translate-y-8 
-    group-hover:opacity-100 group-hover:translate-y-0
-    transition-all duration-500 ease-out
-  "
-                        >
-                            <span className="flex items-center h-full">Get Tickets</span>
-
-                            <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
-                                <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
-                            </span>
-                        </NavLink>
-                    </div>
-
-                    {/* Phim 4 */}
-                    <div className="item relative group">
-                        <img
-                            src="./img/Carousel/carousel3.jpg"
-                            className="w-full object-cover"
-                        />
-                        <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
-                        <NavLink
-                            to="*"
-                            className="
-    absolute right-[43%] bottom-20
-    flex items-center justify-center gap-3
-    bg-linear-to-r from-blue-500 to-purple-600
-    text-white px-6 py-3 h-10
-    rounded-full font-semibold shadow-lg
-    opacity-0 translate-y-8 
-    group-hover:opacity-100 group-hover:translate-y-0
-    transition-all duration-500 ease-out
-  "
-                        >
-                            <span className="flex items-center h-full">Get Tickets</span>
-
-                            <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
-                                <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
-                            </span>
-                        </NavLink>
-                    </div>
-
-                    {/* Phim 5 */}
-                    <div className="item relative group">
-                        <img
-                            src="./img/Carousel/carousel4.jpg"
-                            className="w-full object-cover"
-                        />
-                        <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
-                        <NavLink
-                            to="*"
-                            className="
-    absolute right-[43%] bottom-20
-    flex items-center justify-center gap-3
-    bg-linear-to-r from-blue-500 to-purple-600
-    text-white px-6 py-3 h-10
-    rounded-full font-semibold shadow-lg
-    opacity-0 translate-y-8 
-    group-hover:opacity-100 group-hover:translate-y-0
-    transition-all duration-500 ease-out
-  "
-                        >
-                            <span className="flex items-center h-full">Get Tickets</span>
-
-                            <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
-                                <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
-                            </span>
-                        </NavLink>
-                    </div>
-
-                    {/* Phim 6 */}
-                    <div className="item relative group">
-                        <img
-                            src="./img/Carousel/carousel5.jpg"
-                            className="w-full object-cover"
-                        />
-                        <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
-                        <NavLink
-                            to="*"
-                            className="
-    absolute right-[43%] bottom-20
-    flex items-center justify-center gap-3
-    bg-linear-to-r from-blue-500 to-purple-600
-    text-white px-6 py-3 h-10
-    rounded-full font-semibold shadow-lg
-    opacity-0 translate-y-8 
-    group-hover:opacity-100 group-hover:translate-y-0
-    transition-all duration-500 ease-out
-  "
-                        >
-                            <span className="flex items-center h-full">Get Tickets</span>
-
-                            <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
-                                <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
-                            </span>
-                        </NavLink>
-                    </div>
-                </Slider>
-            </div>
-
-            {/* DEAL BANNER */}
-            <div className="transition-all duration-300 pb-15">
-                <div className="container mx-auto">
-                    <NavLink to="/now-showing">
-                        <img
-                            src="./img/deal1.jpg"
-                            className="w-full object-cover rounded-xl"
-                            alt="deal"
-                        />
-                    </NavLink>
-                </div>
-            </div>
-
-            {/* QUICK BOOK TICKETS */}
-            <div className="bg-black text-white flex justify-center items-center py-20">
-                <div className="container mx-auto">
-                    <h2 className="text-4xl md:text-5xl font-extrabold mb-8 text-left">
-                        Ready to Grab Your Tickets?
-                    </h2>
-                    <div className="flex flex-col md:flex-row justify-start items-end gap-4 md:gap-6">
-                        <div className="flex flex-col w-full md:w-64">
-                            <label className="text-lg font-semibold text-gray-300 mb-2 text-left">Select Movie</label>
-                            <select
-                                className="w-full p-3 border border-gray-700 rounded-xl shadow-md bg-[#1C1C1C] text-white focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 cursor-pointer appearance-none transition-all duration-300 hover:shadow-lg"
-                            >
-                                <option value="">-- Select Movie --</option>
-                                {renderPlanMovie()}
-                            </select>
-                        </div>
-                        <div className="flex flex-col w-full md:w-64">
-                            <label className="text-lg font-semibold text-gray-300 mb-2 text-left">Select Cinema</label>
-                            <select
-                                className="w-full p-3 border border-gray-700 rounded-xl shadow-md bg-[#1C1C1C] text-white focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 cursor-pointer appearance-none transition-all duration-300 hover:shadow-lg"
-                            >
-                                <option value="">-- Select Cinema --</option>
-                                {renderPlanCinema()}
-                            </select>
-                        </div>
-                        <div className="flex flex-col w-full md:w-64">
-                            <label className="text-lg font-semibold text-gray-300 mb-2 text-left">Select Date</label>
-                            <select
-                                className="w-full p-3 border border-gray-700 rounded-xl shadow-md bg-[#1C1C1C] text-white focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 cursor-pointer appearance-none transition-all duration-300 hover:shadow-lg"
-                            >
-                                <option value="">-- Select Date --</option>
-                                <option value="option1">Option 1</option>
-                                <option value="option2">Option 2</option>
-                                <option value="option3">Option 3</option>
-                            </select>
-                        </div>
-                        <button className="w-full md:w-48 py-3 px-6 bg-amber-500 hover:bg-orange-500 rounded-xl font-bold text-black shadow-lg transition-transform duration-300 hover:scale-105 cursor-pointer">
-                            Book
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            {/* MOVIES TABS */}
-            <div className="py-15">
-                <div className="container relative">
-                    <div className="absolute top-0 left-0">
-                        <div className="relative inline px-1 py-10 rounded-l-lg text-white text-xl font-medium bg-black">
-                            SHOW ME
-                            <span
-                                className="absolute top-1/2 right-0 transform translate-x-full -translate-y-1/2"
-                                style={{
-                                    width: 0,
-                                    height: 0,
-                                    borderTop: '52px solid transparent',
-                                    borderBottom: '52px solid transparent',
-                                    borderLeft: '52px solid #000',
-                                }}
-                            ></span>
-                        </div>
-                    </div>
-
-                    <div className="flex justify-center text-lg font-bold mt-4">
-                        <button
-                            className={`${activeTab === 'now'
-                                ? 'text-red-500 border-b-2 border-red-600 text-3xl font-extrabold mb-6 pb-2'
-                                : 'text-gray-800 text-3xl font-extrabold mb-6 pb-2'
-                                } hover:text-red-600 transition-colors duration-300 cursor-pointer`}
-                            onClick={() => setActiveTab('now')}
-                        >
-                            NOW SHOWING
-                        </button>
-                        <button
-                            className={`${activeTab === 'upcoming'
-                                ? 'text-red-500 border-b-2 border-red-600 text-3xl font-extrabold mb-6 pb-2 ml-5'
-                                : 'text-gray-800 text-3xl font-extrabold mb-6 pb-2 ml-5'
-                                } hover:text-red-600 transition-colors duration-300 cursor-pointer`}
-                            onClick={() => setActiveTab('upcoming')}
-                        >
-                            UPCOMING
-                        </button>
-                    </div>
-                </div>
-
-                {activeTab === 'now' && (
-                    <div className="py-8">
-                        <div className='container'>
-                            <div className="flex items-center mb-6">
-                                <div className="flex flex-col justify-center flex-1 gap-1">
-                                    <div className="border-t-2 border-black h-0.5"></div>
-                                    <div className="border-t-2 border-black h-0.5"></div>
-                                </div>
-                                <h2 className="text-3xl font-extrabold text-black px-4">TOP MOVIES</h2>
-                                <div className="flex flex-col justify-center flex-1 gap-1">
-                                    <div className="border-t-2 border-black h-0.5"></div>
-                                    <div className="border-t-2 border-black h-0.5"></div>
-                                </div>
-                            </div>
-
-                            <div className="slider-container relative">
-                                <Slider className="movies-carousel" {...moviesSlide}>
-                                    {renderNowMovieList()}
-                                </Slider>
-                            </div>
-
-                            <div className="flex justify-center items-center mt-6">
-                                <NavLink
-                                    to="/movie-list"
-                                    className="relative inline-block text-red-500 font-semibold bg-white hover:bg-red-500 border hover:text-white border-red-500 hover:border-red-500 rounded-lg px-6 py-3 shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden cursor-pointer"
-                                >
-                                    SHOW MORE
-                                </NavLink>
-                            </div>
-                        </div>
-                    </div>
-                )}
-
-                {activeTab === 'upcoming' && (
-                    <div className="py-8 bg-black">
-                        <div className='container'>
-                            <div className="flex items-center mb-6">
-                                <div className="flex flex-col justify-center flex-1 gap-1">
-                                    <div className="border-t-2 border-amber-500 h-0.5"></div>
-                                    <div className="border-t-2 border-amber-500 h-0.5"></div>
-                                </div>
-                                <h2 className="text-3xl font-extrabold text-amber-500 px-4">COMING SOON</h2>
-                                <div className="flex flex-col justify-center flex-1 gap-1">
-                                    <div className="border-t-2 border-amber-500 h-0.5"></div>
-                                    <div className="border-t-2 border-amber-500 h-0.5"></div>
-                                </div>
-                            </div>
-
-                            <div className="slider-container relative">
-                                <Slider className="movies-carousel" {...moviesSlide}>
-                                    {renderUpComingMovieList()}
-                                </Slider>
-                            </div>
-
-                            <div className="flex justify-center items-center mt-6">
-                                <NavLink
-                                    to="/movie-list"
-                                    className="relative inline-block text-amber-500 font-semibold bg-black hover:bg-amber-500 border hover:text-black border-amber-500 hover:border-amber-500 rounded-lg px-6 py-3 shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden cursor-pointer"
-                                >
-                                    SHOW MORE
-                                </NavLink>
-                            </div>
-                        </div>
-                    </div>
-                )}
-            </div>
-
-            {/* NEWS */}
-            <section className="container mx-auto pb-15">
-                <div className="flex items-center mb-6 w-full relative">
-                    <div className="flex-1 h-7 bg-amber-500 relative">
-                        <div
-                            style={{
-                                position: 'absolute',
-                                right: '-20px',
-                                top: '50%',
-                                transform: 'translateY(-50%)',
-                                width: 0,
-                                height: 0,
-                                borderTop: '14px solid transparent',
-                                borderBottom: '14px solid transparent',
-                                borderLeft: '20px solid #f59e0b',
-                            }}
-                        ></div>
-                    </div>
-
-                    <h2 className="text-5xl font-extrabold text-black px-10">NEWS & REVIEWS</h2>
-
-                    <div className="flex-1 h-7 bg-amber-500 relative">
-                        <div
-                            style={{
-                                position: 'absolute',
-                                left: '-20px',
-                                top: '50%',
-                                transform: 'translateY(-50%)',
-                                width: 0,
-                                height: 0,
-                                borderTop: '14px solid transparent',
-                                borderBottom: '14px solid transparent',
-                                borderRight: '20px solid #f59e0b',
-                            }}
-                        ></div>
-                    </div>
-                </div>
-
-                <div className="flex flex-wrap gap-8 justify-center">
-                    <div className="flex-1 min-w-[300px]">
-                        <div className="flex flex-col bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer">
-                            <div className="h-90 bg-[#C6C6C6] flex items-center justify-center overflow-hidden rounded-xl">
-                                <img src="./img/News/news1.jpg" alt="Predator Badlands" className="object-cover h-full w-full rounded-xl cursor-pointer" />
-                            </div>
-                            <div className="p-4 flex flex-col justify-between">
-                                <h3 className="text-md font-semibold text-gray-800 mb-2 cursor-pointer">
-                                    [Review] Predator Badlands: Sự Hồi Sinh Của Thương Hiệu Quái Thú Lừng Lẫy
-                                </h3>
-                                <div className="flex justify-start">
-                                    <NavLink to="*" className="text-red-500 font-semibold hover:text-red-700 transition duration-300 cursor-pointer">
-                                        Read more &gt;&gt;
-                                    </NavLink>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="flex-1 flex flex-col gap-8 min-w-[300px]">
-                        <div className="flex bg-white shadow-lg overflow-hidden rounded-xl transition-all duration-300 cursor-pointer">
-                            <div className="h-[120px] w-auto bg-[#C6C6C6] flex items-center justify-center overflow-hidden rounded-xl shrink-0">
-                                <img src="./img/News/news2.jpg" alt="Truy Tìm Long Diên Hương" className="object-cover h-full w-full rounded-xl cursor-pointer" />
-                            </div>
-                            <div className="p-4 flex flex-col justify-between h-[100px] flex-1">
-                                <h3 className="text-md font-semibold text-gray-800 mb-2 cursor-pointer">
-                                    [Review] Truy Tìm Long Diên Hương: Võ Thuật - Hài Dẫn Đầu Màn Ảnh Việt
-                                </h3>
-                                <div className="flex justify-start">
-                                    <NavLink to="*" className="text-red-500 font-semibold hover:text-red-700 transition duration-300 cursor-pointer">
-                                        Read more &gt;&gt;
-                                    </NavLink>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="flex bg-white shadow-lg overflow-hidden rounded-xl transition-all duration-300 cursor-pointer">
-                            <div className="h-[120px] w-auto bg-[#C6C6C6] flex items-center justify-center overflow-hidden rounded-xl shrink-0">
-                                <img src="./img/News/news3.jpg" alt="Trái Tim Què Quặt" className="object-cover h-full w-full rounded-xl cursor-pointer" />
-                            </div>
-                            <div className="p-4 flex flex-col justify-between h-[100px] flex-1">
-                                <h3 className="text-md font-semibold text-gray-800 mb-2 cursor-pointer">
-                                    [Review] Trái Tim Què Quặt: Hai Mối Tình Và Một Vụ Án Mạng
-                                </h3>
-                                <div className="flex justify-start">
-                                    <NavLink to="*" className="text-red-500 font-semibold hover:text-red-700 transition duration-300 cursor-pointer">
-                                        Read more &gt;&gt;
-                                    </NavLink>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="flex bg-white shadow-lg overflow-hidden rounded-xl transition-all duration-300 cursor-pointer">
-                            <div className="h-[120px] w-auto bg-[#C6C6C6] flex items-center justify-center overflow-hidden rounded-xl shrink-0">
-                                <img src="./img/News/news4.jpg" alt="Cục Vàng Của Ngoại" className="object-cover h-full w-full rounded-xl cursor-pointer" />
-                            </div>
-                            <div className="p-4 flex flex-col justify-between h-[100px] flex-1">
-                                <h3 className="text-md font-semibold text-gray-800 mb-2 cursor-pointer">
-                                    [Review] Cục Vàng Của Ngoại: Việt Hương - Hồng Đào Lấy Nước Mắt Khán Giả
-                                </h3>
-                                <div className="flex justify-start">
-                                    <NavLink to="*" className="text-red-500 font-semibold hover:text-red-700 transition duration-300 cursor-pointer">
-                                        Read more &gt;&gt;
-                                    </NavLink>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="flex justify-center items-center mt-6">
-                    <NavLink
-                        to="*"
-                        className="relative inline-block text-gray-500 font-semibold bg-white hover:bg-red-500 border hover:text-white border-gray-500 hover:border-red-500 rounded-lg px-6 py-3 shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden cursor-pointer"
-                    >
-                        SEE MORE NEWS
-                    </NavLink>
-                </div>
-            </section>
-        </>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 p-4">
+        <div className="animate-pulse space-y-3">
+          <div className="w-full aspect-3/4 bg-gray-200 rounded-lg" />
+          <div className="h-4 bg-gray-200 rounded w-3/4" />
+          <div className="h-3 bg-gray-200 rounded w-1/2" />
+        </div>
+        <div className="animate-pulse space-y-3">
+          <div className="w-full aspect-3/4 bg-gray-200 rounded-lg" />
+          <div className="h-4 bg-gray-200 rounded w-2/3" />
+          <div className="h-3 bg-gray-200 rounded w-1/3" />
+        </div>
+        <div className="animate-pulse space-y-3">
+          <div className="w-full aspect-3/4 bg-gray-200 rounded-lg" />
+          <div className="h-4 bg-gray-200 rounded w-1/2" />
+          <div className="h-3 bg-gray-200 rounded w-3/4" />
+        </div>
+        <div className="animate-pulse space-y-3">
+          <div className="w-full aspect-3/4 bg-gray-200 rounded-lg" />
+          <div className="h-4 bg-gray-200 rounded w-4/5" />
+          <div className="h-3 bg-gray-200 rounded w-2/3" />
+        </div>
+        <div className="animate-pulse space-y-3">
+          <div className="w-full aspect-3/4 bg-gray-200 rounded-lg" />
+          <div className="h-4 bg-gray-200 rounded w-3/5" />
+          <div className="h-3 bg-gray-200 rounded w-1/2" />
+        </div>
+      </div>
     );
+  }
+
+  const renderPlanCinema = () => {
+    return dataChainCinema?.map((cinema) => {
+      return (
+        <option key={cinema.maHeThongRap} value={cinema.biDanh}>
+          {cinema.tenHeThongRap}
+        </option>
+      );
+    });
+  };
+
+  const renderPlanMovie = () => {
+    return data?.map((movie) => {
+      if (movie.dangChieu) {
+        return (
+          <option key={movie.maPhim} value="option1">
+            {movie.tenPhim}{" "}
+          </option>
+        );
+      }
+    });
+  };
+
+  const renderNowMovieList = () => {
+    return data?.map((movie) => {
+      if (movie.hot && movie.dangChieu) {
+        return <Movie key={movie.maPhim} propMovie={movie} />;
+      }
+    });
+  };
+
+  const renderUpComingMovieList = () => {
+    return data?.map((movie) => {
+      if (!movie.dangChieu) {
+        return <Movie key={movie.maPhim} propMovie={movie} />;
+      }
+    });
+  };
+
+  return (
+    <>
+      {/* CAROUSEL */}
+      <div className="slider-container relative pb-10">
+        <Slider {...carouselSlide}>
+          {/* Intro */}
+          <div className="item relative group">
+            <img
+              src="./img/Carousel/carousel0.gif"
+              className="w-full object-cover"
+            />
+          </div>
+
+          {/* Phim 1 */}
+          <div className="item relative group">
+            <img
+              src="./img/Carousel/carousel0-1.jpg"
+              className="w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
+            <NavLink
+              to="*"
+              className="
+    absolute right-[43%] bottom-20
+    flex items-center justify-center gap-3
+    bg-linear-to-r from-blue-500 to-purple-600
+    text-white px-6 py-3 h-10
+    rounded-full font-semibold shadow-lg
+    opacity-0 translate-y-8 
+    group-hover:opacity-100 group-hover:translate-y-0
+    transition-all duration-500 ease-out
+  "
+            >
+              <span className="flex items-center h-full">Get Tickets</span>
+
+              <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
+                <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
+              </span>
+            </NavLink>
+          </div>
+
+          {/* Phim 2 */}
+          <div className="item relative group">
+            <img
+              src="./img/Carousel/carousel1.jpg"
+              className="w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
+            <NavLink
+              to="*"
+              className="
+    absolute right-[43%] bottom-20
+    flex items-center justify-center gap-3
+    bg-linear-to-r from-blue-500 to-purple-600
+    text-white px-6 py-3 h-10
+    rounded-full font-semibold shadow-lg
+    opacity-0 translate-y-8 
+    group-hover:opacity-100 group-hover:translate-y-0
+    transition-all duration-500 ease-out
+  "
+            >
+              <span className="flex items-center h-full">Get Tickets</span>
+
+              <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
+                <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
+              </span>
+            </NavLink>
+          </div>
+
+          {/* Phim 3 */}
+          <div className="item relative group">
+            <img
+              src="./img/Carousel/carousel2.jpg"
+              className="w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
+            <NavLink
+              to="*"
+              className="
+    absolute right-[43%] bottom-20
+    flex items-center justify-center gap-3
+    bg-linear-to-r from-blue-500 to-purple-600
+    text-white px-6 py-3 h-10
+    rounded-full font-semibold shadow-lg
+    opacity-0 translate-y-8 
+    group-hover:opacity-100 group-hover:translate-y-0
+    transition-all duration-500 ease-out
+  "
+            >
+              <span className="flex items-center h-full">Get Tickets</span>
+
+              <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
+                <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
+              </span>
+            </NavLink>
+          </div>
+
+          {/* Phim 4 */}
+          <div className="item relative group">
+            <img
+              src="./img/Carousel/carousel3.jpg"
+              className="w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
+            <NavLink
+              to="*"
+              className="
+    absolute right-[43%] bottom-20
+    flex items-center justify-center gap-3
+    bg-linear-to-r from-blue-500 to-purple-600
+    text-white px-6 py-3 h-10
+    rounded-full font-semibold shadow-lg
+    opacity-0 translate-y-8 
+    group-hover:opacity-100 group-hover:translate-y-0
+    transition-all duration-500 ease-out
+  "
+            >
+              <span className="flex items-center h-full">Get Tickets</span>
+
+              <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
+                <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
+              </span>
+            </NavLink>
+          </div>
+
+          {/* Phim 5 */}
+          <div className="item relative group">
+            <img
+              src="./img/Carousel/carousel4.jpg"
+              className="w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
+            <NavLink
+              to="*"
+              className="
+    absolute right-[43%] bottom-20
+    flex items-center justify-center gap-3
+    bg-linear-to-r from-blue-500 to-purple-600
+    text-white px-6 py-3 h-10
+    rounded-full font-semibold shadow-lg
+    opacity-0 translate-y-8 
+    group-hover:opacity-100 group-hover:translate-y-0
+    transition-all duration-500 ease-out
+  "
+            >
+              <span className="flex items-center h-full">Get Tickets</span>
+
+              <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
+                <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
+              </span>
+            </NavLink>
+          </div>
+
+          {/* Phim 6 */}
+          <div className="item relative group">
+            <img
+              src="./img/Carousel/carousel5.jpg"
+              className="w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
+            <NavLink
+              to="*"
+              className="
+    absolute right-[43%] bottom-20
+    flex items-center justify-center gap-3
+    bg-linear-to-r from-blue-500 to-purple-600
+    text-white px-6 py-3 h-10
+    rounded-full font-semibold shadow-lg
+    opacity-0 translate-y-8 
+    group-hover:opacity-100 group-hover:translate-y-0
+    transition-all duration-500 ease-out
+  "
+            >
+              <span className="flex items-center h-full">Get Tickets</span>
+
+              <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
+                <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
+              </span>
+            </NavLink>
+          </div>
+        </Slider>
+      </div>
+
+      {/* DEAL BANNER */}
+      <div className="transition-all duration-300 pb-15">
+        <div className="container mx-auto">
+          <NavLink to="/now-showing">
+            <img
+              src="./img/deal1.jpg"
+              className="w-full object-cover rounded-xl"
+              alt="deal"
+            />
+          </NavLink>
+        </div>
+      </div>
+
+      {/* QUICK BOOK TICKETS */}
+      <div className="bg-black text-white flex justify-center items-center py-10 sm:py-14 md:py-20">
+        <div className="container mx-auto">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-6 sm:mb-7 md:mb-8 text-left">
+            Ready to Grab Your Tickets?
+          </h2>
+
+          <div className="flex flex-col md:flex-row justify-start items-end gap-3 sm:gap-4 md:gap-6">
+            {/* Select Movie */}
+            <div className="flex flex-col w-full md:w-64">
+              <label className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-gray-300 mb-1 sm:mb-2 text-left">
+                Select Movie
+              </label>
+              <select className="w-full p-2 sm:p-2.5 md:p-3 border border-gray-700 rounded-lg sm:rounded-xl shadow-md bg-[#1C1C1C] text-white text-xs sm:text-sm md:text-base lg:text-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 cursor-pointer appearance-none transition-all duration-300 hover:shadow-lg">
+                <option value="">-- Select Movie --</option>
+                {renderPlanMovie()}
+              </select>
+            </div>
+
+            {/* Select Cinema */}
+            <div className="flex flex-col w-full md:w-64">
+              <label className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-gray-300 mb-1 sm:mb-2 text-left">
+                Select Cinema
+              </label>
+              <select className="w-full p-2 sm:p-2.5 md:p-3 border border-gray-700 rounded-lg sm:rounded-xl shadow-md bg-[#1C1C1C] text-white text-xs sm:text-sm md:text-base lg:text-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 cursor-pointer appearance-none transition-all duration-300 hover:shadow-lg">
+                <option value="">-- Select Cinema --</option>
+                {renderPlanCinema()}
+              </select>
+            </div>
+
+            {/* Select Date */}
+            <div className="flex flex-col w-full md:w-64">
+              <label className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-gray-300 mb-1 sm:mb-2 text-left">
+                Select Date
+              </label>
+              <select className="w-full p-2 sm:p-2.5 md:p-3 border border-gray-700 rounded-lg sm:rounded-xl shadow-md bg-[#1C1C1C] text-white text-xs sm:text-sm md:text-base lg:text-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 cursor-pointer appearance-none transition-all duration-300 hover:shadow-lg">
+                <option value="">-- Select Date --</option>
+                <option value="option1">Option 1</option>
+                <option value="option2">Option 2</option>
+                <option value="option3">Option 3</option>
+              </select>
+            </div>
+
+            {/* Book Button */}
+            <button className="w-full md:w-48 py-2 sm:py-2.5 md:py-3 px-4 sm:px-5 md:px-6 lg:px-6 bg-amber-500 hover:bg-orange-500 rounded-lg sm:rounded-xl font-bold text-sm sm:text-base md:text-lg lg:text-xl text-black shadow-lg transition-transform duration-300 hover:scale-105 cursor-pointer">
+              Book
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* MOVIES TABS */}
+      <div className="py-15">
+        <div className="container relative">
+          <div className="md:block hidden absolute top-0 left-0">
+            <div className="relative inline px-1 py-10 rounded-l-2xl text-white text-xl font-medium bg-black">
+              SHOW ME
+              <span
+                className="absolute top-1/2 right-0 transform translate-x-full -translate-y-1/2"
+                style={{
+                  width: 0,
+                  height: 0,
+                  borderTop: '52px solid transparent',
+                  borderBottom: '52px solid transparent',
+                  borderLeft: '52px solid #000',
+                }}
+              ></span>
+            </div>
+          </div>
+
+          <div className="flex justify-center text-lg font-bold mt-4">
+            <button
+              className={`${activeTab === "now"
+                ? "text-red-500 border-b lg:border-b-2 border-red-600 text-xl sm:text-2xl lg:text-3xl xl:text-3xl font-extrabold mb-6 pb-2"
+                : "text-gray-800 text-xl sm:text-2xl lg:text-3xl xl:text-3xl font-extrabold mb-6 pb-2"
+                } hover:text-red-600 transition-colors duration-300 cursor-pointer`}
+              onClick={() => setActiveTab("now")}
+            >
+              NOW SHOWING
+            </button>
+
+            <button
+              className={`${activeTab === "upcoming"
+                ? "text-red-500 border-b lg:border-b-2 border-red-600 text-xl sm:text-2xl lg:text-3xl xl:text-3xl font-extrabold mb-6 pb-2 ml-5"
+                : "text-gray-800 text-xl sm:text-2xl lg:text-3xl xl:text-3xl font-extrabold mb-6 pb-2 ml-5"
+                } hover:text-red-600 transition-colors duration-300 cursor-pointer`}
+              onClick={() => setActiveTab("upcoming")}
+            >
+              UPCOMING
+            </button>
+          </div>
+        </div>
+
+        {activeTab === "now" && (
+          <div className="py-4 sm:py-6 md:py-8">
+            <div className="container">
+              <div className="flex items-center mb-6">
+                <div className="flex flex-col justify-center flex-1 gap-1">
+                  <div className="border-t-2 border-black h-0.5"></div>
+                  <div className="border-t-2 border-black h-0.5"></div>
+                </div>
+                <h2 className="text-xl md:text-2xl lg:text-3xl xl:text-3xl font-extrabold text-black px-4">
+                  TOP MOVIES
+                </h2>
+                <div className="flex flex-col justify-center flex-1 gap-1">
+                  <div className="border-t-2 border-black h-0.5"></div>
+                  <div className="border-t-2 border-black h-0.5"></div>
+                </div>
+              </div>
+
+              <div className="slider-container relative">
+                <Slider className="movies-carousel" {...moviesSlide}>
+                  <div
+                    className="group bg-[#1C1C1C] rounded-2xl overflow-hidden shadow-lg 
+                  hover:shadow-3xl transform hover:-translate-y-1 hover:scale-105 
+                  transition-all duration-300 cursor-pointer p-2 lg:p-3 xl:p-4"
+                  >
+                    <div className="relative rounded-xl overflow-hidden">
+                      <img
+                        src="/img/MoviePoster/Predator Badlands.jpg"
+                        alt="Predator Badlands"
+                        className="w-full h-60 sm:h-65 md:h-70 lg:h-75 xl:h-80 object-cover"
+                      />
+
+                      <span
+                        className="absolute top-2 left-2 sm:top-3 sm:left-3 bg-amber-500 text-white text-[10px] sm:text-xs md:text-sm font-bold px-2 py-1 rounded-lg shadow 
+                      opacity-100 group-hover:opacity-0 transition-opacity duration-500"
+                      >
+                        C16
+                      </span>
+
+                      <div
+                        className="absolute bottom-2 right-2 sm:bottom-3 sm:right-3 bg-black/70 text-white text-[10px] sm:text-xs md:text-sm px-1 sm:px-2 py-1 rounded-lg flex items-center gap-1 
+                      opacity-100 group-hover:opacity-0 transition-opacity duration-500"
+                      >
+                        <i className="fa-solid fa-star text-amber-400 text-xs sm:text-sm md:text-base"></i>
+                        <span className="text-[10px] sm:text-xs md:text-sm">
+                          9
+                        </span>
+                      </div>
+
+                      <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <button className="bg-amber-500 text-white text-xs sm:text-sm md:text-base font-bold px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 md:py-2.5 rounded-lg shadow-sm cursor-pointer transition-all duration-300 hover:bg-orange-500">
+                          TRAILER
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="pt-2 sm:pt-3 md:pt-4 flex flex-col justify-between h-[90px] sm:h-[110px] md:h-[130px] lg:h-[150px]">
+                      <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-white leading-tight line-clamp-2">
+                        Predator: Badlands (2025)
+                      </h3>
+
+                      <span className="text-gray-300 text-sm sm:text-md md:text-base mt-1 mb-1">
+                        127 min
+                      </span>
+
+                      <button
+                        className="flex items-center justify-center gap-2 w-full py-2 rounded-2xl font-semibold text-white bg-red-500 
+                      hover:bg-rose-600 shadow-md hover:shadow-lg transition-all duration-300 text-xs sm:text-sm md:text-base lg:text-base"
+                      >
+                        <i className="fi fi-rs-ticket-alt text-xs sm:text-sm md:text-base lg:text-base leading-none"></i>
+                        <span>Get Tickets</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div
+                    className="group bg-[#1C1C1C] rounded-2xl overflow-hidden shadow-lg 
+                  hover:shadow-3xl transform hover:-translate-y-1 hover:scale-105 
+                  transition-all duration-300 cursor-pointer p-2 lg:p-3 xl:p-4"
+                  >
+                    <div className="relative rounded-xl overflow-hidden">
+                      <img
+                        src="/img/MoviePoster/Wicked For Good.jpg"
+                        alt="Wicked For Good"
+                        className="w-full h-60 sm:h-65 md:h-70 lg:h-75 xl:h-80 object-cover"
+                      />
+
+                      <span
+                        className="absolute top-2 left-2 sm:top-3 sm:left-3 bg-amber-500 text-white text-[10px] sm:text-xs md:text-sm font-bold px-2 py-1 rounded-lg shadow 
+                      opacity-100 group-hover:opacity-0 transition-opacity duration-500"
+                      >
+                        C16
+                      </span>
+
+                      <div
+                        className="absolute bottom-2 right-2 sm:bottom-3 sm:right-3 bg-black/70 text-white text-[10px] sm:text-xs md:text-sm px-1 sm:px-2 py-1 rounded-lg flex items-center gap-1 
+                      opacity-100 group-hover:opacity-0 transition-opacity duration-500"
+                      >
+                        <i className="fa-solid fa-star text-amber-400 text-xs sm:text-sm md:text-base"></i>
+                        <span className="text-[10px] sm:text-xs md:text-sm">
+                          7
+                        </span>
+                      </div>
+
+                      <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <button className="bg-amber-500 text-white text-xs sm:text-sm md:text-base font-bold px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 md:py-2.5 rounded-lg shadow-sm cursor-pointer transition-all duration-300 hover:bg-orange-500">
+                          TRAILER
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="pt-2 sm:pt-3 md:pt-4 flex flex-col justify-between h-[90px] sm:h-[110px] md:h-[130px] lg:h-[150px]">
+                      <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-white leading-tight line-clamp-2">
+                        Wicked For Good
+                      </h3>
+
+                      <span className="text-gray-300 text-sm sm:text-md md:text-base mt-1 mb-1">
+                        128 min
+                      </span>
+
+                      <button
+                        className="flex items-center justify-center gap-2 w-full py-2 rounded-2xl font-semibold text-white bg-red-500 
+                      hover:bg-rose-600 shadow-md hover:shadow-lg transition-all duration-300 text-xs sm:text-sm md:text-base lg:text-base"
+                      >
+                        <i className="fi fi-rs-ticket-alt text-xs sm:text-sm md:text-base lg:text-base leading-none"></i>
+                        <span>Get Tickets</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div
+                    className="group bg-[#1C1C1C] rounded-2xl overflow-hidden shadow-lg 
+                  hover:shadow-3xl transform hover:-translate-y-1 hover:scale-105 
+                  transition-all duration-300 cursor-pointer p-2 lg:p-3 xl:p-4"
+                  >
+                    <div className="relative rounded-xl overflow-hidden">
+                      <img
+                        src="/img/MoviePoster/Disney's Zootopia 2.jpg"
+                        alt="Disney's Zootopia 2"
+                        className="w-full h-60 sm:h-65 md:h-70 lg:h-75 xl:h-80 object-cover"
+                      />
+
+                      <span
+                        className="absolute top-2 left-2 sm:top-3 sm:left-3 bg-amber-500 text-white text-[10px] sm:text-xs md:text-sm font-bold px-2 py-1 rounded-lg shadow 
+                      opacity-100 group-hover:opacity-0 transition-opacity duration-500"
+                      >
+                        C16
+                      </span>
+
+                      <div
+                        className="absolute bottom-2 right-2 sm:bottom-3 sm:right-3 bg-black/70 text-white text-[10px] sm:text-xs md:text-sm px-1 sm:px-2 py-1 rounded-lg flex items-center gap-1 
+                      opacity-100 group-hover:opacity-0 transition-opacity duration-500"
+                      >
+                        <i className="fa-solid fa-star text-amber-400 text-xs sm:text-sm md:text-base"></i>
+                        <span className="text-[10px] sm:text-xs md:text-sm">
+                          8
+                        </span>
+                      </div>
+
+                      <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <button className="bg-amber-500 text-white text-xs sm:text-sm md:text-base font-bold px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 md:py-2.5 rounded-lg shadow-sm cursor-pointer transition-all duration-300 hover:bg-orange-500">
+                          TRAILER
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="pt-2 sm:pt-3 md:pt-4 flex flex-col justify-between h-[90px] sm:h-[110px] md:h-[130px] lg:h-[150px]">
+                      <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-white leading-tight line-clamp-2">
+                        Disney's Zootopia 2
+                      </h3>
+
+                      <span className="text-gray-300 text-sm sm:text-md md:text-base mt-1 mb-1">
+                        125 min
+                      </span>
+
+                      <button
+                        className="flex items-center justify-center gap-2 w-full py-2 rounded-2xl font-semibold text-white bg-red-500 
+                      hover:bg-rose-600 shadow-md hover:shadow-lg transition-all duration-300 text-xs sm:text-sm md:text-base lg:text-base"
+                      >
+                        <i className="fi fi-rs-ticket-alt text-xs sm:text-sm md:text-base lg:text-base leading-none"></i>
+                        <span>Get Tickets</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div
+                    className="group bg-[#1C1C1C] rounded-2xl overflow-hidden shadow-lg 
+                  hover:shadow-3xl transform hover:-translate-y-1 hover:scale-105 
+                  transition-all duration-300 cursor-pointer p-2 lg:p-3 xl:p-4"
+                  >
+                    <div className="relative rounded-xl overflow-hidden">
+                      <img
+                        src="/img/MoviePoster/Now You See Me Now You Don't.jpg"
+                        alt="Now You See Me Now You Don't"
+                        className="w-full h-60 sm:h-65 md:h-70 lg:h-75 xl:h-80 object-cover"
+                      />
+
+                      <span
+                        className="absolute top-2 left-2 sm:top-3 sm:left-3 bg-amber-500 text-white text-[10px] sm:text-xs md:text-sm font-bold px-2 py-1 rounded-lg shadow 
+                      opacity-100 group-hover:opacity-0 transition-opacity duration-500"
+                      >
+                        C16
+                      </span>
+
+                      <div
+                        className="absolute bottom-2 right-2 sm:bottom-3 sm:right-3 bg-black/70 text-white text-[10px] sm:text-xs md:text-sm px-1 sm:px-2 py-1 rounded-lg flex items-center gap-1 
+                      opacity-100 group-hover:opacity-0 transition-opacity duration-500"
+                      >
+                        <i className="fa-solid fa-star text-amber-400 text-xs sm:text-sm md:text-base"></i>
+                        <span className="text-[10px] sm:text-xs md:text-sm">
+                          9
+                        </span>
+                      </div>
+
+                      <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <button className="bg-amber-500 text-white text-xs sm:text-sm md:text-base font-bold px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 md:py-2.5 rounded-lg shadow-sm cursor-pointer transition-all duration-300 hover:bg-orange-500">
+                          TRAILER
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="pt-2 sm:pt-3 md:pt-4 flex flex-col justify-between h-[90px] sm:h-[110px] md:h-[130px] lg:h-[150px]">
+                      <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-white leading-tight line-clamp-2">
+                        Now You See Me Now You Don't
+                      </h3>
+
+                      <span className="text-gray-300 text-sm sm:text-md md:text-base mt-1 mb-1">
+                        124 min
+                      </span>
+
+                      <button
+                        className="flex items-center justify-center gap-2 w-full py-2 rounded-2xl font-semibold text-white bg-red-500 
+                      hover:bg-rose-600 shadow-md hover:shadow-lg transition-all duration-300 text-xs sm:text-sm md:text-base lg:text-base"
+                      >
+                        <i className="fi fi-rs-ticket-alt text-xs sm:text-sm md:text-base lg:text-base leading-none"></i>
+                        <span>Get Tickets</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  {renderNowMovieList()}
+                </Slider>
+              </div>
+
+              <div className="flex justify-center items-center mt-6">
+                <NavLink
+                  to="/movie-list"
+                  className="relative inline-block text-red-500 font-semibold bg-white hover:bg-red-500 border hover:text-white border-red-500 hover:border-red-500 
+    rounded-md sm:rounded-lg md:rounded-xl 
+    px-3 sm:px-4 md:px-6 xl:px-8 
+    py-1.5 sm:py-2 md:py-3 
+    text-xs sm:text-sm md:text-base lg:text-lg 
+    shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden cursor-pointer"
+                >
+                  SHOW MORE
+                </NavLink>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === "upcoming" && (
+          <div className="py-4 sm:py-6 md:py-8 bg-black">
+            <div className="container">
+              <div className="flex items-center mb-6">
+                <div className="flex flex-col justify-center flex-1 gap-1">
+                  <div className="border-t-2 border-amber-500 h-0.5"></div>
+                  <div className="border-t-2 border-amber-500 h-0.5"></div>
+                </div>
+                <h2 className="text-xl md:text-2xl lg:text-3xl xl:text-3xl font-extrabold text-amber-500 px-4">
+                  COMING SOON
+                </h2>
+                <div className="flex flex-col justify-center flex-1 gap-1">
+                  <div className="border-t-2 border-amber-500 h-0.5"></div>
+                  <div className="border-t-2 border-amber-500 h-0.5"></div>
+                </div>
+              </div>
+
+              <div className="slider-container relative">
+                <Slider className="movies-carousel" {...moviesSlide}>
+                  {renderUpComingMovieList()}
+                </Slider>
+              </div>
+
+              <div className="flex justify-center items-center mt-6">
+                <NavLink
+                  to="/movie-list"
+                  className="relative inline-block text-amber-500 font-semibold bg-black hover:bg-amber-500 border hover:text-black border-amber-500 hover:border-amber-500 
+    rounded-md sm:rounded-lg md:rounded-xl 
+    px-3 sm:px-4 md:px-6 xl:px-8 
+    py-1.5 sm:py-2 md:py-3 
+    text-xs sm:text-sm md:text-base lg:text-lg 
+    shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden cursor-pointer"
+                >
+                  SHOW MORE
+                </NavLink>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* NEWS */}
+      <section className="container mx-auto pb-10 sm:pb-12 md:pb-14 lg:pb-16">
+        {/* HEADING */}
+        <div className="flex items-center mb-4 sm:mb-6 w-full relative">
+          {/* LEFT BAR */}
+          <div className="flex-1 h-6 bg-amber-500 relative">
+            <div
+              style={{
+                position: "absolute",
+                right: "-16px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                width: 0,
+                height: 0,
+                borderTop: "12px solid transparent",
+                borderBottom: "12px solid transparent",
+                borderLeft: "16px solid #f59e0b",
+              }}
+            ></div>
+          </div>
+
+          {/* TITLE */}
+          <h2
+            className="
+        text-3xl sm:text-4xl md:text-4xl lg:text-5xl xl:text-5xl 
+        font-extrabold text-black px-6 md:px-8 lg:px-10
+        text-center transition-all
+      "
+          >
+            NEWS & REVIEWS
+          </h2>
+
+          {/* RIGHT BAR */}
+          <div className="flex-1 h-6 bg-amber-500 relative">
+            <div
+              style={{
+                position: "absolute",
+                left: "-16px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                width: 0,
+                height: 0,
+                borderTop: "12px solid transparent",
+                borderBottom: "12px solid transparent",
+                borderRight: "16px solid #f59e0b",
+              }}
+            ></div>
+          </div>
+        </div>
+
+        {/* CONTENT */}
+        <div
+          className="
+    flex flex-wrap gap-6 sm:gap-8 justify-center
+    md:flex-col lg:flex-row
+  "
+        >
+          {/* LEFT BIG CARD */}
+          <div className="w-full sm:w-[90%] md:w-full lg:flex-1 min-w-[260px]">
+            <div className="flex flex-col bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer">
+              <div className="h-48 sm:h-60 md:h-64 lg:h-72 xl:h-80 bg-gray-300 overflow-hidden">
+                <img
+                  src="./img/News/news1.jpg"
+                  alt="Predator Badlands"
+                  className="object-cover h-full w-full"
+                />
+              </div>
+
+              <div className="p-3 sm:p-4 md:p-5">
+                <h3
+                  className="
+                text-sm sm:text-base md:text-lg lg:text-xl 
+                font-semibold text-gray-800 mb-2 transition
+                hover:text-red-600
+            "
+                >
+                  [Review] Predator Badlands: Sự Hồi Sinh Của Thương Hiệu Quái
+                  Thú Lừng Lẫy
+                </h3>
+
+                <NavLink
+                  to="*"
+                  className="text-red-500 font-semibold hover:text-red-700 transition duration-300"
+                >
+                  Read more &gt;&gt;
+                </NavLink>
+              </div>
+            </div>
+          </div>
+
+          {/* RIGHT THREE CARDS */}
+          <div className="w-full sm:w-[90%] md:w-full lg:flex-1 flex flex-col gap-6 sm:gap-8 min-w-[260px]">
+            {/* CARD 1 */}
+            <div className="flex bg-white shadow-lg overflow-hidden rounded-xl cursor-pointer">
+              <div className="overflow-hidden shrink-0 w-40 sm:w-44 md:w-48 lg:w-52 h-24 sm:h-28 md:h-32 lg:h-36">
+                <img
+                  src="./img/News/news2.jpg"
+                  alt=""
+                  className="object-cover w-full h-full"
+                />
+              </div>
+              <div className="p-3 sm:p-4 flex flex-col justify-between flex-1">
+                <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-gray-800 mb-2 hover:text-red-600 transition">
+                  [Review] Truy Tìm Long Diên Hương: Võ Thuật - Hài Dẫn Đầu Màn Ảnh Việt
+                </h3>
+                <NavLink
+                  to="*"
+                  className="text-red-500 font-semibold hover:text-red-700 transition duration-300"
+                >
+                  Read more &gt;&gt;
+                </NavLink>
+              </div>
+            </div>
+
+            {/* CARD 2 */}
+            <div className="flex bg-white shadow-lg overflow-hidden rounded-xl cursor-pointer">
+              <div className="overflow-hidden shrink-0 w-40 sm:w-44 md:w-48 lg:w-52 h-24 sm:h-28 md:h-32 lg:h-36">
+                <img
+                  src="./img/News/news3.jpg"
+                  alt=""
+                  className="object-cover w-full h-full"
+                />
+              </div>
+              <div className="p-3 sm:p-4 flex flex-col justify-between flex-1">
+                <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-gray-800 mb-2 hover:text-red-600 transition">
+                  [Review] Trái Tim Què Quặt: Hai Mối Tình Và Một Vụ Án Mạng
+                </h3>
+                <NavLink
+                  to="*"
+                  className="text-red-500 font-semibold hover:text-red-700 transition duration-300"
+                >
+                  Read more &gt;&gt;
+                </NavLink>
+              </div>
+            </div>
+
+            {/* CARD 3 */}
+            <div className="flex bg-white shadow-lg overflow-hidden rounded-xl cursor-pointer">
+              <div className="overflow-hidden shrink-0 w-40 sm:w-44 md:w-48 lg:w-52 h-24 sm:h-28 md:h-32 lg:h-36">
+                <img
+                  src="./img/News/news4.jpg"
+                  alt=""
+                  className="object-cover w-full h-full"
+                />
+              </div>
+              <div className="p-3 sm:p-4 flex flex-col justify-between flex-1">
+                <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-gray-800 mb-2 hover:text-red-600 transition">
+                  [Review] Cục Vàng Của Ngoại: Việt Hương - Hồng Đào Lấy Nước Mắt Khán Giả
+                </h3>
+                <NavLink
+                  to="*"
+                  className="text-red-500 font-semibold hover:text-red-700 transition duration-300"
+                >
+                  Read more &gt;&gt;
+                </NavLink>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* BUTTON */}
+        <div className="flex justify-center mt-6">
+          <NavLink
+            to="*"
+            className="
+      relative inline-block font-semibold 
+      text-gray-600 bg-white 
+      border border-gray-400 
+      rounded-md                       /* mobile nhỏ hơn */
+      px-3 py-1.5 text-sm              /* mobile */
+      shadow-md 
+      hover:bg-red-500 hover:text-white hover:border-red-500 
+      transition-all duration-300
+
+      sm:px-4 sm:py-2 sm:text-base     /* tablet */
+      md:px-6 md:py-2.5 md:text-lg     /* md */
+      lg:px-8 lg:py-3 lg:text-xl       /* laptop */
+      xl:px-10 xl:py-4 xl:text-2xl     /* desktop lớn */
+      2xl:px-12 2xl:py-5 2xl:text-3xl  /* màn rất lớn */
+    "
+          >
+            SEE MORE NEWS
+          </NavLink>
+        </div>
+      </section>
+    </>
+  );
 };
 
 export default Home;

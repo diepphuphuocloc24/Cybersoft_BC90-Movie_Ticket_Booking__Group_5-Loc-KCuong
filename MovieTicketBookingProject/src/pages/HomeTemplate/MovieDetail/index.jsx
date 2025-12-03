@@ -102,38 +102,38 @@ const MovieDetail = () => {
         <div className="bg-white text-gray-800 py-10">
             <div className="container mx-auto px-4">
                 {/* DETAIL INFORMATION */}
-                <div className="flex flex-col lg:flex-row gap-15">
+                <div className="flex flex-col sm:flex-col-reverse md:flex-row gap-4 md:gap-6 lg:gap-8">
 
                     {/* LEFT CONTENT */}
-                    <div className="lg:w-3/5 flex flex-col">
+                    <div className="order-2 sm:order-2 md:order-1 lg:order-1 lg:w-3/5 flex flex-col gap-2 sm:gap-3 md:gap-4">
                         {dataDetail?.dangChieu ? (
-                            <p className="bg-amber-500 text-black font-bold w-max p-2 rounded-full mb-5 shadow-lg border-black">
+                            <p className="bg-amber-500 text-black font-bold w-max px-2 py-1 sm:px-3 sm:py-1.5 rounded-full mb-3 sm:mb-4 md:mb-5 text-[10px] sm:text-xs md:text-sm lg:text-base">
                                 NOW SHOWING
                             </p>
                         ) : (
-                            <p className="bg-black text-amber-500 font-semibold w-max p-2 rounded-full mb-5 border border-orange-500 shadow-inner">
+                            <p className="bg-black text-amber-500 font-semibold w-max px-2 py-1 sm:px-3 sm:py-1.5 rounded-full mb-3 sm:mb-4 md:mb-5 border border-orange-500 shadow-inner text-[10px] sm:text-xs md:text-sm lg:text-base">
                                 COMING SOON
                             </p>
                         )}
 
-                        <h2 className="text-3xl font-bold border-t-2 border-b-2 border-red-500 py-3 mb-8">
+                        <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold border-t-2 border-b-2 border-red-500 py-1 sm:py-2 md:py-3 mb-3 sm:mb-4 md:mb-6 lg:mb-8">
                             {dataDetail?.tenPhim}
                         </h2>
 
-                        <p className="bg-amber-500 text-white font-bold w-max px-4 py-1 rounded mb-10">
+                        <p className="bg-amber-500 text-white font-bold w-max px-2 py-1 sm:px-3 sm:py-1.5 rounded mb-3 sm:mb-4 md:mb-5 text-[10px] sm:text-xs md:text-sm lg:text-base">
                             C16
                         </p>
 
-                        <div className="mb-10">
-                            <h3 className="text-xl text-red-600 font-semibold mb-3 tracking-wide uppercase">Synopsis</h3>
-                            <p className="text-gray-700 leading-relaxed">
+                        <div className="mb-3 sm:mb-4 md:mb-5">
+                            <h3 className="text-[11px] sm:text-sm md:text-base lg:text-lg text-red-600 font-semibold mb-1 tracking-wide uppercase">Synopsis</h3>
+                            <p className="text-gray-700 text-[10px] sm:text-xs md:text-sm lg:text-base leading-relaxed">
                                 {dataDetail?.moTa}
                             </p>
                         </div>
 
-                        <div className="mb-8">
-                            <h3 className="text-xl text-red-600 font-semibold mb-3 tracking-wide uppercase">Release Date</h3>
-                            <p className="text-gray-700">
+                        <div className="mb-3 sm:mb-4 md:mb-5">
+                            <h3 className="text-[11px] sm:text-sm md:text-base lg:text-lg text-red-600 font-semibold mb-1 tracking-wide uppercase">Release Date</h3>
+                            <p className="text-gray-700 text-[10px] sm:text-xs md:text-sm lg:text-base">
                                 {dataDetail?.ngayKhoiChieu
                                     ? new Date(dataDetail.ngayKhoiChieu).toLocaleDateString("en-US", {
                                         month: "long",
@@ -144,67 +144,67 @@ const MovieDetail = () => {
                             </p>
                         </div>
 
-                        <div className="mb-4">
-                            <h3 className="text-xl text-red-600 font-semibold mb-3 tracking-wide uppercase">Movie Trailer</h3>
+                        <div className="mb-3 sm:mb-4 md:mb-5">
+                            <h3 className="text-[11px] sm:text-sm md:text-base lg:text-lg text-red-600 font-semibold mb-1 tracking-wide uppercase">Movie Trailer</h3>
                             {dataDetail?.trailer && (
                                 <iframe
-                                    className="w-full md:h-80 rounded"
+                                    className="w-full h-36 sm:h-48 md:h-60 lg:h-72 rounded"
                                     src={getEmbedUrl(dataDetail?.trailer)}
                                     title="Trailer"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowFullScreen
                                 ></iframe>
-
                             )}
                         </div>
                     </div>
 
                     {/* RIGHT CONTENT */}
-                    <div className="lg:w-2/5 flex flex-col gap-6">
+                    <div className="order-1 sm:order-1 md:order-2 lg:order-2 lg:w-2/5 flex flex-col gap-2 sm:gap-3 md:gap-4">
                         <img
                             src={dataDetail?.hinhAnh}
                             alt="Movie Poster"
-                            className="rounded-lg shadow-lg w-[70%] mx-auto object-cover"
+                            className="rounded-lg shadow-lg w-[70%] sm:w-[75%] md:w-[80%] lg:w-[70%] mx-auto object-cover"
                         />
 
-                        <div className="flex justify-between bg-gray-100 p-4 border-t-2 border-b-2 border-red-500">
+                        <div className="flex flex-row justify-between bg-gray-100 p-1 sm:p-2 md:p-3 border-t-2 border-b-2 border-red-500 text-[10px] sm:text-xs md:text-sm lg:text-base">
                             <div className="flex flex-col text-center">
-                                <h4 className="text-red-600 font-semibold">RUNTIME</h4>
+                                <h4 className="text-red-600 font-semibold text-[10px] sm:text-xs md:text-sm lg:text-base">RUNTIME</h4>
                                 {renderDuration()}
                             </div>
                             <div className="flex flex-col text-center">
-                                <h4 className="text-red-600 font-semibold">RATING</h4>
-                                <p className="text-sm text-gray-700 flex items-center gap-1">
+                                <h4 className="text-red-600 font-semibold text-[10px] sm:text-xs md:text-sm lg:text-base">RATING</h4>
+                                <p className="text-gray-700 text-[10px] sm:text-xs md:text-sm lg:text-base flex items-center gap-1">
                                     <i className="fa-solid fa-star text-yellow-500"></i>
                                     {dataDetail?.danhGia}
                                 </p>
-
                             </div>
                             <div className="flex flex-col text-center">
-                                <h4 className="text-red-600 font-semibold">FORMAT</h4>
-                                <p className="text-sm text-gray-700">2D / IMAX</p>
+                                <h4 className="text-red-600 font-semibold text-[10px] sm:text-xs md:text-sm lg:text-base">FORMAT</h4>
+                                <p className="text-gray-700 text-[10px] sm:text-xs md:text-sm lg:text-base">2D / IMAX</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 {/* SHOWTIME TABLE */}
-                <div className="mt-12 space-y-6">
-                    <h3 className="text-xl text-red-600 font-semibold mb-3 tracking-wide uppercase">
+                <div className="mt-8 sm:mt-10 md:mt-12 space-y-4 sm:space-y-5 md:space-y-6">
+                    <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl text-red-600 font-semibold mb-2 sm:mb-3 md:mb-4 tracking-wide uppercase">
                         Times & Tickets
                     </h3>
 
-                    <div className='flex flex-col'>
-                        <label className="block mb-2 text-lg font-semibold text-gray-black dark:text-gray-100">
+                    <div className='flex flex-col gap-2 sm:gap-3 md:gap-4'>
+                        <label className="block mb-1 sm:mb-2 text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-gray-black dark:text-gray-100">
                             Cinema:
                         </label>
 
-                        <div className="flex justify-start items-center gap-5">
+                        <div className="flex justify-start items-center gap-3 sm:gap-4 md:gap-5 lg:gap-6">
                             {renderListCinema()}
                         </div>
                     </div>
 
-                    {renderEachCinemas()}
+                    <div className="text-xs sm:text-sm md:text-base lg:text-base">
+                        {renderEachCinemas()}
+                    </div>
                 </div>
             </div >
         </div >

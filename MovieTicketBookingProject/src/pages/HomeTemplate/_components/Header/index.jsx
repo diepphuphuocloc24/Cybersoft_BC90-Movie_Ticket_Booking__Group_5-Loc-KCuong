@@ -1,127 +1,172 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import Login from "../../Login";
+import Register from "../../Register";
 
 const HomeHeader = () => {
-    const [navOpen, setNavOpen] = useState(false);
-    const [userOpen, setUserOpen] = useState(false);
+  const [navOpen, setNavOpen] = useState(false);
+  const [userOpen, setUserOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(null);
 
-    return (
-        <header className="bg-black text-white shadow-lg shadow-red-900/10 fixed z-100 w-full py-6 duration-300">
-            <div className="container mx-auto flex md:flex-row lg: flex-wrap lg:flex-nowrap items-center justify-between gap-4 lg:gap-0">
-                {/* Logo */}
-                <NavLink to="/" className="w-full md:max-w-[40%] lg:max-w-[24%] order-1 lg:order-1">
-                    <img src="/img/logo.png" alt="FeelDiamondCine Logo" className="md:w-full w-[60%] mx-auto" />
-                </NavLink>
+  const handleOpenLogin = () => setOpenModal("login");
+  const handleOpenRegister = () => setOpenModal("register");
+  const handleCloseModal = () => setOpenModal(null);
 
-                {/* Nav toggle (bars) */}
-                <button
-                    className="md:hidden order-2 w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-red-100 hover:bg-red-200 transition-colors duration-200 shadow-md focus:outline-none focus:ring-2 focus:ring-red-400"
-                    onClick={() => setNavOpen(!navOpen)}
-                >
-                    <i className={`fa-solid fa-bars text-red-500 text-xl sm:text-2xl ${navOpen ? 'rotate-90 transition-transform duration-300' : ''}`}></i>
-                </button>
+  return (
+    <header className="bg-black text-white fixed w-full z-50 shadow-lg shadow-red-900/10 py-4 lg:py-6">
+      <div className="container mx-auto flex flex-wrap items-center justify-between gap-4 lg:flex-nowrap">
+        {/* LOGO */}
+        <NavLink
+          to="/"
+          className="order-1 w-full sm:max-w-[40%] lg:max-w-[23%] flex justify-center lg:justify-start"
+        >
+          <img src="/img/logo.png" alt="Logo" className="w-[60%] sm:w-full" />
+        </NavLink>
 
-                {/* User toggle */}
-                <button
-                    className="md:hidden order-3 w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors duration-200 shadow-md focus:outline-none focus:ring-2 focus:ring-gray-400"
-                    onClick={() => setUserOpen(!userOpen)}
-                >
-                    <i className={`fi fi-sr-user text-gray-700 text-xl sm:text-2xl ${userOpen ? 'scale-110 transition-transform duration-300' : ''}`}></i>
-                </button>
+        {/* TOGGLE */}
+        <div className="flex sm:hidden items-center justify-between w-full order-2 gap-2">
+          <button
+            onClick={() => setNavOpen(!navOpen)}
+            className="w-full h-8 bg-gray-200 border border-amber-500 rounded-xl flex items-center justify-center cursor-pointer text-black font-semibold hover:bg-gray-300 hover:border-gray-500 hover:text-red-600 transition-all duration-300"
+          >
+            <i className="fa-solid fa-bars text-lg"></i>
+          </button>
 
-                {/* Nav menu */}
-                <nav
-                    className={`w-full lg:w-auto order-4 md:order-3 lg:order-2
-                        ${navOpen ? "flex" : "hidden"} 
-                        md:flex lg:flex flex-col lg:flex-row`}
-                >
-                    <ul className="flex flex-row justify-between items-center gap-4 lg:gap-10 w-full">
-                        <li>
-                            <NavLink
-                                to="/"
-                                className={({ isActive }) =>
-                                    `group flex flex-col items-center transition-all duration-300 ${isActive ? "text-red-400" : "text-gray-300 hover:text-red-400"
-                                    }`
-                                }
-                            >
-                                <i className="fa-solid fa-house text-2xl group-hover:text-red-400"></i>
-                                <span className="text-sm mt-1 group-hover:text-red-400">Home</span>
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink
-                                to="/movie-list"
-                                className={({ isActive }) =>
-                                    `group flex flex-col items-center transition-all duration-300 ${isActive ? "text-red-400" : "text-gray-300 hover:text-red-400"
-                                    }`
-                                }
-                            >
-                                <i className="fa-solid fa-film text-2xl group-hover:text-red-400"></i>
-                                <span className="text-sm mt-1 group-hover:text-red-400">Movies</span>
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink
-                                to="*"
-                                className={({ isActive }) =>
-                                    `group flex flex-col items-center transition-all duration-300 ${isActive ? "text-red-400" : "text-gray-300 hover:text-red-400"
-                                    }`
-                                }
-                            >
-                                <i className="fi fi-sr-land-layer-location text-2xl group-hover:text-red-400"></i>
-                                <span className="text-sm mt-1 group-hover:text-red-400">Cinemas</span>
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink
-                                to="*"
-                                className={({ isActive }) =>
-                                    `group flex flex-col items-center transition-all duration-300 ${isActive ? "text-red-400" : "text-gray-300 hover:text-red-400"
-                                    }`
-                                }
-                            >
-                                <i className="fi fi-rs-ticket text-2xl text-transparent bg-clip-text bg-linear-to-r from-yellow-300 via-yellow-400 to-yellow-500"></i>
-                                <span className="text-sm mt-1 group-hover:text-red-400">Buy Tickets</span>
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink
-                                to="*"
-                                className={({ isActive }) =>
-                                    `group flex flex-col items-center transition-all duration-300 ${isActive ? "text-red-400" : "text-gray-300 hover:text-red-400"
-                                    }`
-                                }
-                            >
-                                <i className="fi fi-rs-gift-box-benefits text-2xl group-hover:text-red-400"></i>
-                                <span className="text-sm mt-1 group-hover:text-red-400">Promotions</span>
-                            </NavLink>
-                        </li>
-                    </ul>
-                </nav>
+          <Link
+            to="/movie-list"
+            className="w-full h-8 bg-gray-200 border border-amber-500 rounded-xl flex items-center justify-center cursor-pointer text-black font-semibold hover:bg-gray-300 hover:border-gray-500 hover:text-red-600 transition-all duration-300"
+          >
+            <i className="fa-solid fa-ticket text-lg"></i>
+          </Link>
 
-                {/* User buttons */}
-                <div
-                    className={`w-full md:w-auto order-5 md:order-2 lg:order-3 mt-2 lg:mt-0 gap-2 ${userOpen ? "flex" : "hidden"} 
-                    md:flex lg:flex flex-col sm:flex-row lg:flex-row`}
-                >
-                    <button
-                        data-modal-target="login-modal"
-                        data-modal-toggle="login-modal"
-                        className="px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-orange-600 transition duration-300 cursor-pointer"
-                    >
-                        Login
-                    </button>
-                    <button
-                        data-modal-target="register-modal"
-                        data-modal-toggle="register-modal"
-                        className="px-4 py-2 border border-amber-500 text-amber-500 rounded-lg hover:bg-amber-500 hover:text-white transition duration-300 cursor-pointer"
-                    >
-                        Register
-                    </button>
-                </div>
-            </div>
-        </header>
-    )
-}
+          <Link
+            to="/"
+            className="w-full h-8 bg-gray-200 border border-amber-500 rounded-xl flex items-center justify-center cursor-pointer text-black font-semibold hover:bg-gray-300 hover:border-gray-500 hover:text-red-600 transition-all duration-300"
+          >
+            <i className="fa-solid fa-earth-africa text-lg"></i>
+          </Link>
 
-export default HomeHeader
+          <button
+            onClick={() => setUserOpen(!userOpen)}
+            className="w-full h-8 bg-gray-200 border border-amber-500 rounded-xl flex items-center justify-center cursor-pointer text-black font-semibold hover:bg-gray-300 hover:border-gray-500 hover:text-red-600 transition-all duration-300"
+          >
+            <i className="fi fi-sr-user text-lg"></i>
+          </button>
+        </div>
+
+        {/* NAVBAR */}
+        <nav
+          className={`
+    order-4 md:order-3 lg:order-2
+    ${navOpen ? "flex" : "hidden"} sm:flex
+    flex-col lg:flex-row w-full lg:w-auto
+    transition-all duration-300
+  `}
+        >
+          <ul className="flex flex-row justify-between items-center gap-2 sm:gap-4 md:gap-6 lg:gap-10 w-full">
+            <li>
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  `group flex flex-col items-center transition-all duration-300 ${isActive
+                    ? "text-red-400"
+                    : "text-gray-300 hover:text-red-400"
+                  }`
+                }
+              >
+                <i className="fa-solid fa-house text-xl sm:text-2xl md:text-2xl lg:text-2xl group-hover:text-red-400"></i>
+                <span className="text-xs sm:text-sm md:text-sm lg:text-sm mt-1 group-hover:text-red-400">
+                  Home
+                </span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/movie-list"
+                className={({ isActive }) =>
+                  `group flex flex-col items-center transition-all duration-300 ${isActive
+                    ? "text-red-400"
+                    : "text-gray-300 hover:text-red-400"
+                  }`
+                }
+              >
+                <i className="fa-solid fa-film text-xl sm:text-2xl md:text-2xl lg:text-2xl group-hover:text-red-400"></i>
+                <span className="text-xs sm:text-sm md:text-sm lg:text-sm mt-1 group-hover:text-red-400">
+                  Movies
+                </span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="*"
+                className={({ isActive }) =>
+                  `group flex flex-col items-center transition-all duration-300 ${isActive
+                    ? "text-red-400"
+                    : "text-gray-300 hover:text-red-400"
+                  }`
+                }
+              >
+                <i className="fi fi-sr-land-layer-location text-xl sm:text-2xl md:text-2xl lg:text-2xl group-hover:text-red-400"></i>
+                <span className="text-xs sm:text-sm md:text-sm lg:text-sm mt-1 group-hover:text-red-400">
+                  Cinemas
+                </span>
+              </NavLink>
+            </li>
+            <li>
+              <Link
+                to="/movie-list"
+                className="group flex flex-col items-center transition-all duration-300 text-gray-300 hover:text-red-400"
+              >
+                <i className="fi fi-rs-ticket text-xl sm:text-2xl md:text-2xl lg:text-2xl text-transparent bg-clip-text bg-linear-to-r from-yellow-300 to-yellow-500"></i>
+                <span className="text-xs sm:text-sm md:text-sm lg:text-sm mt-1 group-hover:text-red-400">
+                  Buy Tickets
+                </span>
+              </Link>
+            </li>
+            <li>
+              <NavLink
+                to="*"
+                className={({ isActive }) =>
+                  `group flex flex-col items-center transition-all duration-300 ${isActive
+                    ? "text-red-400"
+                    : "text-gray-300 hover:text-red-400"
+                  }`
+                }
+              >
+                <i className="fi fi-rs-gift-box-benefits text-xl sm:text-2xl md:text-2xl lg:text-2xl group-hover:text-red-400"></i>
+                <span className="text-xs sm:text-sm md:text-sm lg:text-sm mt-1 group-hover:text-red-400">
+                  Promotions
+                </span>
+              </NavLink>
+            </li>
+          </ul>
+        </nav>
+
+        {/* USER BUTTONS */}
+        <div
+          className={`${userOpen ? "flex" : "hidden"
+            } sm:flex order-5 sm:order-2 lg:order-3 mt-2 lg:mt-0 gap-2 flex-col sm:flex-row w-full sm:w-auto transition-all duration-300`}
+        >
+          <button
+            className="px-3 sm:px-4 py-1.5 sm:py-2 border border-amber-500 text-amber-500 rounded-lg hover:bg-orange-500 hover:text-white cursor-pointer transition-all duration-300 text-sm sm:text-base"
+            onClick={handleOpenLogin}
+          >
+            Login
+          </button>
+          <button
+            className="px-3 sm:px-4 py-1.5 sm:py-2 bg-amber-500 text-white rounded-lg hover:bg-orange-600 cursor-pointer transition-all duration-300 text-sm sm:text-base"
+            onClick={handleOpenRegister}
+          >
+            Register
+          </button>
+        </div>
+      </div>
+
+      {/* MODALS */}
+      {openModal === "login" && <Login handleClose={handleCloseModal} />}
+      {openModal === "register" && <Register handleClose={handleCloseModal} />}
+    </header>
+  );
+};
+
+export default HomeHeader;

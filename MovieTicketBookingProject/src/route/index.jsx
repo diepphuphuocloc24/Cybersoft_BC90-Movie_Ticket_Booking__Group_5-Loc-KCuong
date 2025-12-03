@@ -24,7 +24,7 @@ const routes = [
         element: React.createElement(lazy(() => import("../pages/HomeTemplate/TicketBooking"))),
       },
       {
-        path: "check-out",
+        path: "check-out/:maLichChieu",
         element: React.createElement(lazy(() => import("../pages/HomeTemplate/CheckOut"))),
       }
     ],
