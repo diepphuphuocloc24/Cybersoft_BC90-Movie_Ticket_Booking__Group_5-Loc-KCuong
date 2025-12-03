@@ -1,9 +1,15 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useParams, useLocation } from 'react-router-dom'
 
 const CheckOut = () => {
+    const { maLichChieu } = useParams();
+    const location = useLocation();
+    const { activeSeats } = location.state || {};
+
+    console.log("Bên CheckOut nhận là: Mã lịch chiếu-", maLichChieu, activeSeats);
+
     return (
-        <section className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-14 px-6">
+        <section className="min-h-screen bg-linear-to-br from-gray-50 to-gray-100 py-14 px-6">
             <div className="container mx-auto grid grid-cols-1 lg:grid-cols-3 gap-10">
 
                 <div className="lg:col-span-2 bg-white rounded-3xl p-10 shadow-xl border border-gray-100 transition-all hover:shadow-2xl">

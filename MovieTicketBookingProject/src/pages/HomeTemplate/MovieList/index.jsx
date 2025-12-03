@@ -1,97 +1,96 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchMovieList } from './slice'
-import Movie from './movie'
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchMovieList } from "./slice";
+import Movie from "./movie";
 
 const MovieList = () => {
-    const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-    const state = useSelector((state) => state.movieListReducer)
+  const state = useSelector((state) => state.movieListReducer);
 
-    useEffect(() => {
-        dispatch(fetchMovieList())
-    }, [])
+  useEffect(() => {
+    dispatch(fetchMovieList());
+  }, []);
 
-    const { data, loading } = state
+  const { data, loading } = state;
 
-    if (loading) {
-        return (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 p-4">
-                <div className="animate-pulse space-y-3">
-                    <div className="w-full aspect-3/4 bg-gray-200 rounded-lg" />
-                    <div className="h-4 bg-gray-200 rounded w-3/4" />
-                    <div className="h-3 bg-gray-200 rounded w-1/2" />
-                </div>
-                <div className="animate-pulse space-y-3">
-                    <div className="w-full aspect-3/4 bg-gray-200 rounded-lg" />
-                    <div className="h-4 bg-gray-200 rounded w-2/3" />
-                    <div className="h-3 bg-gray-200 rounded w-1/3" />
-                </div>
-                <div className="animate-pulse space-y-3">
-                    <div className="w-full aspect-3/4 bg-gray-200 rounded-lg" />
-                    <div className="h-4 bg-gray-200 rounded w-1/2" />
-                    <div className="h-3 bg-gray-200 rounded w-3/4" />
-                </div>
-                <div className="animate-pulse space-y-3">
-                    <div className="w-full aspect-3/4 bg-gray-200 rounded-lg" />
-                    <div className="h-4 bg-gray-200 rounded w-4/5" />
-                    <div className="h-3 bg-gray-200 rounded w-2/3" />
-                </div>
-                <div className="animate-pulse space-y-3">
-                    <div className="w-full aspect-3/4 bg-gray-200 rounded-lg" />
-                    <div className="h-4 bg-gray-200 rounded w-3/5" />
-                    <div className="h-3 bg-gray-200 rounded w-1/2" />
-                </div>
-            </div>
-        );
-    }
-
-    const renderNowMovieList = () => {
-        return data?.map((movie) => {
-            if (movie.dangChieu) {
-                return <Movie key={movie.maPhim} propMovie={movie} />
-            }
-        });
-    };
-
-    const renderUpComingMovieList = () => {
-        return data?.map((movie) => {
-            if (!movie.dangChieu) {
-                return <Movie key={movie.maPhim} propMovie={movie} />
-            }
-        });
-    };
-
+  if (loading) {
     return (
-        <div>
-            <div className='bg-gray-100 pb-12'>
-                <section className="bg-gray-100 py-12">
-                    <div className="container mx-auto">
-                        <h2 className="text-3xl font-extrabold text-gray-800 mb-6 border-b pb-2">
-                            NOW SHOWING / ADVANCED SALES
-                        </h2>
-
-                        <div className='grid grid-cols-4 gap-4'>
-                            {renderNowMovieList()}
-                        </div>
-                    </div>
-                </section>
-
-                <section className="bg-gray-100 py-12">
-                    <div className="container mx-auto">
-                        <h2 className="text-3xl font-extrabold text-gray-800 mb-6 border-b pb-2">
-                            UPCOMING MOVIES
-                        </h2>
-
-
-                        <div className='grid grid-cols-4 gap-4'>
-                            {renderUpComingMovieList()}
-                        </div>
-                    </div>
-                </section>
-            </div>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 p-4">
+        <div className="animate-pulse space-y-3">
+          <div className="w-full aspect-3/4 bg-gray-200 rounded-lg" />
+          <div className="h-4 bg-gray-200 rounded w-3/4" />
+          <div className="h-3 bg-gray-200 rounded w-1/2" />
         </div>
-    )
-}
+        <div className="animate-pulse space-y-3">
+          <div className="w-full aspect-3/4 bg-gray-200 rounded-lg" />
+          <div className="h-4 bg-gray-200 rounded w-2/3" />
+          <div className="h-3 bg-gray-200 rounded w-1/3" />
+        </div>
+        <div className="animate-pulse space-y-3">
+          <div className="w-full aspect-3/4 bg-gray-200 rounded-lg" />
+          <div className="h-4 bg-gray-200 rounded w-1/2" />
+          <div className="h-3 bg-gray-200 rounded w-3/4" />
+        </div>
+        <div className="animate-pulse space-y-3">
+          <div className="w-full aspect-3/4 bg-gray-200 rounded-lg" />
+          <div className="h-4 bg-gray-200 rounded w-4/5" />
+          <div className="h-3 bg-gray-200 rounded w-2/3" />
+        </div>
+        <div className="animate-pulse space-y-3">
+          <div className="w-full aspect-3/4 bg-gray-200 rounded-lg" />
+          <div className="h-4 bg-gray-200 rounded w-3/5" />
+          <div className="h-3 bg-gray-200 rounded w-1/2" />
+        </div>
+      </div>
+    );
+  }
 
-export default MovieList
+  const renderNowMovieList = () => {
+    return data?.map((movie) => {
+      if (movie.dangChieu) {
+        return <Movie key={movie.maPhim} propMovie={movie} />;
+      }
+    });
+  };
+
+  const renderUpComingMovieList = () => {
+    return data?.map((movie) => {
+      if (!movie.dangChieu) {
+        return <Movie key={movie.maPhim} propMovie={movie} />;
+      }
+    });
+  };
+
+  return (
+    <div>
+      <div className="bg-gray-100 pb-12">
+        <section className="bg-gray-100 py-12">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-base sm:text-xl md:text-2xl lg:text-3xl font-extrabold text-gray-800 mb-6 border-b pb-2">
+              NOW SHOWING / ADVANCED SALES
+            </h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+              {renderNowMovieList()}
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-gray-100 py-12">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-base sm:text-xl md:text-2xl lg:text-3xl font-extrabold text-gray-800 mb-6 border-b pb-2">
+              UPCOMING MOVIES
+            </h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-3 md:gap-4 lg:gap-5 xl:gap-6">
+              {renderUpComingMovieList()}
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  );
+};
+
+export default MovieList;

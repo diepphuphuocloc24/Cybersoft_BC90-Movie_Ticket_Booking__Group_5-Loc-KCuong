@@ -2,18 +2,18 @@ import React from 'react';
 
 const SeatList = ({ propSeats, activeSeats, onSelectSeat }) => {
     const handleSelectSeat = (seat) => {
-        const isCurrentlyActive = activeSeats.includes(seat.tenGhe);
+        const isCurrentlyActive = activeSeats.some((ghe) => ghe.tenGhe === seat.tenGhe);
 
         const newActiveSeats = isCurrentlyActive
-            ? activeSeats.filter((gheTen) => gheTen !== seat.tenGhe)
-            : [...activeSeats, seat.tenGhe];
+            ? activeSeats.filter((ghe) => ghe.tenGhe !== seat.tenGhe)
+            : [...activeSeats, { tenGhe: seat.tenGhe, giaVe: seat.giaVe }];
 
         onSelectSeat(newActiveSeats);
     };
 
     const renderSeats = () => {
         return propSeats?.map((seat) => {
-            const isActive = activeSeats.includes(seat.tenGhe);
+            const isActive = activeSeats.some(ghe => ghe.tenGhe === seat.tenGhe);
 
             const getSeatColor = () => {
                 const seatNum = parseInt(seat.tenGhe, 10);
