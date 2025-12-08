@@ -58,7 +58,7 @@ const AdminTemplate = () => {
                     <header className="bg-white shadow-md p-4 flex items-center justify-between sticky top-0 z-10">
                         {/* Hamburger mobile */}
                         <button
-                            className="md:hidden text-gray-600 text-2xl mr-2 flex-shrink-0"
+                            className="md:hidden text-gray-600 text-2xl mr-2 shrink-0"
                             onClick={() => setOpenSidebar(true)}
                         >
                             <i className="fi fi-br-menu-burger"></i>
@@ -76,20 +76,20 @@ const AdminTemplate = () => {
                                     className="pl-10 pr-4 py-2 w-full bg-gray-100 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-400 shadow-sm min-w-0"
                                 />
                             </div>
-                            <button className="px-3 sm:px-4 py-2 bg-blue-500 text-white rounded-full shadow-md hover:bg-blue-600 flex-shrink-0">
+                            <button className="px-3 sm:px-4 py-2 bg-blue-500 text-white rounded-full shadow-md hover:bg-blue-600 shrink-0">
                                 Search
                             </button>
                         </div>
 
                         {/* Right Section */}
-                        <div className="flex items-center gap-2 ml-2 flex-shrink-0 relative">
+                        <div className="flex items-center gap-2 ml-2 shrink-0 relative">
                             {/* Desktop Bell + Message */}
                             <div className="hidden sm:flex items-center gap-2">
-                                <button className="relative p-2 cursor-pointer flex-shrink-0">
+                                <button className="relative p-2 cursor-pointer shrink-0">
                                     <i className="fa-solid fa-bell text-gray-600 text-lg animate-bell hover:text-red-500"></i>
                                     <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full border border-white"></span>
                                 </button>
-                                <button className="relative p-2 cursor-pointer flex-shrink-0">
+                                <button className="relative p-2 cursor-pointer shrink-0">
                                     <i className="fi fi-sr-comment-alt-dots text-gray-600 text-lg animate-breath hover:text-cyan-500"></i>
                                     <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full border border-white"></span>
                                 </button>
@@ -100,7 +100,7 @@ const AdminTemplate = () => {
                                 <span className="text-gray-700 text-sm sm:text-base whitespace-nowrap">
                                     Hi, <strong className="text-black font-semibold">Admin</strong>
                                 </span>
-                                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden border-2 border-gray-300 flex-shrink-0">
+                                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden border-2 border-gray-300 shrink-0">
                                     <img
                                         src="/img/avatarLogo.jpg"
                                         alt="avatar"
@@ -110,7 +110,7 @@ const AdminTemplate = () => {
 
                                 {/* Chevron Dropdown toggle (mobile <640px) */}
                                 <button
-                                    className="sm:hidden p-1 text-gray-600 hover:text-black flex-shrink-0"
+                                    className="sm:hidden p-1 text-gray-600 hover:text-black shrink-0"
                                     onClick={() => setDropdownOpen((prev) => !prev)}
                                 >
                                     <i className={`fa-solid fa-chevron-down transition-transform duration-200 ${dropdownOpen ? "rotate-180" : ""}`}></i>

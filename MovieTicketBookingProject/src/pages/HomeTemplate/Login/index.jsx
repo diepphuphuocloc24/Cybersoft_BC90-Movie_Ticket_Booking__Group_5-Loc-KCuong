@@ -1,96 +1,183 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { homeUserLogin } from './slice'
+import Register from "../Register";
 
 const Login = ({ handleClose }) => {
+
   const dispatch = useDispatch();
 
-  const state = useSelector((state) => state.homeLoginReducer);
+  const stateLogin = useSelector((state) => state.homeLoginReducer);
 
-  const handleOnChange = () => {};
+  const { loading, dataUser, error } = stateLogin
+
+  const [userLogin, setUserLogin] = useState(
+    {
+      taiKhoan: "",
+      matKhau: ""
+    }
+  )
+  console.log(userLogin);
+
+  const [errorBlank, setErrorBlank] = useState(
+    {
+      taiKhoan: "",
+      matKhau: ""
+    }
+  )
+
+  const [successMsg, setSuccessMsg] = useState(false);
+
+  const [openModal, setOpenModal] = useState(null);
+  const handleCloseModal = () => setOpenModal(null);
+
+  const handleChangeToRegister = () => {
+    setOpenModal("register");
+  }
+
+  if (loading) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-black/80 z-50">
+        <div className="bg-white rounded-lg p-6 flex flex-col items-center justify-center shadow-lg">
+          <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4 animate-spin"></div>
+          <span className="text-gray-700 font-medium">Logging in...</span>
+        </div>
+      </div>
+    );
+  }
+
+  const handleOnChange = (e) => {
+    const { name, value } = e.target
+    setUserLogin({
+      ...userLogin,
+      [name]: value
+    })
+
+    const newErrorBlank = { ...errorBlank };
+
+    if (value.trim() === "") {
+      newErrorBlank[name] = "This field cannot be empty";
+    } else {
+      newErrorBlank[name] = "";
+    }
+
+    setErrorBlank(newErrorBlank);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch();
+
+    const newError = {};
+
+    if (!userLogin.taiKhoan.trim()) {
+      newError.taiKhoan = "Username cannot be empty";
+    }
+
+    if (!userLogin.matKhau.trim()) {
+      newError.matKhau = "Password cannot be empty";
+    }
+
+    setErrorBlank(newError);
+
+    if (Object.keys(newError).length > 0) {
+      return;
+    }
+
+    dispatch(homeUserLogin(userLogin));
+    handleClose()
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-center items-center bg-black/60 px-4">
-      <div className="relative w-full max-w-xl sm:max-w-lg md:max-w-xl">
-        {/* CLOSE BUTTON */}
-        <button
-          onClick={() => {
-            handleClose();
-            setOpenModal("login");
-          }}
-          className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-[#383838] border border-white/60 text-white hover:bg-red-500 hover:text-white transition-all duration-300 cursor-pointer"
-        >
-          <i className="fa-solid fa-xmark text-base"></i>
-        </button>
+    <>
+      <div className="fixed inset-0 z-50 flex justify-end items-center bg-black/60">
+        <div className="relative w-[70%] sm:w-[50%] md:w-[40%] h-screen flex flex-col justify-center animate__animated animate__fadeInRight">
+          <button
+            onClick={handleClose}
+            className="absolute top-2 left-2 w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 flex items-center justify-center rounded-full bg-[#383838] border border-white/60 text-white hover:bg-red-500 transition cursor-pointer"
+          >
+            <i className="fa-solid fa-xmark text-xs sm:text-sm md:text-base lg:text-base xl:text-base"></i>
+          </button>
 
-        {/* MODAL CONTENT */}
-        <div className="bg-[#1C1C1C] rounded-xl shadow-lg text-white p-6 sm:p-7 md:p-8">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 text-center">
-            Quick Login for Fast Booking!
-          </h2>
+          <div className="bg-[#1C1C1C] rounded-xl shadow-lg text-white p-3 sm:p-4 md:p-5 lg:p-6 xl:p-6 h-full flex flex-col justify-center">
+            <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-2xl font-bold mb-2 sm:mb-3 md:mb-4 lg:mb-5 xl:mb-5 text-center">
+              Quick Login for Fast Booking!
+            </h2>
 
-          <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-            {/* EMAIL */}
-            <div>
-              <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                className="w-full p-3 rounded-lg bg-[#383838] border border-gray-700 focus:outline-none focus:border-red-500 transition"
-                onChange={handleOnChange}
-              />
-              <p className="text-red-500 text-sm mt-1">Email is required</p>
+            <form className="flex flex-col gap-2 sm:gap-3 md:gap-4 lg:gap-5 xl:gap-6" onSubmit={handleSubmit}>
+              <div className="flex flex-col">
+                <input
+                  type="text"
+                  name="taiKhoan"
+                  placeholder="Username"
+                  className="w-full p-1.5 sm:p-2 md:p-2.5 lg:p-3 xl:p-3 rounded-lg bg-[#383838] border border-gray-700 focus:outline-none focus:border-red-500 transition text-xs sm:text-xs md:text-sm lg:text-sm xl:text-sm"
+                  onChange={handleOnChange}
+                />
+
+                <p className="text-red-500 text-[10px] sm:text-xs md:text-xs lg:text-sm mt-0.5">{errorBlank.taiKhoan}</p>
+              </div>
+
+              <div className="flex flex-col">
+                <input
+                  type="password"
+                  name="matKhau"
+                  placeholder="Password"
+                  className="w-full p-1.5 sm:p-2 md:p-2.5 lg:p-3 xl:p-3 rounded-lg bg-[#383838] border border-gray-700 focus:outline-none focus:border-red-500 transition text-xs sm:text-xs md:text-sm lg:text-sm xl:text-sm"
+                  onChange={handleOnChange}
+                />
+
+                <p className="text-red-500 text-[10px] sm:text-xs md:text-xs lg:text-sm mt-0.5">{errorBlank.matKhau}</p>
+              </div>
+
+              <button
+                type="submit"
+                className="mt-1.5 py-2 md:py-2.5 lg:py-3 w-full bg-gradient-to-r from-red-500 to-red-600 rounded-xl font-semibold text-white shadow-md shadow-red-900/30 hover:from-red-600 hover:to-red-700 hover:shadow-lg hover:shadow-red-900/40 active:scale-[0.98] transition duration-300 cursor-pointer text-xs sm:text-sm md:text-sm lg:text-sm xl:text-base"
+              >
+                <span className="flex items-center justify-center gap-2">
+                  <i className="fa-solid fa-right-to-bracket text-sm"></i>
+                  Login
+                </span>
+              </button>
+            </form>
+
+            <p className="text-gray-400 text-center my-2 sm:my-3 md:my-4 lg:my-5 xl:my-5 text-[10px] sm:text-xs md:text-sm lg:text-sm">
+              or
+            </p>
+
+            <div className="flex flex-col md:flex-row gap-2 sm:gap-3 md:gap-3 lg:gap-4">
+              <button className="flex-1 flex items-center justify-center gap-2 sm:gap-3 py-2 sm:py-2.5 md:py-3 lg:py-3 bg-red-500 rounded-lg font-semibold hover:bg-red-600 transition cursor-pointer text-xs sm:text-xs md:text-sm lg:text-sm">
+                <i className="fa-brands fa-google text-xs sm:text-sm md:text-sm lg:text-base"></i>
+                Google
+              </button>
+              <button className="flex-1 flex items-center justify-center gap-2 sm:gap-3 py-2 sm:py-2.5 md:py-3 lg:py-3 bg-blue-600 rounded-lg font-semibold hover:bg-blue-700 transition cursor-pointer text-xs sm:text-xs md:text-sm lg:text-sm">
+                <i className="fa-brands fa-facebook text-xs sm:text-sm md:text-sm lg:text-base"></i>
+                Facebook
+              </button>
             </div>
 
-            {/* PASSWORD */}
-            <div>
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                className="w-full p-3 rounded-lg bg-[#383838] border border-gray-700 focus:outline-none focus:border-red-500 transition"
-                onChange={handleOnChange}
-              />
-              <p className="text-red-500 text-sm mt-1">
-                Password must be at least 6 characters
-              </p>
-            </div>
-
-            <button
-              type="submit"
-              className="mt-2 py-3 bg-red-600 rounded-lg font-semibold hover:bg-red-700 transition cursor-pointer"
-            >
-              Login
-            </button>
-          </form>
-
-          <p className="text-gray-400 text-center my-4">or</p>
-
-          {/* SOCIAL LOGIN */}
-          <div className="flex flex-col md:flex-row gap-3 md:gap-4">
-            <button className="flex-1 flex items-center justify-center gap-3 py-3 bg-red-500 rounded-lg font-semibold hover:bg-red-600 transition cursor-pointer">
-              <i className="fa-brands fa-google"></i>
-              Google
-            </button>
-            <button className="flex-1 flex items-center justify-center gap-3 py-3 bg-blue-600 rounded-lg font-semibold hover:bg-blue-700 transition cursor-pointer">
-              <i className="fa-brands fa-facebook"></i>
-              Facebook
-            </button>
+            <p className="text-gray-400 text-center mt-2 sm:mt-3 md:mt-4 lg:mt-5 xl:mt-5 text-[10px] sm:text-xs md:text-sm lg:text-sm">
+              Don't have an account?{" "}
+              <button
+                className="text-red-500 font-semibold hover:underline cursor-pointer text-[10px] sm:text-xs md:text-sm lg:text-sm"
+                onClick={handleChangeToRegister}
+              >
+                Register
+              </button>
+            </p>
           </div>
-
-          <p className="text-gray-400 text-center mt-6">
-            Don't have an account?{" "}
-            <button className="text-red-500 font-semibold hover:underline cursor-pointer">
-              Register
-            </button>
-          </p>
         </div>
       </div>
-    </div>
+
+      {successMsg && (
+        <div className="fixed top-5 left-1/2 transform -translate-x-1/2 flex items-center gap-3 bg-green-600 text-white px-5 py-3 rounded-lg shadow-2xl z-50 animate__animated animate__fadeInDown animate__fast">
+          <i className="fa-solid fa-circle-check text-lg"></i>
+          <span className="font-medium text-sm sm:text-base">
+            Login successful!
+          </span>
+        </div>
+      )}
+
+      {openModal === "register" && <Register handleClose={handleCloseModal} />}
+    </>
   );
 };
 

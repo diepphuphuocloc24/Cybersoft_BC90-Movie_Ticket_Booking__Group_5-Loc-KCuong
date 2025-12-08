@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchMovieHome } from "./slice";
 import { fetchMovieList } from "../MovieList/slice";
 import Movie from "../MovieList/movie";
+import MovieSlider from "./movieSlider";
 
 const Home = () => {
   const [activeTab, setActiveTab] = useState("now");
@@ -72,8 +73,6 @@ const Home = () => {
   const dataChainCinema = useSelector((state) => {
     return state.movieHomeReducer.dataHome?.dataChainCinema;
   });
-
-  console.log(dataChainCinema);
 
   useEffect(() => {
     dispatch(fetchMovieList());
@@ -139,7 +138,7 @@ const Home = () => {
   const renderNowMovieList = () => {
     return data?.map((movie) => {
       if (movie.hot && movie.dangChieu) {
-        return <Movie key={movie.maPhim} propMovie={movie} />;
+        return <MovieSlider key={movie.maPhim} propMovie={movie} />;
       }
     });
   };
@@ -147,7 +146,7 @@ const Home = () => {
   const renderUpComingMovieList = () => {
     return data?.map((movie) => {
       if (!movie.dangChieu) {
-        return <Movie key={movie.maPhim} propMovie={movie} />;
+        return <MovieSlider key={movie.maPhim} propMovie={movie} />;
       }
     });
   };
@@ -501,8 +500,10 @@ const Home = () => {
                         Predator: Badlands (2025)
                       </h3>
 
-                      <span className="text-gray-300 text-sm sm:text-md md:text-base mt-1 mb-1">
-                        127 min
+                      <span className="text-gray-300 text-sm sm:text-md md:text-base mt-1 mb-1 flex items-center gap-2">
+                        <span>110 min</span>
+                        <span className="w-px h-4 bg-gray-500"></span>
+                        <span>November 6, 2025</span>
                       </span>
 
                       <button
@@ -556,8 +557,10 @@ const Home = () => {
                         Wicked For Good
                       </h3>
 
-                      <span className="text-gray-300 text-sm sm:text-md md:text-base mt-1 mb-1">
-                        128 min
+                      <span className="text-gray-300 text-sm sm:text-md md:text-base mt-1 mb-1 flex items-center gap-2">
+                        <span>137 min</span>
+                        <span className="w-px h-4 bg-gray-500"></span>
+                        <span>November 20, 2025</span>
                       </span>
 
                       <button
@@ -611,8 +614,10 @@ const Home = () => {
                         Disney's Zootopia 2
                       </h3>
 
-                      <span className="text-gray-300 text-sm sm:text-md md:text-base mt-1 mb-1">
-                        125 min
+                      <span className="text-gray-300 text-sm sm:text-md md:text-base mt-1 mb-1 flex items-center gap-2">
+                        <span>108 min</span>
+                        <span className="w-px h-4 bg-gray-500"></span>
+                        <span>November 27, 2025</span>
                       </span>
 
                       <button
@@ -666,8 +671,10 @@ const Home = () => {
                         Now You See Me Now You Don't
                       </h3>
 
-                      <span className="text-gray-300 text-sm sm:text-md md:text-base mt-1 mb-1">
-                        124 min
+                      <span className="text-gray-300 text-sm sm:text-md md:text-base mt-1 mb-1 flex items-center gap-2">
+                        <span>113 min</span>
+                        <span className="w-px h-4 bg-gray-500"></span>
+                        <span>November 13, 2025</span>
                       </span>
 
                       <button
@@ -794,10 +801,7 @@ const Home = () => {
 
         {/* CONTENT */}
         <div
-          className="
-    flex flex-wrap gap-6 sm:gap-8 justify-center
-    md:flex-col lg:flex-row
-  "
+          className="flex flex-wrap gap-6 sm:gap-8 justify-center md:flex-col lg:flex-row"
         >
           {/* LEFT BIG CARD */}
           <div className="w-full sm:w-[90%] md:w-full lg:flex-1 min-w-[260px]">
@@ -824,7 +828,7 @@ const Home = () => {
 
                 <NavLink
                   to="*"
-                  className="text-red-500 font-semibold hover:text-red-700 transition duration-300"
+                  className="text-xs md:text:sm lg:text-base text-red-500 font-semibold hover:text-red-700 transition duration-300"
                 >
                   Read more &gt;&gt;
                 </NavLink>
@@ -844,12 +848,12 @@ const Home = () => {
                 />
               </div>
               <div className="p-3 sm:p-4 flex flex-col justify-between flex-1">
-                <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-gray-800 mb-2 hover:text-red-600 transition">
+                <h3 className="text-sm sm:text-sm md:text-base lg:text-lg font-semibold text-gray-800 mb-2 hover:text-red-600 transition truncate sm:whitespace-normal sm:line-clamp-none line-clamp-2">
                   [Review] Truy Tìm Long Diên Hương: Võ Thuật - Hài Dẫn Đầu Màn Ảnh Việt
                 </h3>
                 <NavLink
                   to="*"
-                  className="text-red-500 font-semibold hover:text-red-700 transition duration-300"
+                  className="text-xs md:text:sm lg:text-base text-red-500 font-semibold hover:text-red-700 transition duration-300"
                 >
                   Read more &gt;&gt;
                 </NavLink>
@@ -866,12 +870,12 @@ const Home = () => {
                 />
               </div>
               <div className="p-3 sm:p-4 flex flex-col justify-between flex-1">
-                <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-gray-800 mb-2 hover:text-red-600 transition">
+                <h3 className="text-sm sm:text-sm md:text-base lg:text-lg font-semibold text-gray-800 mb-2 hover:text-red-600 transition truncate sm:whitespace-normal sm:line-clamp-none line-clamp-2">
                   [Review] Trái Tim Què Quặt: Hai Mối Tình Và Một Vụ Án Mạng
                 </h3>
                 <NavLink
                   to="*"
-                  className="text-red-500 font-semibold hover:text-red-700 transition duration-300"
+                  className="text-xs md:text:sm lg:text-base text-red-500 font-semibold hover:text-red-700 transition duration-300"
                 >
                   Read more &gt;&gt;
                 </NavLink>
@@ -888,12 +892,12 @@ const Home = () => {
                 />
               </div>
               <div className="p-3 sm:p-4 flex flex-col justify-between flex-1">
-                <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-gray-800 mb-2 hover:text-red-600 transition">
+                <h3 className="text-sm sm:text-sm md:text-base lg:text-lg font-semibold text-gray-800 mb-2 hover:text-red-600 transition truncate sm:whitespace-normal sm:line-clamp-none line-clamp-2">
                   [Review] Cục Vàng Của Ngoại: Việt Hương - Hồng Đào Lấy Nước Mắt Khán Giả
                 </h3>
                 <NavLink
                   to="*"
-                  className="text-red-500 font-semibold hover:text-red-700 transition duration-300"
+                  className="text-xs md:text:sm lg:text-base text-red-500 font-semibold hover:text-red-700 transition duration-300"
                 >
                   Read more &gt;&gt;
                 </NavLink>
@@ -907,21 +911,21 @@ const Home = () => {
           <NavLink
             to="*"
             className="
-      relative inline-block font-semibold 
-      text-gray-600 bg-white 
-      border border-gray-400 
-      rounded-md                       /* mobile nhỏ hơn */
-      px-3 py-1.5 text-sm              /* mobile */
-      shadow-md 
-      hover:bg-red-500 hover:text-white hover:border-red-500 
-      transition-all duration-300
+    relative inline-block font-semibold 
+    text-gray-600 bg-white 
+    border border-gray-400 
+    rounded-md
+    px-2 py-0.5 text-[10px]
+    shadow 
+    hover:bg-red-500 hover:text-white hover:border-red-500 
+    transition-all duration-300
 
-      sm:px-4 sm:py-2 sm:text-base     /* tablet */
-      md:px-6 md:py-2.5 md:text-lg     /* md */
-      lg:px-8 lg:py-3 lg:text-xl       /* laptop */
-      xl:px-10 xl:py-4 xl:text-2xl     /* desktop lớn */
-      2xl:px-12 2xl:py-5 2xl:text-3xl  /* màn rất lớn */
-    "
+    sm:px-2.5 sm:py-1 sm:text-xs
+    md:px-3 sm:py-1.5 md:text-sm
+    lg:px-4 lg:py-2 lg:text-base
+    xl:px-5 xl:py-2 xl:text-lg
+    2xl:px-6 2xl:py-2 2xl:text-xl
+  "
           >
             SEE MORE NEWS
           </NavLink>
