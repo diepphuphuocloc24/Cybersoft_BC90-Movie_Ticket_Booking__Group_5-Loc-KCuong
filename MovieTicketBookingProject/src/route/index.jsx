@@ -16,6 +16,10 @@ const routes = [
         element: React.createElement(lazy(() => import("../pages/HomeTemplate/MovieList"))),
       },
       {
+        path: "cinema-system",
+        element: React.createElement(lazy(() => import("../pages/HomeTemplate/CinemaSystem"))),
+      },
+      {
         path: "movie-detail/:maPhim",
         element: React.createElement(lazy(() => import("../pages/HomeTemplate/MovieDetail"))),
       },

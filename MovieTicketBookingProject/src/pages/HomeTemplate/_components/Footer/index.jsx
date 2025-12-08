@@ -30,41 +30,41 @@ const Footer = () => {
       {/* FOLLOW SECTION */}
       <div
         className="
-      bg-black text-white flex flex-col sm:flex-row 
-      items-center justify-center gap-3 sm:gap-6 
-      py-5 sm:py-6 md:py-7
-    "
+    bg-black text-white flex flex-col sm:flex-row 
+    items-center justify-center gap-2 sm:gap-6 
+    py-3 sm:py-6 md:py-7
+  "
       >
         <h3
           className="
-        text-white font-semibold tracking-wide 
-        text-lg sm:text-xl md:text-2xl lg:text-2xl 
-        text-center sm:text-left
-      "
+      text-white font-semibold tracking-wide 
+      text-base sm:text-xl md:text-2xl lg:text-2xl
+      text-center sm:text-left
+    "
         >
           Follow Us
         </h3>
 
-        <ul className="flex items-center gap-3 sm:gap-4 md:gap-5 lg:gap-6 xl:gap-7 flex-wrap justify-center">
+        <ul className="flex items-center gap-2 sm:gap-4 md:gap-5 lg:gap-6 xl:gap-7 flex-wrap justify-center">
           {/* FACEBOOK */}
           <li>
             <a
               href="#"
               className="
-            w-10 h-10
-            sm:w-10 sm:h-10
-            md:w-11 md:h-11
-            lg:w-12 lg:h-12
-            xl:w-14 xl:h-14
-            rounded-full border border-white flex items-center justify-center
-            hover:bg-red-600 transition-colors duration-300 shadow-md
-          "
+          w-10 h-10
+          sm:w-10 sm:h-10
+          md:w-11 md:h-11
+          lg:w-12 lg:h-12
+          xl:w-14 xl:h-14
+          rounded-full border border-white flex items-center justify-center
+          hover:bg-red-600 transition-colors duration-300 shadow-md
+        "
             >
               <i
                 className="
-              fa-brands fa-facebook-f text-white
-              text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl
-            "
+            fa-brands fa-facebook-f text-white
+            text-base md:text-lg lg:text-xl xl:text-2xl
+          "
               ></i>
             </a>
           </li>
@@ -74,20 +74,20 @@ const Footer = () => {
             <a
               href="#"
               className="
-            w-10 h-10
-            sm:w-10 sm:h-10
-            md:w-11 md:h-11
-            lg:w-12 lg:h-12
-            xl:w-14 xl:h-14
-            rounded-full border border-white flex items-center justify-center
-            hover:bg-red-600 transition-colors duration-300 shadow-md
-          "
+          w-10 h-10
+          sm:w-10 sm:h-10
+          md:w-11 md:h-11
+          lg:w-12 lg:h-12
+          xl:w-14 xl:h-14
+          rounded-full border border-white flex items-center justify-center
+          hover:bg-red-600 transition-colors duration-300 shadow-md
+        "
             >
               <i
                 className="
-              fa-brands fa-instagram text-white
-              text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl
-            "
+            fa-brands fa-instagram text-white
+            text-base md:text-lg lg:text-xl xl:text-2xl
+          "
               ></i>
             </a>
           </li>
@@ -97,20 +97,20 @@ const Footer = () => {
             <a
               href="#"
               className="
-            w-10 h-10
-            sm:w-10 sm:h-10
-            md:w-11 md:h-11
-            lg:w-12 lg:h-12
-            xl:w-14 xl:h-14
-            rounded-full border border-white flex items-center justify-center
-            hover:bg-red-600 transition-colors duration-300 shadow-md
-          "
+          w-10 h-10
+          sm:w-10 sm:h-10
+          md:w-11 md:h-11
+          lg:w-12 lg:h-12
+          xl:w-14 xl:h-14
+          rounded-full border border-white flex items-center justify-center
+          hover:bg-red-600 transition-colors duration-300 shadow-md
+        "
             >
               <i
                 className="
-              fa-brands fa-tiktok text-white
-              text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl
-            "
+            fa-brands fa-tiktok text-white
+            text-base md:text-lg lg:text-xl xl:text-2xl
+          "
               ></i>
             </a>
           </li>
@@ -120,20 +120,20 @@ const Footer = () => {
             <a
               href="#"
               className="
-            w-10 h-10
-            sm:w-10 sm:h-10
-            md:w-11 md:h-11
-            lg:w-12 lg:h-12
-            xl:w-14 xl:h-14
-            rounded-full border border-white flex items-center justify-center
-            hover:bg-red-600 transition-colors duration-300 shadow-md
-          "
+          w-10 h-10
+          sm:w-10 sm:h-10
+          md:w-11 md:h-11
+          lg:w-12 lg:h-12
+          xl:w-14 xl:h-14
+          rounded-full border border-white flex items-center justify-center
+          hover:bg-red-600 transition-colors duration-300 shadow-md
+        "
             >
               <i
                 className="
-              fa-brands fa-youtube text-white
-              text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl
-            "
+            fa-brands fa-youtube text-white
+            text-base md:text-lg lg:text-xl xl:text-2xl
+          "
               ></i>
             </a>
           </li>

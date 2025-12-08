@@ -66,7 +66,7 @@ const MovieList = () => {
     <div>
       <div className="bg-gray-100 pb-12">
         <section className="bg-gray-100 py-12">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="container mx-auto">
             <h2 className="text-base sm:text-xl md:text-2xl lg:text-3xl font-extrabold text-gray-800 mb-6 border-b pb-2">
               NOW SHOWING / ADVANCED SALES
             </h2>
