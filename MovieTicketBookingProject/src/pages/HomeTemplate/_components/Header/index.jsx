@@ -41,7 +41,6 @@ const HomeHeader = () => {
       setIsLogin(false);
     }
   }, [dataUser]);
-  console.log(isLogin);
 
   const renderUserMenu = () => {
     if (dataUser) {

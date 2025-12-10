@@ -3,19 +3,17 @@ import api from "./../../../services/api";
 
 const initialState = {
   loading: false,
-  dataSeats: null,
+  dataSelectedSeats: null,
   error: null,
 };
 
-export const fetchSeats = createAsyncThunk(
-  "ticket/fetchSeats",
-  async (maLichChieu, { rejectWithValue }) => {
+export const seatsToCheckOut = createAsyncThunk(
+  "ticket/seatsToCheckOut",
+  async (selectedSeats, { rejectWithValue }) => {
     try {
-      const result = await api.get(
-        `QuanLyDatVe/LayDanhSachPhongVe?MaLichChieu=${maLichChieu}`
-      );
+      const response = await api.post("QuanLyDatVe/DatVe", selectedSeats);
 
-      return result.data.content;
+      return response.data.content;
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -27,15 +25,15 @@ const SeatsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    // RENDER SEATS
-    builder.addCase(fetchSeats.pending, (state) => {
+    // SEATS TO CHECKOUT
+    builder.addCase(seatsToCheckOut.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(fetchSeats.fulfilled, (state, action) => {
+    builder.addCase(seatsToCheckOut.fulfilled, (state, action) => {
       state.loading = false;
-      state.dataSeats = action.payload;
+      state.dataSelectedSeats = action.payload;
     });
-    builder.addCase(fetchSeats.rejected, (state, action) => {
+    builder.addCase(seatsToCheckOut.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });

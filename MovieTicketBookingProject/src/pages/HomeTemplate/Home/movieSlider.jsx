@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import Trailer from '../MovieList/trailer';
 
-const MovieSlider = ({ propMovie }) => {
+const MovieSlider = ({ propMovie, onOpenTrailer }) => {
+
     const formatDate = (dateStr) => {
         const date = new Date(dateStr);
         return date.toLocaleDateString("en-US", {
@@ -9,6 +11,10 @@ const MovieSlider = ({ propMovie }) => {
             day: "numeric",
             year: "numeric",
         });
+    };
+
+    const handleOpenTrailer = () => {
+        onOpenTrailer(propMovie.trailer);
     };
 
     return (
@@ -46,6 +52,7 @@ const MovieSlider = ({ propMovie }) => {
                         <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             <button
                                 className="bg-amber-500 text-white text-xs sm:text-sm md:text-base font-bold px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 md:py-2.5 rounded-lg shadow-sm cursor-pointer transition-all duration-300 hover:bg-orange-500"
+                                onClick={handleOpenTrailer}
                             >
                                 TRAILER
                             </button>

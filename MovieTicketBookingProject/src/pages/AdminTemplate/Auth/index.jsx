@@ -75,7 +75,7 @@ const AuthTemplate = () => {
                                     <input
                                         name="taiKhoan"
                                         type="text"
-                                        className="flex-1 ml-4 bg-[#1C1C1C] text-white placeholder-gray-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500 transition-all duration-200"
+                                        className="flex-1 ml-4 bg-[#1C1C1C] text-white placeholder-gray-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500 transition-all duration-300"
                                         placeholder="Enter your email"
                                         onChange={handleOnchange}
                                     />
@@ -91,7 +91,7 @@ const AuthTemplate = () => {
                                     <input
                                         name="matKhau"
                                         type="password"
-                                        className="flex-1 ml-4 bg-[#1C1C1C] text-white placeholder-gray-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500 transition-all duration-200"
+                                        className="flex-1 ml-4 bg-[#1C1C1C] text-white placeholder-gray-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500 transition-all duration-300"
                                         placeholder="Enter your password"
                                         onChange={handleOnchange}
                                     />

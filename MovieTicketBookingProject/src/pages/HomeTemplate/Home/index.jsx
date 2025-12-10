@@ -8,8 +8,9 @@ import "slick-carousel/slick/slick-theme.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMovieHome } from "./slice";
 import { fetchMovieList } from "../MovieList/slice";
-import Movie from "../MovieList/movie";
+
 import MovieSlider from "./movieSlider";
+import Trailer from "../MovieList/trailer";
 
 const Home = () => {
   const [activeTab, setActiveTab] = useState("now");
@@ -81,6 +82,10 @@ const Home = () => {
 
   const { data, loading } = stateList;
 
+  const [openTrailerModal, setOpenTrailerModal] = useState(false);
+
+  const [trailerUrl, setTrailerUrl] = useState("");
+
   if (loading) {
     return (
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 p-4">
@@ -138,7 +143,11 @@ const Home = () => {
   const renderNowMovieList = () => {
     return data?.map((movie) => {
       if (movie.hot && movie.dangChieu) {
-        return <MovieSlider key={movie.maPhim} propMovie={movie} />;
+        return <MovieSlider
+          key={movie.maPhim}
+          propMovie={movie}
+          onOpenTrailer={getInformationFromTrailer}
+        />;
       }
     });
   };
@@ -149,6 +158,11 @@ const Home = () => {
         return <MovieSlider key={movie.maPhim} propMovie={movie} />;
       }
     });
+  };
+
+  const getInformationFromTrailer = (trailerLink) => {
+    setTrailerUrl(trailerLink);
+    setOpenTrailerModal(true);
   };
 
   return (
@@ -170,24 +184,36 @@ const Home = () => {
               src="./img/Carousel/carousel0-1.jpg"
               className="w-full object-cover"
             />
+            <div className="absolute top-0 right-0 w-[30%] h-[10%] bg-linear-to-r from-green-700 to-lime-400 text-white flex items-center pl-[4%] rounded-bl-full shadow-lg">
+              <p className="text-[8px] sm:text-xs md:text-sx lg:text-base xl:text-lg font-semibold tracking-wide">
+                Don’t miss this hot new release!
+              </p>
+            </div>
             <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
             <NavLink
               to="*"
-              className="
-    absolute right-[43%] bottom-20
-    flex items-center justify-center gap-3
-    bg-linear-to-r from-blue-500 to-purple-600
-    text-white px-6 py-3 h-10
-    rounded-full font-semibold shadow-lg
-    opacity-0 translate-y-8 
-    group-hover:opacity-100 group-hover:translate-y-0
-    transition-all duration-500 ease-out
-  "
+              className="absolute left-1/2 -translate-x-1/2 
+  bottom-10 sm:bottom-14 md:bottom-16 lg:bottom-20 xl:bottom-24
+  flex items-center justify-center gap-2 sm:gap-3
+  bg-linear-to-r from-blue-500 to-purple-600 text-white 
+  px-3 py-2 sm:px-4 sm:py-2 md:px-6 md:py-3 
+  h-9 sm:h-10 md:h-11 lg:h-12
+  rounded-full font-semibold 
+  text-sm sm:text-base md:text-lg lg:text-xl
+  shadow-lg opacity-0 translate-y-8 
+  group-hover:opacity-100 group-hover:translate-y-0
+  transition-all duration-500 ease-out 
+  hover:scale-105 hover:shadow-[0_0_25px_rgba(0,0,0,0.4)]"
             >
               <span className="flex items-center h-full">Get Tickets</span>
 
-              <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
-                <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
+              <span className="flex items-center justify-center 
+    w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-10 lg:h-10 
+    rounded-full border-2 border-white 
+    transition-all duration-300 hover:translate-x-1">
+                <i className="fi fi-rr-angle-double-small-right 
+      text-xs sm:text-sm md:text-base lg:text-lg 
+      flex items-center justify-center leading-none"></i>
               </span>
             </NavLink>
           </div>
@@ -198,24 +224,36 @@ const Home = () => {
               src="./img/Carousel/carousel1.jpg"
               className="w-full object-cover"
             />
+            <div className="absolute top-0 right-0 w-[30%] h-[10%] bg-linear-to-r from-green-700 to-lime-400 text-white flex items-center pl-[4%] rounded-bl-full shadow-lg">
+              <p className="text-[8px] sm:text-xs md:text-sx lg:text-base xl:text-lg font-semibold tracking-wide">
+                Don’t miss this hot new release!
+              </p>
+            </div>
             <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
             <NavLink
               to="*"
-              className="
-    absolute right-[43%] bottom-20
-    flex items-center justify-center gap-3
-    bg-linear-to-r from-blue-500 to-purple-600
-    text-white px-6 py-3 h-10
-    rounded-full font-semibold shadow-lg
-    opacity-0 translate-y-8 
-    group-hover:opacity-100 group-hover:translate-y-0
-    transition-all duration-500 ease-out
-  "
+              className="absolute left-1/2 -translate-x-1/2 
+  bottom-10 sm:bottom-14 md:bottom-16 lg:bottom-20 xl:bottom-24
+  flex items-center justify-center gap-2 sm:gap-3
+  bg-linear-to-r from-blue-500 to-purple-600 text-white 
+  px-3 py-2 sm:px-4 sm:py-2 md:px-6 md:py-3 
+  h-9 sm:h-10 md:h-11 lg:h-12
+  rounded-full font-semibold 
+  text-sm sm:text-base md:text-lg lg:text-xl
+  shadow-lg opacity-0 translate-y-8 
+  group-hover:opacity-100 group-hover:translate-y-0
+  transition-all duration-500 ease-out 
+  hover:scale-105 hover:shadow-[0_0_25px_rgba(0,0,0,0.4)]"
             >
               <span className="flex items-center h-full">Get Tickets</span>
 
-              <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
-                <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
+              <span className="flex items-center justify-center 
+    w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-10 lg:h-10 
+    rounded-full border-2 border-white 
+    transition-all duration-300 hover:translate-x-1">
+                <i className="fi fi-rr-angle-double-small-right 
+      text-xs sm:text-sm md:text-base lg:text-lg 
+      flex items-center justify-center leading-none"></i>
               </span>
             </NavLink>
           </div>
@@ -229,21 +267,28 @@ const Home = () => {
             <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
             <NavLink
               to="*"
-              className="
-    absolute right-[43%] bottom-20
-    flex items-center justify-center gap-3
-    bg-linear-to-r from-blue-500 to-purple-600
-    text-white px-6 py-3 h-10
-    rounded-full font-semibold shadow-lg
-    opacity-0 translate-y-8 
-    group-hover:opacity-100 group-hover:translate-y-0
-    transition-all duration-500 ease-out
-  "
+              className="absolute left-1/2 -translate-x-1/2 
+  bottom-10 sm:bottom-14 md:bottom-16 lg:bottom-20 xl:bottom-24
+  flex items-center justify-center gap-2 sm:gap-3
+  bg-linear-to-r from-blue-500 to-purple-600 text-white 
+  px-3 py-2 sm:px-4 sm:py-2 md:px-6 md:py-3 
+  h-9 sm:h-10 md:h-11 lg:h-12
+  rounded-full font-semibold 
+  text-sm sm:text-base md:text-lg lg:text-xl
+  shadow-lg opacity-0 translate-y-8 
+  group-hover:opacity-100 group-hover:translate-y-0
+  transition-all duration-500 ease-out 
+  hover:scale-105 hover:shadow-[0_0_25px_rgba(0,0,0,0.4)]"
             >
               <span className="flex items-center h-full">Get Tickets</span>
 
-              <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
-                <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
+              <span className="flex items-center justify-center 
+    w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-10 lg:h-10 
+    rounded-full border-2 border-white 
+    transition-all duration-300 hover:translate-x-1">
+                <i className="fi fi-rr-angle-double-small-right 
+      text-xs sm:text-sm md:text-base lg:text-lg 
+      flex items-center justify-center leading-none"></i>
               </span>
             </NavLink>
           </div>
@@ -257,21 +302,28 @@ const Home = () => {
             <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
             <NavLink
               to="*"
-              className="
-    absolute right-[43%] bottom-20
-    flex items-center justify-center gap-3
-    bg-linear-to-r from-blue-500 to-purple-600
-    text-white px-6 py-3 h-10
-    rounded-full font-semibold shadow-lg
-    opacity-0 translate-y-8 
-    group-hover:opacity-100 group-hover:translate-y-0
-    transition-all duration-500 ease-out
-  "
+              className="absolute left-1/2 -translate-x-1/2 
+  bottom-10 sm:bottom-14 md:bottom-16 lg:bottom-20 xl:bottom-24
+  flex items-center justify-center gap-2 sm:gap-3
+  bg-linear-to-r from-blue-500 to-purple-600 text-white 
+  px-3 py-2 sm:px-4 sm:py-2 md:px-6 md:py-3 
+  h-9 sm:h-10 md:h-11 lg:h-12
+  rounded-full font-semibold 
+  text-sm sm:text-base md:text-lg lg:text-xl
+  shadow-lg opacity-0 translate-y-8 
+  group-hover:opacity-100 group-hover:translate-y-0
+  transition-all duration-500 ease-out 
+  hover:scale-105 hover:shadow-[0_0_25px_rgba(0,0,0,0.4)]"
             >
               <span className="flex items-center h-full">Get Tickets</span>
 
-              <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
-                <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
+              <span className="flex items-center justify-center 
+    w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-10 lg:h-10 
+    rounded-full border-2 border-white 
+    transition-all duration-300 hover:translate-x-1">
+                <i className="fi fi-rr-angle-double-small-right 
+      text-xs sm:text-sm md:text-base lg:text-lg 
+      flex items-center justify-center leading-none"></i>
               </span>
             </NavLink>
           </div>
@@ -282,24 +334,36 @@ const Home = () => {
               src="./img/Carousel/carousel4.jpg"
               className="w-full object-cover"
             />
+            <div className="absolute top-0 right-0 w-[30%] h-[10%] bg-linear-to-r from-green-700 to-lime-400 text-white flex items-center pl-[4%] rounded-bl-full shadow-lg">
+              <p className="text-[8px] sm:text-xs md:text-sx lg:text-base xl:text-lg font-semibold tracking-wide">
+                Don’t miss this hot new release!
+              </p>
+            </div>
             <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
             <NavLink
               to="*"
-              className="
-    absolute right-[43%] bottom-20
-    flex items-center justify-center gap-3
-    bg-linear-to-r from-blue-500 to-purple-600
-    text-white px-6 py-3 h-10
-    rounded-full font-semibold shadow-lg
-    opacity-0 translate-y-8 
-    group-hover:opacity-100 group-hover:translate-y-0
-    transition-all duration-500 ease-out
-  "
+              className="absolute left-1/2 -translate-x-1/2 
+  bottom-10 sm:bottom-14 md:bottom-16 lg:bottom-20 xl:bottom-24
+  flex items-center justify-center gap-2 sm:gap-3
+  bg-linear-to-r from-blue-500 to-purple-600 text-white 
+  px-3 py-2 sm:px-4 sm:py-2 md:px-6 md:py-3 
+  h-9 sm:h-10 md:h-11 lg:h-12
+  rounded-full font-semibold 
+  text-sm sm:text-base md:text-lg lg:text-xl
+  shadow-lg opacity-0 translate-y-8 
+  group-hover:opacity-100 group-hover:translate-y-0
+  transition-all duration-500 ease-out 
+  hover:scale-105 hover:shadow-[0_0_25px_rgba(0,0,0,0.4)]"
             >
               <span className="flex items-center h-full">Get Tickets</span>
 
-              <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
-                <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
+              <span className="flex items-center justify-center 
+    w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-10 lg:h-10 
+    rounded-full border-2 border-white 
+    transition-all duration-300 hover:translate-x-1">
+                <i className="fi fi-rr-angle-double-small-right 
+      text-xs sm:text-sm md:text-base lg:text-lg 
+      flex items-center justify-center leading-none"></i>
               </span>
             </NavLink>
           </div>
@@ -310,24 +374,36 @@ const Home = () => {
               src="./img/Carousel/carousel5.jpg"
               className="w-full object-cover"
             />
+            <div className="absolute top-0 right-0 w-[30%] h-[10%] bg-linear-to-r from-green-700 to-lime-400 text-white flex items-center pl-[4%] rounded-bl-full shadow-lg">
+              <p className="text-[8px] sm:text-xs md:text-sx lg:text-base xl:text-lg font-semibold tracking-wide">
+                Don’t miss this hot new release!
+              </p>
+            </div>
             <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
             <NavLink
               to="*"
-              className="
-    absolute right-[43%] bottom-20
-    flex items-center justify-center gap-3
-    bg-linear-to-r from-blue-500 to-purple-600
-    text-white px-6 py-3 h-10
-    rounded-full font-semibold shadow-lg
-    opacity-0 translate-y-8 
-    group-hover:opacity-100 group-hover:translate-y-0
-    transition-all duration-500 ease-out
-  "
+              className="absolute left-1/2 -translate-x-1/2 
+  bottom-10 sm:bottom-14 md:bottom-16 lg:bottom-20 xl:bottom-24
+  flex items-center justify-center gap-2 sm:gap-3
+  bg-linear-to-r from-blue-500 to-purple-600 text-white 
+  px-3 py-2 sm:px-4 sm:py-2 md:px-6 md:py-3 
+  h-9 sm:h-10 md:h-11 lg:h-12
+  rounded-full font-semibold 
+  text-sm sm:text-base md:text-lg lg:text-xl
+  shadow-lg opacity-0 translate-y-8 
+  group-hover:opacity-100 group-hover:translate-y-0
+  transition-all duration-500 ease-out 
+  hover:scale-105 hover:shadow-[0_0_25px_rgba(0,0,0,0.4)]"
             >
               <span className="flex items-center h-full">Get Tickets</span>
 
-              <span className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white">
-                <i className="fi fi-rr-angle-double-small-right text-white text-base flex items-center justify-center leading-none"></i>
+              <span className="flex items-center justify-center 
+    w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-10 lg:h-10 
+    rounded-full border-2 border-white 
+    transition-all duration-300 hover:translate-x-1">
+                <i className="fi fi-rr-angle-double-small-right 
+      text-xs sm:text-sm md:text-base lg:text-lg 
+      flex items-center justify-center leading-none"></i>
               </span>
             </NavLink>
           </div>
@@ -910,27 +986,20 @@ const Home = () => {
         <div className="flex justify-center mt-6">
           <NavLink
             to="*"
-            className="
-    relative inline-block font-semibold 
-    text-gray-600 bg-white 
-    border border-gray-400 
-    rounded-md
-    px-2 py-0.5 text-[10px]
-    shadow 
-    hover:bg-red-500 hover:text-white hover:border-red-500 
-    transition-all duration-300
-
-    sm:px-2.5 sm:py-1 sm:text-xs
-    md:px-3 sm:py-1.5 md:text-sm
-    lg:px-4 lg:py-2 lg:text-base
-    xl:px-5 xl:py-2 xl:text-lg
-    2xl:px-6 2xl:py-2 2xl:text-xl
-  "
+            className="relative inline-block font-semibold text-gray-600 bg-white border border-gray-400 rounded-md px-2 py-0.5 text-[10px] shadow hover:bg-red-500 hover:text-white hover:border-red-500 transition-all duration-300 sm:px-2.5 sm:py-1 sm:text-xs md:px-3 md:text-sm lg:px-4 lg:py-2 lg:text-base xl:px-5 xl:py-2 xl:text-lg 2xl:px-6 2xl:py-2 2xl:text-xl"
           >
             SEE MORE NEWS
           </NavLink>
         </div>
       </section>
+
+      {/* Modal Trailer */}
+      {openTrailerModal && (
+        <Trailer
+          propTrailer={trailerUrl}
+          onClose={() => setOpenTrailerModal(false)}
+        />
+      )}
     </>
   );
 };
