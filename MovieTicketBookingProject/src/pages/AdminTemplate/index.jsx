@@ -113,13 +113,13 @@ const AdminTemplate = () => {
                                     className="sm:hidden p-1 text-gray-600 hover:text-black shrink-0"
                                     onClick={() => setDropdownOpen((prev) => !prev)}
                                 >
-                                    <i className={`fa-solid fa-chevron-down transition-transform duration-200 ${dropdownOpen ? "rotate-180" : ""}`}></i>
+                                    <i className={`fa-solid fa-chevron-down transition-transform duration-300 ${dropdownOpen ? "rotate-180" : ""}`}></i>
                                 </button>
 
                                 {/* Dropdown mobile */}
                                 <div
                                     ref={dropdownRef}
-                                    className={`absolute top-full right-0 mt-5 w-44 bg-white rounded-xl shadow-lg border border-gray-200 flex flex-col p-2 z-50 transition-all duration-200 transform origin-top-right
+                                    className={`absolute top-full right-0 mt-5 w-44 bg-white rounded-xl shadow-lg border border-gray-200 flex flex-col p-2 z-50 transition-all duration-300 transform origin-top-right
         ${dropdownOpen ? "scale-100 opacity-100" : "scale-95 opacity-0 pointer-events-none"} sm:hidden`}
                                 >
                                     {/* Notifications */}

@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import api from "./../../../services/api";
 
-const dataUserToJSON = localStorage.getItem("USER_ADMIN");
+const dataUserToJSON = localStorage.getItem("USER_LOGIN");
 const dataUser = JSON.parse(dataUserToJSON);
 
 const initialState = {
@@ -29,7 +29,7 @@ const homeLoginSlice = createSlice({
     handleLogout: (state) => {
       state.dataUser = null;
       state.error = null;
-      localStorage.removeItem("USER_ADMIN");
+      localStorage.removeItem("USER_LOGIN");
     },
   },
   extraReducers: (builder) => {
@@ -41,7 +41,7 @@ const homeLoginSlice = createSlice({
       state.dataUser = action.payload;
 
       const dataUsertoString = JSON.stringify(action.payload);
-      localStorage.setItem("USER_ADMIN", dataUsertoString);
+      localStorage.setItem("USER_LOGIN", dataUsertoString);
     });
     builder.addCase(homeUserLogin.rejected, (state, action) => {
       state.loading = false;

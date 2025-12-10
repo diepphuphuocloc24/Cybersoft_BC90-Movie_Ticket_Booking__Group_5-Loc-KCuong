@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSeats, seatsToCheckOut } from "./slice";
+import { fetchSeats } from "./slice";
 import { Link, useLocation, useParams } from "react-router-dom";
 import SeatList from "./seatList";
 import Loading from "./loading";
@@ -17,11 +17,6 @@ const TicketBooking = () => {
   const [activeSeats, setActiveSeats] = useState([]);
 
   const [modalConfirmOpen, setModalConfirmOpen] = useState(false);
-
-  const [isConfirm, setIsConfirm] = useState({
-    maLichChieu: null,
-    danhSachVe: [],
-  });
 
   const [showAlert, setShowAlert] = useState(false);
 
@@ -113,18 +108,6 @@ const TicketBooking = () => {
 
   const handleCancel = () => {
     setModalConfirmOpen(false);
-  };
-
-  const handleConfirm = () => {
-    const bookingData = {
-      maLichChieu: Number(maLichChieu),
-      danhSachVe: activeSeats.map((seat) => ({
-        maGhe: seat.maGhe,
-        giaVe: seat.giaVe
-      }))
-    };
-
-    // dispatch(seatsToCheckOut(bookingData));
   };
 
   if (loading) {
@@ -315,7 +298,6 @@ const TicketBooking = () => {
                 <Link
                   to={`/check-out/${maLichChieu}`}
                   state={{ activeSeats }}
-                  onClick={handleConfirm}
                   className="px-2.5 sm:px-3 md:px-4 lg:px-5 xl:px-6 py-1 sm:py-1.5 md:py-2 lg:py-2.5 xl:py-3 rounded-lg bg-red-500 text-white font-bold hover:bg-red-600 transition-all duration-300 cursor-pointer shadow-md text-[10px] sm:text-xs md:text-sm lg:text-base xl:text-lg"
                 >
                   Confirm

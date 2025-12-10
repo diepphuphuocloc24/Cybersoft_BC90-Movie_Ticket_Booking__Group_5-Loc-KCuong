@@ -30,6 +30,10 @@ const routes = [
       {
         path: "check-out/:maLichChieu",
         element: React.createElement(lazy(() => import("../pages/HomeTemplate/CheckOut"))),
+      },
+      {
+        path: "your-ticket",
+        element: React.createElement(lazy(() => import("../pages/HomeTemplate/Ticket"))),
       }
     ],
   },
