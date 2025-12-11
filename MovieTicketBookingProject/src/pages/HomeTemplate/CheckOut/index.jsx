@@ -161,7 +161,7 @@ const CheckOut = () => {
                                     className="w-28 sm:w-32 md:w-36 rounded-2xl object-cover border-4 border-red-300 shadow-lg"
                                 />
 
-                                <div className="flex flex-col gap-2">
+                                <div className="flex flex-col gap-2 w-full">
                                     <h2 className="text-2xl lg:text-3xl font-bold text-gray-900">{tenPhim}</h2>
                                     <p className="text-gray-700 text-sm sm:text-base">{tenRap} — {tenCumRap}</p>
                                     <p className="text-gray-500 text-sm">{diaChi}</p>
