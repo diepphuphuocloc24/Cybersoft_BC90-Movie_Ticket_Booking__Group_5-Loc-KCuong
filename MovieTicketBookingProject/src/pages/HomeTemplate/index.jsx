@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import HomeHeader from "./_components/Header/index.jsx";
 import Footer from "./_components/Footer/index.jsx";
@@ -22,4 +22,4 @@ const HomeTemplate = () => {
   );
 };
 
-export default HomeTemplate;
+export default memo(HomeTemplate);

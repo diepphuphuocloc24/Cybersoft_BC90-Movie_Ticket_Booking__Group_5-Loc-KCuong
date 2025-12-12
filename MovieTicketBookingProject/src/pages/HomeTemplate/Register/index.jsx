@@ -258,7 +258,7 @@ const Register = ({ handleClose }) => {
 
               <button
                 type="submit"
-                className="mt-1.5 py-2 md:py-2.5 lg:py-3 w-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl font-semibold text-white shadow-md shadow-blue-900/30 hover:from-blue-600 hover:to-blue-700 hover:shadow-lg hover:shadow-blue-900/40 active:scale-[0.98] transition duration-300 cursor-pointer text-xs sm:text-sm md:text-sm lg:text-sm xl:text-base"
+                className="mt-1.5 py-2 md:py-2.5 lg:py-3 w-full bg-linear-to-r from-blue-500 to-blue-600 rounded-xl font-semibold text-white shadow-md shadow-blue-900/30 hover:from-blue-600 hover:to-blue-700 hover:shadow-lg hover:shadow-blue-900/40 active:scale-[0.98] transition duration-300 cursor-pointer text-xs sm:text-sm md:text-sm lg:text-sm xl:text-base"
               >
                 <span className="flex items-center justify-center gap-2">
                   <i className="fa-solid fa-user-plus text-sm"></i>

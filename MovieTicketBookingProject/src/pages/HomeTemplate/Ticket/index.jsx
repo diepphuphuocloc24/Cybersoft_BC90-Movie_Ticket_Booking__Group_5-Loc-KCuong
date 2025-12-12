@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { NavLink, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchSeats } from './../TicketBooking/slice'
-import { homeUserLogin } from './../Login/slice'
 
 const YourTicket = () => {
     const { state } = useLocation();

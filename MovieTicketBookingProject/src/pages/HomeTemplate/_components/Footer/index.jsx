@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { memo, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 const Footer = () => {
@@ -272,4 +272,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default memo(Footer);

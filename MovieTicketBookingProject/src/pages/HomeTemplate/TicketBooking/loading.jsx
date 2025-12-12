@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 const Loading = ({ status = false }) => {
     return (
@@ -33,4 +33,4 @@ const Loading = ({ status = false }) => {
     );
 };
 
-export default Loading
+export default memo(Loading)

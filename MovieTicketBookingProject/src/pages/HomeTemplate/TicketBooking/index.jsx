@@ -137,7 +137,7 @@ const TicketBooking = () => {
   if (!dataUser) {
     return !redirect
       ? <Loading status={true} />
-      : <Navigate to="/movie-list" replace />;
+      : <Navigate to="/" replace />;
   }
 
   return (

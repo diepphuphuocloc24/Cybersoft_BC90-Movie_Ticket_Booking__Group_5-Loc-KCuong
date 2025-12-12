@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import movieListReducer from "./../pages/HomeTemplate/MovieList/slice";
 import movieHomeReducer from "./../pages/HomeTemplate/Home/slice";
+import cinemaReducer from "./../pages/HomeTemplate/CinemaSystem/slice";
 import movieDetailReducer from "./../pages/HomeTemplate/MovieDetail/slice";
 import seatsReducer from "./../pages/HomeTemplate/TicketBooking/slice";
 import homeLoginReducer from "./../pages/HomeTemplate/Login/slice";
@@ -13,6 +14,7 @@ const Store = configureStore({
   reducer: {
     movieListReducer,
     movieHomeReducer,
+    cinemaReducer,
     movieDetailReducer,
     seatsReducer,
     authLoginReducer,

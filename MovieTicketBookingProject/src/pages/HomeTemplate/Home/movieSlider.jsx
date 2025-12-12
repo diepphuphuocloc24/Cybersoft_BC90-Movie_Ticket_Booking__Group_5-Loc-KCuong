@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
+import React, { memo } from 'react'
 import { NavLink } from 'react-router-dom'
-import Trailer from '../MovieList/trailer';
 
 const MovieSlider = ({ propMovie, onOpenTrailer }) => {
 
@@ -85,4 +84,4 @@ const MovieSlider = ({ propMovie, onOpenTrailer }) => {
     )
 }
 
-export default MovieSlider
+export default memo(MovieSlider)
