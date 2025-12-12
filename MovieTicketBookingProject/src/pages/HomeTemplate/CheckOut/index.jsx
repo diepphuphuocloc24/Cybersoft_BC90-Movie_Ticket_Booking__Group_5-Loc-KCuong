@@ -27,11 +27,6 @@ const CheckOut = () => {
 
     const [message, setMessage] = useState('');
 
-    const [isConfirm, setIsConfirm] = useState({
-        maLichChieu: null,
-        danhSachVe: [],
-    });
-
     const [step, setStep] = useState("none");
 
     useEffect(() => {
@@ -48,9 +43,13 @@ const CheckOut = () => {
         return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
     };
 
-    const totalTicketPrice = activeSeats.reduce((a, s) => a + (s.giaVe || 0), 0);
+    const totalTicketPrice = activeSeats.reduce((totalSeatsPrice, seats) => {
+        return totalSeatsPrice + (seats.giaVe)
+    }, 0);
 
-    const totalFoodPrice = foodOrders.reduce((a, i) => a + (i.price || 0) * (i.quantity || 1), 0);
+    const totalFoodPrice = foodOrders.reduce((totalFoodPrice, i) => {
+        return totalFoodPrice + (i.price || 0) * (i.quantity || 1)
+    }, 0);
 
     const discountCatalog = {
         CINEMA10: { type: 'fixed', value: 10000, label: '10,000 VND off' },
@@ -161,7 +160,7 @@ const CheckOut = () => {
                                     className="w-28 sm:w-32 md:w-36 rounded-2xl object-cover border-4 border-red-300 shadow-lg"
                                 />
 
-                                <div className="flex flex-col gap-2">
+                                <div className="flex flex-col gap-2 w-full">
                                     <h2 className="text-2xl lg:text-3xl font-bold text-gray-900">{tenPhim}</h2>
                                     <p className="text-gray-700 text-sm sm:text-base">{tenRap} — {tenCumRap}</p>
                                     <p className="text-gray-500 text-sm">{diaChi}</p>
@@ -340,7 +339,7 @@ const CheckOut = () => {
             </section>
 
             {step === "qr" && (
-                <QRpayment />
+                <QRpayment propTotalPayment={totalPayment} />
             )}
 
             {step === "success" && (

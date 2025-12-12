@@ -6,6 +6,7 @@ import ListCinema from './listcinema';
 import Cinema from './cinema';
 
 const MovieDetail = () => {
+    console.log("MovieDetail");
     const { maPhim } = useParams();
 
     const dispatch = useDispatch();

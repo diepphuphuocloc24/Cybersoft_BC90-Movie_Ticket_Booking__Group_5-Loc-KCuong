@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { memo, useCallback, useState } from "react";
 import { NavLink } from "react-router-dom";
 import Trailer from "./trailer";
 
 const Movie = ({ propMovie }) => {
   const [openTrailerModal, setOpenTrailerModal] = useState(false);
+
+  const handleCloseTrailer = useCallback(() => {
+    setOpenTrailerModal(false);
+  }, []);
 
   const formatDate = (dateStr) => {
     const date = new Date(dateStr);
@@ -81,13 +85,10 @@ const Movie = ({ propMovie }) => {
 
       {/* Modal Trailer */}
       {openTrailerModal && (
-        <Trailer
-          propTrailer={propMovie.trailer}
-          onClose={() => setOpenTrailerModal(false)}
-        />
+        <Trailer propTrailer={propMovie.trailer} onClose={handleCloseTrailer} />
       )}
     </>
   );
 };
 
-export default Movie;
+export default memo(Movie);

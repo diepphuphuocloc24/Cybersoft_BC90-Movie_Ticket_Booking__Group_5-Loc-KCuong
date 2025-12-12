@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSeats } from "./slice";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, Navigate, useLocation, useParams } from "react-router-dom";
 import SeatList from "./seatList";
 import Loading from "./loading";
 
@@ -9,6 +9,7 @@ const TicketBooking = () => {
   const location = useLocation();
   const { duration } = location.state || {};
   const { maLichChieu } = useParams();
+
   const dispatch = useDispatch();
 
   const stateSeats = useSelector((state) => state.seatsReducer);
@@ -20,6 +21,12 @@ const TicketBooking = () => {
 
   const [showAlert, setShowAlert] = useState(false);
 
+  const stateLogin = useSelector((state) => state.homeLoginReducer);
+
+  const { dataUser } = stateLogin
+
+  const [redirect, setRedirect] = useState(false);
+
   useEffect(() => {
     dispatch(fetchSeats(maLichChieu));
   }, [maLichChieu, dispatch]);
@@ -27,6 +34,17 @@ const TicketBooking = () => {
   const getSeatsSelectedInformation = (activeSeats) => {
     setActiveSeats(activeSeats)
   };
+
+  useEffect(() => {
+    if (!dataUser) {
+      const timer = setTimeout(() => {
+        setRedirect(true);
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [dataUser]);
+
 
   const renderSeatList = () => (
     <SeatList
@@ -112,8 +130,14 @@ const TicketBooking = () => {
 
   if (loading) {
     return (
-      <Loading />
+      <Loading status={false} />
     );
+  }
+
+  if (!dataUser) {
+    return !redirect
+      ? <Loading status={true} />
+      : <Navigate to="/" replace />;
   }
 
   return (

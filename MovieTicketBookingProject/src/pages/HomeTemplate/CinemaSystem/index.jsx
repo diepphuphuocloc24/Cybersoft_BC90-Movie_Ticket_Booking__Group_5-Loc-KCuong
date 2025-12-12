@@ -1,18 +1,63 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState, memo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchMovieHome } from './../Home/slice'
+import { fetchCinema } from './slice'
 import Slider from "react-slick";
+import Cinema from './Cinema';
 
 const CinemaSystem = () => {
     const dispatch = useDispatch();
+    const [selectedMaHeThongRap, setSelectedMaHeThongRap] = useState(null);
+    console.log(selectedMaHeThongRap);
 
-    const dataChainCinema = useSelector((state) => {
-        return state.movieHomeReducer.dataHome?.dataChainCinema;
-    });
+    const dataChainCinema = useSelector((state) => state.movieHomeReducer.dataHome?.dataChainCinema);
+
+    const dataListCinema = useSelector((state) => state.cinemaReducer)
+
+    const { dataCinema } = dataListCinema
+    console.log(dataCinema);
 
     useEffect(() => {
         dispatch(fetchMovieHome());
-    }, []);
+        if (selectedMaHeThongRap) {
+            dispatch(fetchCinema(selectedMaHeThongRap));
+        }
+    }, [dispatch, selectedMaHeThongRap]);
+
+    const handleSelectCinemaSystem = (maHeThongRap) => {
+        setSelectedMaHeThongRap(maHeThongRap);
+    };
+
+    const renderButtonCinemaList = () => {
+        return dataChainCinema?.map((cinemasList) => {
+            const isActive = selectedMaHeThongRap === cinemasList.maHeThongRap;
+            return (
+                <button
+                    key={cinemasList.maHeThongRap}
+                    onClick={() => handleSelectCinemaSystem(cinemasList.maHeThongRap)}
+                    className={`
+                        flex flex-col items-center justify-center
+                        p-1.5 sm:p-2
+                        min-w-12 sm:min-w-14
+                        rounded-lg border transition-all duration-300 shadow-sm
+                        ${isActive
+                            ? "bg-linear-to-br from-yellow-300 to-cyan-400 text-black border-orange-600 shadow-lg scale-105"
+                            : "bg-white text-red-500 border-gray-300 hover:bg-red-100 hover:border-red-400 hover:shadow-md cursor-pointer"
+                        }
+                    `}
+                >
+                    <img
+                        src={cinemasList.logo}
+                        alt={cinemasList.tenHeThongRap}
+                        className="w-10 h-10 sm:w-12 sm:h-12 object-contain rounded-full drop-shadow-md"
+                    />
+                    <span className="text-center font-semibold text-[9px] sm:text-[10px] uppercase truncate">
+                        {cinemasList.tenHeThongRap}
+                    </span>
+                </button>
+            );
+        });
+    };
 
     const experienceSlider = {
         dots: true,
@@ -20,21 +65,66 @@ const CinemaSystem = () => {
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
+        arrows: false,
     };
+
+    const experienceItems = [
+        { title: "Seamless Booking Experience", text: "Book your movie tickets in seconds with a smooth, modern, and user-friendly platform made for every cinema lover." },
+        { title: "Your Gateway to the Best Movies", text: "Explore the latest blockbusters, trending titles, and exclusive screenings tailored just for you." },
+        { title: "Modern & Advanced Cinemas", text: "Enjoy top-tier sound, crystal-clear screens, and premium seating across leading cinema chains in Southern Vietnam." },
+        { title: "Snacks That Elevate Your Movie Night", text: "Treat yourself to delicious popcorn, drinks, and exclusive combos available at partnered theaters." },
+        { title: "Powered by Leading Cinema Brands", text: "In partnership with BHD, CGV, Cinestar, Galaxy Cinema, Lotte Cinema, and MegaGS for the best and widest choices." },
+        { title: "Your Perfect Cinema Journey", text: "Comfort, convenience, and unforgettable moments—all in one place with FeelDiamondCine." },
+    ];
 
     const renderCinemaList = () => {
         return dataChainCinema?.map((cinemasList) => (
             <div
                 key={cinemasList.maHeThongRap}
-                className="flex flex-col items-center gap-1 p-2 bg-white/5 rounded-lg backdrop-blur-md shadow-sm hover:shadow-md transition-all duration-300 animate__animated animate__fadeInUp animate__slow"
+                className="flex flex-col items-center gap-1 p-2 bg-white/5 rounded-lg backdrop-blur-md shadow-sm hover:shadow-md transition-all duration-300 animate__animated animate__flipInX animate__slow wow" data-wow-duration="1.5s" data-wow-delay="0.3s"
+                onClick={handleSelectCinemaSystem}
             >
                 <img
                     src={cinemasList.logo}
                     alt={cinemasList.tenHeThongRap}
-                    className="w-15 h-15 object-contain drop-shadow-lg"
+                    className="w-12 h-12 object-contain drop-shadow-md"
                 />
-                <div className="text-white font-medium text-xs md:text-sm">
-                    {cinemasList.tenHeThongRap}
+                <div className="text-white font-medium text-xs truncate">
+                    {cinemasList.tenHeThongRap.toUpperCase()}
+                </div>
+            </div>
+        ));
+    };
+
+    const renderEachCinema = () => {
+        const cinemaImages = {
+            BHDStar: "/img/Cinema/BHDCine.jpg",
+            CineStar: "/img/Cinema/CineStar.avif",
+            CGV: "/img/Cinema/CGV.avif",
+            Galaxy: "/img/Cinema/GalaxyCine.jpg",
+            LotteCinema: "/img/Cinema/LotteCine.jpg",
+            MegaGS: "/img/Cinema/megaGS.jpg",
+        };
+
+        return dataCinema?.map((cinema) => (
+            <div
+                key={cinema.maCumRap}
+                className="bg-white/5 backdrop-blur-md rounded-2xl p-4 shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-start gap-2 animate__animated animate__fadeInDown animate__slow wow" data-wow-duration="1s" data-wow-delay="0.3s"
+            >
+                <img
+                    src={cinemaImages[cinema.maHeThongRap] || "/img/Cinema/default.png"}
+                    alt={cinema.tenCumRap}
+                    className="w-full h-32 object-cover rounded-xl"
+                />
+
+                {/* Nội dung */}
+                <div className="mt-2">
+                    <h2 className="text-lg md:text-xl font-bold text-white truncate">
+                        {cinema.tenCumRap}
+                    </h2>
+                    <h3 className="text-sm md:text-base text-gray-300 wrap-break-word whitespace-normal">
+                        {cinema.diaChi}
+                    </h3>
                 </div>
             </div>
         ));
@@ -42,36 +132,34 @@ const CinemaSystem = () => {
 
     return (
         <section className="bg-[#1C1C1C] text-white py-20 space-y-32 animate__animated animate__fadeIn">
-            <div className='container mx-auto space-y-28'>
-
-                {/* HERO TITLE */}
+            <div className='container mx-auto flex flex-col gap-15'>
                 <div className="space-y-6">
-                    <h1 className="text-3xl md:text-4xl font-extrabold leading-snug bg-linear-to-r from-red-500 to-amber-400 bg-clip-text text-transparent drop-shadow-xl text-center animate__animated animate__fadeInDown animate__slow">
+                    <h1 className="text-3xl md:text-4xl font-extrabold leading-snug bg-linear-to-r from-red-500 to-amber-400 bg-clip-text text-transparent drop-shadow-xl text-center animate__animated animate__fadeInDown animate__slow wow" data-wow-duration="1.5s" data-wow-delay="0.3s">
                         <span className='text-2xl md:text-4xl'>FeelDiamondCine</span><br />
                         Elevating Your Movie Experience in Southern Vietnam
                     </h1>
-
-                    <p className="text-white text-lg md:text-xl
-                    animate__animated animate__fadeInLeft animate__slow">FeelDiamondCine is a modern online movie ticketing platform designed to bring cinema lovers across Southern Vietnam closer to the films they love.</p>
-
-                    <p className="text-white text-lg md:text-xl
-                    animate__animated animate__fadeInLeft animate__slow">From finding the nearest cinema to browsing detailed movie information and selecting the perfect showtime, everything is crafted to make your booking journey fast, simple, and enjoyable.</p>
+                    <p className="text-white text-lg md:text-xl animate__animated animate__fadeInLeft animate__slow wow" data-wow-duration="1.5s" data-wow-delay="0.3s">
+                        FeelDiamondCine is a modern online movie ticketing platform designed to bring cinema lovers across Southern Vietnam closer to the films they love.
+                    </p>
+                    <p className="text-white text-lg md:text-xl animate__animated animate__fadeInLeft animate__slow wow" data-wow-duration="1.5s" data-wow-delay="0.3s">
+                        From finding the nearest cinema to browsing detailed movie information and selecting the perfect showtime, everything is crafted to make your booking journey fast, simple, and enjoyable.
+                    </p>
                 </div>
 
-                {/* EXPERIENCE SLIDER */}
-                <div className="animate__animated animate__fadeInUp animate__slow">
+                <div className='flex flex-wrap items-center justify-start gap-3 sm:gap-4 md:gap-6 animate__animated animate__backInRight animate__slow wow' data-wow-duration="1.5s" data-wow-delay="0.3s">
+                    {renderButtonCinemaList()}
+                </div>
+
+                <div className='grid grid-cols-3 gap-5'>
+                    {renderEachCinema()}
+                </div>
+
+                <div className="animate__animated animate__fadeInUp animate__slow wow" data-wow-duration="1.5s" data-wow-delay="0.3s">
                     <Slider {...experienceSlider}>
-                        {[
-                            { title: "Seamless Booking Experience", text: "Book your movie tickets in seconds with a smooth, modern, and user-friendly platform made for every cinema lover." },
-                            { title: "Your Gateway to the Best Movies", text: "Explore the latest blockbusters, trending titles, and exclusive screenings tailored just for you." },
-                            { title: "Modern & Advanced Cinemas", text: "Enjoy top-tier sound, crystal-clear screens, and premium seating across leading cinema chains in Southern Vietnam." },
-                            { title: "Snacks That Elevate Your Movie Night", text: "Treat yourself to delicious popcorn, drinks, and exclusive combos available at partnered theaters." },
-                            { title: "Powered by Leading Cinema Brands", text: "In partnership with BHD, CGV, Cinestar, Galaxy Cinema, Lotte Cinema, and MegaGS for the best and widest choices." },
-                            { title: "Your Perfect Cinema Journey", text: "Comfort, convenience, and unforgettable moments—all in one place with FeelDiamondCine." },
-                        ].map((item, i) => (
+                        {experienceItems.map((item, i) => (
                             <div
                                 key={i}
-                                className="p-10 bg-white/5 rounded-2xl backdrop-blur-md space-y-4 shadow-lg border border-white/10 animate__animated animate__fadeInUp animate__slow"
+                                className="p-10 bg-white/5 rounded-2xl backdrop-blur-md space-y-4 shadow-lg border border-white/10 animate__animated animate__fadeInUp animate__slow wow" data-wow-duration="1.5s" data-wow-delay="0.3s"
                             >
                                 <h3 className="text-2xl font-bold text-amber-400 drop-shadow-md">{item.title}</h3>
                                 <p className="text-gray-300">{item.text}</p>
@@ -80,78 +168,62 @@ const CinemaSystem = () => {
                     </Slider>
                 </div>
 
-                {/* TREE INFORMATION */}
                 <div className="w-full relative">
-
                     <div className="absolute left-1/2 top-0 w-[3px] h-full bg-amber-400/50"></div>
-
                     <div className="flex flex-col space-y-16">
-
-                        {/* 1 - LEFT */}
                         <div className="flex justify-start">
                             <div className="w-full max-w-xl space-y-6 animate__animated animate__fadeInLeft animate__slow wow" data-wow-duration="1.5s" data-wow-delay="0.3s">
                                 <h2 className="text-3xl md:text-4xl font-bold text-amber-400 drop-shadow-lg">
                                     Where Convenience Meets Premium Experience
                                 </h2>
-
                                 <p className="text-xs md:text-sm lg:text-base xl:text-lg">
                                     At FeelDiamondCine, we believe watching a movie should be effortless from the very first step.
                                 </p>
-
                                 <p className="text-xs md:text-sm lg:text-base xl:text-lg">
                                     Our platform offers a smooth, user-friendly interface, ensuring you can explore movies, reserve tickets, and enjoy the excitement of cinema without any hassle.
                                 </p>
-
                                 <p className="text-xs md:text-sm lg:text-base xl:text-lg">
                                     Whether it’s the latest blockbuster, a romantic drama, or a family-friendly animation, we help you dive into the world of film with comfort, modern technology, and an elevated level of convenience.
                                 </p>
                             </div>
                         </div>
 
-                        {/* 2 - RIGHT */}
                         <div className="flex justify-end">
-                            <div className="w-full max-w-xl space-y-6 animate__animated animate__fadeInRight animate__slow wow text-left" data-wow-duration="1.5s" data-wow-delay="0.3s">
+                            <div className="w-full max-w-xl space-y-6 text-left animate__animated animate__fadeInRight animate__slow wow" data-wow-duration="1.5s" data-wow-delay="0.3s">
                                 <h2 className="text-3xl md:text-4xl font-bold text-amber-400 drop-shadow-lg">
                                     Proudly Partnered With Leading Cinema Brands
                                 </h2>
-
                                 <p className="text-xs md:text-sm lg:text-base xl:text-lg">
                                     To bring you the widest selection and the best experience, FeelDiamondCine collaborates with top cinema partners across the region, including:
                                 </p>
-
-                                <div className="grid grid-cols-3 gap-8 mt-6">
+                                <div className="grid grid-cols-3 gap-6 mt-6">
                                     {renderCinemaList()}
                                 </div>
-
                                 <p className="text-xs md:text-sm lg:text-base xl:text-lg">
                                     These partnerships allow us to offer diverse movie lineups, premium theater environments, and exclusive promotions you won’t find anywhere else.
                                 </p>
                             </div>
                         </div>
 
-                        {/* 3 - LEFT */}
                         <div className="flex justify-start">
                             <div className="w-full max-w-xl space-y-6 animate__animated animate__fadeInLeft animate__slow wow" data-wow-duration="1.5s" data-wow-delay="0.3s">
                                 <h2 className="text-3xl md:text-4xl font-bold text-amber-400 drop-shadow-lg">
                                     Your Movie Journey Starts Here
                                 </h2>
-
                                 <p className="text-xs md:text-sm lg:text-base xl:text-lg">
                                     Whether you’re planning a fun night out, a weekend escape, or a special date, FeelDiamondCine is your trusted companion—helping you book with ease and enjoy every moment in the most modern cinemas around.
                                 </p>
                             </div>
                         </div>
-
                     </div>
                 </div>
 
-                {/* SLOGAN */}
                 <p className="text-center text-sm md:text-base lg:text-lg xl:text-xl text-white italic mt-6 md:mt-8 tracking-wide leading-relaxed">
                     FeelDiamondCine – where comfort, convenience, and cinematic moments come together.
                 </p>
             </div>
-        </section>
+        </section >
     );
 };
 
-export default CinemaSystem;
+export default memo(CinemaSystem);

@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { memo } from 'react'
 
-const QRpayment = ({ onClose }) => {
+const QRpayment = ({ onClose, propTotalPayment }) => {
     return (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
             <div
@@ -48,7 +48,7 @@ const QRpayment = ({ onClose }) => {
 
                     {/* Amount */}
                     <p className="font-semibold text-lg sm:text-xl text-center">
-                        Amount: <span className="text-green-600">$12.00</span>
+                        Amount: <span className="text-green-600">{propTotalPayment.toLocaleString()} VND</span>
                     </p>
 
                     {/* Promo */}
@@ -68,4 +68,4 @@ const QRpayment = ({ onClose }) => {
     )
 }
 
-export default QRpayment
+export default memo(QRpayment)

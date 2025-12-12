@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 const PageNotFound = () => {
     return (
@@ -16,4 +16,4 @@ const PageNotFound = () => {
     );
 };
 
-export default PageNotFound
+export default memo(PageNotFound)

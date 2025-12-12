@@ -69,19 +69,36 @@ const HomeHeader = () => {
           {dropdownOpen && (
             <div
               className="absolute right-0 mt-2 sm:mt-3 w-40 sm:w-48 md:w-52 lg:w-56 xl:w-60 2xl:w-64
-             bg-gray-900 border border-gray-700 rounded-xl shadow-2xl z-50 overflow-hidden
-             transition-all duration-300"
+    bg-gray-900 border border-gray-700 rounded-xl shadow-2xl z-50 overflow-hidden
+    transition-all duration-300"
             >
+              {dataUser?.maLoaiNguoiDung === "QuanTri" ? (
+                <NavLink
+                  to="/admin"
+                  className="block w-full text-left px-3 sm:px-4 py-2 sm:py-3 
+          text-sm sm:text-base md:text-base lg:text-lg text-white 
+          hover:bg-amber-500 hover:text-gray-900 transition-colors duration-300 
+          cursor-pointer font-medium"
+                  onClick={() => setGoToAdmin(true)}
+                >
+                  Go to Admin
+                </NavLink>
+              ) : (
+                <button
+                  className="block w-full text-left px-3 sm:px-4 py-2 sm:py-3 
+          text-sm sm:text-base md:text-base lg:text-lg text-white 
+          hover:bg-amber-500 hover:text-gray-900 transition-colors duration-300 
+          cursor-pointer font-medium"
+                  onClick={() => alert("No profile page available.")}
+                >
+                  View Profile
+                </button>
+              )}
+
+
               <button
                 className="block w-full text-left px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base md:text-base lg:text-lg text-white 
-               hover:bg-amber-500 hover:text-gray-900 transition-colors duration-300 cursor-pointer font-medium"
-                onClick={() => alert("Go to profile")}
-              >
-                View Profile
-              </button>
-              <button
-                className="block w-full text-left px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base md:text-base lg:text-lg text-white 
-               hover:bg-amber-500 hover:text-gray-900 transition-colors duration-300 cursor-pointer font-medium"
+      hover:bg-amber-500 hover:text-gray-900 transition-colors duration-300 cursor-pointer font-medium"
                 onClick={handleLogOut}
               >
                 Logout

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 const SeatList = ({ propSeats, activeSeats, onSelectSeat }) => {
     const handleSelectSeat = (seat) => {
@@ -53,4 +53,4 @@ const SeatList = ({ propSeats, activeSeats, onSelectSeat }) => {
     );
 };
 
-export default SeatList;
+export default memo(SeatList);

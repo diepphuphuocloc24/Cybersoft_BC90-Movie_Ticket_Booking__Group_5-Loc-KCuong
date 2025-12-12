@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 
 const BackToTopButton = () => {
     const [showButton, setShowButton] = useState(false);
@@ -37,4 +37,4 @@ const BackToTopButton = () => {
     );
 };
 
-export default BackToTopButton;
+export default memo(BackToTopButton);

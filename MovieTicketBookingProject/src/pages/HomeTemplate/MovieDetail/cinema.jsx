@@ -4,7 +4,7 @@ import TimeShow from './timeShow';
 const Cinema = ({ propEachCinema }) => {
 
     const renderTimeShow = (ngayChieuGioChieu, maLichChieu, thoiLuong) => (
-        <TimeShow propTimeShow={ngayChieuGioChieu} propShowCode={maLichChieu} propDuration={thoiLuong} />
+        <TimeShow key={maLichChieu} propTimeShow={ngayChieuGioChieu} propShowCode={maLichChieu} propDuration={thoiLuong} />
     );
 
     const renderAuditorium = () => {
