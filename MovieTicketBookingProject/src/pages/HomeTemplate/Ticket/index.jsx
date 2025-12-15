@@ -35,7 +35,7 @@ const YourTicket = () => {
     return (
         <section className="bg-white text-black py-3 sm:py-4 md:py-5 lg:py-6 xl:py-8">
             <div className="container mx-auto max-w-[90%] md:max-w-lg lg:max-w-xl xl:max-w-2xl bg-white rounded-xl sm:rounded-2xl shadow-xl lg:shadow-2xl border border-gray-200">
-                <div className="w-full h-2 bg-gradient-to-r from-[#A40062] via-rose-500 to-purple-500 rounded-t-xl sm:rounded-t-2xl"></div>
+                <div className="w-full h-2 bg-linear-to-r from-[#A40062] via-rose-500 to-purple-500 rounded-t-xl sm:rounded-t-2xl"></div>
 
                 <div className="p-4 sm:p-6 md:p-8 lg:p-10 flex flex-col gap-3 sm:gap-4 md:gap-5">
                     <div className="bg-black p-4 flex justify-center items-center rounded-xl shadow-md ring-1 ring-white/10">
@@ -62,7 +62,7 @@ const YourTicket = () => {
                             <p className="text-xs sm:text-sm text-gray-600">Please present this QR code at the counter.</p>
                         </div>
 
-                        <div className="w-full p-3 sm:p-4 border border-gray-200 rounded-xl bg-gradient-to-br from-white to-gray-50 shadow-sm flex flex-col items-center gap-1">
+                        <div className="w-full p-3 sm:p-4 border border-gray-200 rounded-xl bg-linear-to-br from-white to-gray-50 shadow-sm flex flex-col items-center gap-1">
                             <span className="text-[#A40062] font-semibold text-sm sm:text-base md:text-lg">Showtime & Date</span>
                             <div className="flex items-center gap-1 text-gray-900 text-sm sm:text-base md:text-lg font-semibold">
                                 <span>{dataSeats?.thongTinPhim?.gioChieu}</span>

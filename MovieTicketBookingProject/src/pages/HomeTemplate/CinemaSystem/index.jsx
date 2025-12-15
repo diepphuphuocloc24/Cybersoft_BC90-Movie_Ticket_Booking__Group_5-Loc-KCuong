@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchMovieHome } from './../Home/slice'
 import { fetchCinema } from './slice'
 import Slider from "react-slick";
-import Cinema from './Cinema';
 import EachCinema from './eachCinema';
 
 const CinemaSystem = () => {

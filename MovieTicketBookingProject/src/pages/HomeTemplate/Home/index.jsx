@@ -139,7 +139,7 @@ const Home = () => {
         <Link
           to={`/buy-ticket/${selectedShowtime.maLichChieu}`}
           state={{ duration: selectedShowtime.thoiLuong }}
-          className="w-full md:w-48 h-[46px] flex items-center justify-center rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 text-black font-bold text-sm md:text-base shadow-xl transition-all hover:scale-105 hover:shadow-amber-500/40"
+          className="w-full md:w-48 h-[46px] flex items-center justify-center rounded-xl bg-linear-to-r from-amber-400 to-orange-500 text-black font-bold text-sm md:text-base shadow-xl transition-all hover:scale-105 hover:shadow-amber-500/40"
         >
           🎟 Book Ticket
         </Link>
@@ -149,7 +149,7 @@ const Home = () => {
     return (
       <Link
         to="/login"
-        className="w-full md:w-48 h-[46px] flex items-center justify-center rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 text-black font-bold text-sm md:text-base shadow-xl transition-all hover:scale-105 hover:shadow-amber-500/40"
+        className="w-full md:w-48 h-[46px] flex items-center justify-center rounded-xl bg-linear-to-r from-amber-400 to-orange-500 text-black font-bold text-sm md:text-base shadow-xl transition-all hover:scale-105 hover:shadow-amber-500/40"
       >
         🎟 Book Ticket
       </Link>
