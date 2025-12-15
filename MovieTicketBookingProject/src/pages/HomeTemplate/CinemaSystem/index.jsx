@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchMovieHome } from './../Home/slice'
 import { fetchCinema } from './slice'
 import Slider from "react-slick";
-import Cinema from './Cinema';
+import EachCinema from './eachCinema';
 
 const CinemaSystem = () => {
     const dispatch = useDispatch();
@@ -15,7 +15,6 @@ const CinemaSystem = () => {
     const dataListCinema = useSelector((state) => state.cinemaReducer)
 
     const { dataCinema } = dataListCinema
-    console.log(dataCinema);
 
     useEffect(() => {
         dispatch(fetchMovieHome());
@@ -36,15 +35,15 @@ const CinemaSystem = () => {
                     key={cinemasList.maHeThongRap}
                     onClick={() => handleSelectCinemaSystem(cinemasList.maHeThongRap)}
                     className={`
-                        flex flex-col items-center justify-center
-                        p-1.5 sm:p-2
-                        min-w-12 sm:min-w-14
-                        rounded-lg border transition-all duration-300 shadow-sm
-                        ${isActive
+                            flex flex-col items-center justify-center
+                            p-1.5 sm:p-2
+                            min-w-12 sm:min-w-14
+                            rounded-lg border transition-all duration-300 shadow-sm
+                            ${isActive
                             ? "bg-linear-to-br from-yellow-300 to-cyan-400 text-black border-orange-600 shadow-lg scale-105"
                             : "bg-white text-red-500 border-gray-300 hover:bg-red-100 hover:border-red-400 hover:shadow-md cursor-pointer"
                         }
-                    `}
+                        `}
                 >
                     <img
                         src={cinemasList.logo}
@@ -82,7 +81,7 @@ const CinemaSystem = () => {
             <div
                 key={cinemasList.maHeThongRap}
                 className="flex flex-col items-center gap-1 p-2 bg-white/5 rounded-lg backdrop-blur-md shadow-sm hover:shadow-md transition-all duration-300 animate__animated animate__flipInX animate__slow wow" data-wow-duration="1.5s" data-wow-delay="0.3s"
-                onClick={handleSelectCinemaSystem}
+                onClick={() => handleSelectCinemaSystem(cinemasList.maHeThongRap)}
             >
                 <img
                     src={cinemasList.logo}
@@ -97,36 +96,14 @@ const CinemaSystem = () => {
     };
 
     const renderEachCinema = () => {
-        const cinemaImages = {
-            BHDStar: "/img/Cinema/BHDCine.jpg",
-            CineStar: "/img/Cinema/CineStar.avif",
-            CGV: "/img/Cinema/CGV.avif",
-            Galaxy: "/img/Cinema/GalaxyCine.jpg",
-            LotteCinema: "/img/Cinema/LotteCine.jpg",
-            MegaGS: "/img/Cinema/megaGS.jpg",
-        };
+        if (!dataCinema || dataCinema.length === 0) return null;
 
-        return dataCinema?.map((cinema) => (
-            <div
+        return dataCinema.map(cinema => (
+            <EachCinema
                 key={cinema.maCumRap}
-                className="bg-white/5 backdrop-blur-md rounded-2xl p-4 shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-start gap-2 animate__animated animate__fadeInDown animate__slow wow" data-wow-duration="1s" data-wow-delay="0.3s"
-            >
-                <img
-                    src={cinemaImages[cinema.maHeThongRap] || "/img/Cinema/default.png"}
-                    alt={cinema.tenCumRap}
-                    className="w-full h-32 object-cover rounded-xl"
-                />
-
-                {/* Nội dung */}
-                <div className="mt-2">
-                    <h2 className="text-lg md:text-xl font-bold text-white truncate">
-                        {cinema.tenCumRap}
-                    </h2>
-                    <h3 className="text-sm md:text-base text-gray-300 wrap-break-word whitespace-normal">
-                        {cinema.diaChi}
-                    </h3>
-                </div>
-            </div>
+                propEachCinema={cinema}
+                maHeThongRap={selectedMaHeThongRap}
+            />
         ));
     };
 

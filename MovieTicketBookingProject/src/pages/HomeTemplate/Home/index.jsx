@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -8,11 +8,13 @@ import "slick-carousel/slick/slick-theme.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMovieHome } from "./slice";
 import { fetchMovieList } from "../MovieList/slice";
+import { fetchMovieDetail } from "../MovieDetail/slice";
 
 import MovieSlider from "./movieSlider";
 import Trailer from "../MovieList/trailer";
 
 const Home = () => {
+
   const [activeTab, setActiveTab] = useState("now");
 
   const carouselSlide = {
@@ -70,21 +72,114 @@ const Home = () => {
   const dispatch = useDispatch();
 
   const stateList = useSelector((state) => state.movieListReducer);
+  const { data, loading } = stateList;
 
-  const dataChainCinema = useSelector((state) => {
-    return state.movieHomeReducer.dataHome?.dataChainCinema;
-  });
+  const stateLogin = useSelector((state) => state.homeLoginReducer);
+  const { dataUser } = stateLogin
+
+  const stateDetail = useSelector((state) => state.movieDetailReducer);
+  const { dataDetail } = stateDetail
 
   useEffect(() => {
     dispatch(fetchMovieList());
     dispatch(fetchMovieHome());
   }, [dispatch]);
 
-  const { data, loading } = stateList;
-
   const [openTrailerModal, setOpenTrailerModal] = useState(false);
 
   const [trailerUrl, setTrailerUrl] = useState("");
+
+  const [selectedMovie, setSelectedMovie] = useState("")
+  const [selectedCinema, setSelectedCinema] = useState("")
+  const [selectedShowtime, setSelectedShowtime] = useState(null)
+
+  const renderPlanMovie = () => {
+    return data?.map((movie) => {
+      if (movie.dangChieu) {
+        return (
+          <option key={movie.maPhim} value={movie.maPhim}>
+            {movie.tenPhim}{" "}
+          </option>
+        );
+      }
+    });
+  };
+
+  const handleSelectMovie = (maPhim) => {
+    setSelectedMovie(maPhim)
+    setSelectedCinema("")
+    setSelectedShowtime(null)
+
+    if (maPhim) {
+      dispatch(fetchMovieDetail(maPhim))
+    }
+  }
+
+  const renderBookingButton = () => {
+    if (!selectedShowtime) {
+      return (
+        <button
+          disabled
+          className="
+    w-full md:w-48 h-[50px]
+    rounded-xl
+    bg-zinc-700
+    text-gray-400
+    font-bold
+    cursor-not-allowed
+  "
+        >
+          🎟 Book Ticket
+        </button>
+      )
+    }
+
+    if (dataUser) {
+      return (
+        <Link
+          to={`/buy-ticket/${selectedShowtime.maLichChieu}`}
+          state={{ duration: selectedShowtime.thoiLuong }}
+          className="w-full md:w-48 h-[46px] flex items-center justify-center rounded-xl bg-linear-to-r from-amber-400 to-orange-500 text-black font-bold text-sm md:text-base shadow-xl transition-all hover:scale-105 hover:shadow-amber-500/40"
+        >
+          🎟 Book Ticket
+        </Link>
+      )
+    }
+
+    return (
+      <Link
+        to="/login"
+        className="w-full md:w-48 h-[46px] flex items-center justify-center rounded-xl bg-linear-to-r from-amber-400 to-orange-500 text-black font-bold text-sm md:text-base shadow-xl transition-all hover:scale-105 hover:shadow-amber-500/40"
+      >
+        🎟 Book Ticket
+      </Link>
+    )
+  }
+
+  const renderNowMovieList = () => {
+    return data?.map((movie) => {
+      if (movie.hot && movie.dangChieu) {
+        return <MovieSlider
+          key={movie.maPhim}
+          propMovie={movie}
+          onOpenTrailer={getInformationFromTrailer}
+        />;
+      }
+    });
+  };
+
+  const renderUpComingMovieList = () => {
+    return data?.map((movie) => {
+      if (!movie.dangChieu) {
+        return <MovieSlider key={movie.maPhim} propMovie={movie} />;
+      }
+    });
+  };
+
+  const getInformationFromTrailer = (trailerLink) => {
+    setTrailerUrl(trailerLink);
+    setOpenTrailerModal(true);
+  };
 
   if (loading) {
     return (
@@ -118,57 +213,10 @@ const Home = () => {
     );
   }
 
-  const renderPlanCinema = () => {
-    return dataChainCinema?.map((cinema) => {
-      return (
-        <option key={cinema.maHeThongRap} value={cinema.biDanh}>
-          {cinema.tenHeThongRap}
-        </option>
-      );
-    });
-  };
-
-  const renderPlanMovie = () => {
-    return data?.map((movie) => {
-      if (movie.dangChieu) {
-        return (
-          <option key={movie.maPhim} value="option1">
-            {movie.tenPhim}{" "}
-          </option>
-        );
-      }
-    });
-  };
-
-  const renderNowMovieList = () => {
-    return data?.map((movie) => {
-      if (movie.hot && movie.dangChieu) {
-        return <MovieSlider
-          key={movie.maPhim}
-          propMovie={movie}
-          onOpenTrailer={getInformationFromTrailer}
-        />;
-      }
-    });
-  };
-
-  const renderUpComingMovieList = () => {
-    return data?.map((movie) => {
-      if (!movie.dangChieu) {
-        return <MovieSlider key={movie.maPhim} propMovie={movie} />;
-      }
-    });
-  };
-
-  const getInformationFromTrailer = (trailerLink) => {
-    setTrailerUrl(trailerLink);
-    setOpenTrailerModal(true);
-  };
-
   return (
     <>
       {/* CAROUSEL */}
-      <div className="slider-container relative pb-10">
+      <section className="slider-container relative pb-10">
         <Slider {...carouselSlide}>
           {/* Intro */}
           <div className="item relative group">
@@ -408,10 +456,10 @@ const Home = () => {
             </NavLink>
           </div>
         </Slider>
-      </div>
+      </section>
 
       {/* DEAL BANNER */}
-      <div className="transition-all duration-300 pb-15">
+      <section className="transition-all duration-300 pb-15">
         <div className="container mx-auto">
           <NavLink to="/now-showing">
             <img
@@ -421,61 +469,135 @@ const Home = () => {
             />
           </NavLink>
         </div>
-      </div>
+      </section>
 
       {/* QUICK BOOK TICKETS */}
-      <div className="bg-black text-white flex justify-center items-center py-10 sm:py-14 md:py-20">
-        <div className="container mx-auto">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-6 sm:mb-7 md:mb-8 text-left">
+      <section className="bg-black py-10 sm:py-14 md:py-20">
+        <div className="container mx-auto px-4">
+          <h2 className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-8">
             Ready to Grab Your Tickets?
           </h2>
 
-          <div className="flex flex-col md:flex-row justify-start items-end gap-3 sm:gap-4 md:gap-6">
-            {/* Select Movie */}
-            <div className="flex flex-col w-full md:w-64">
-              <label className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-gray-300 mb-1 sm:mb-2 text-left">
-                Select Movie
-              </label>
-              <select className="w-full p-2 sm:p-2.5 md:p-3 border border-gray-700 rounded-lg sm:rounded-xl shadow-md bg-[#1C1C1C] text-white text-xs sm:text-sm md:text-base lg:text-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 cursor-pointer appearance-none transition-all duration-300 hover:shadow-lg">
-                <option value="">-- Select Movie --</option>
-                {renderPlanMovie()}
-              </select>
-            </div>
+          <div className="bg-zinc-900/80 backdrop-blur-xl border border-zinc-800 rounded-2xl p-4 sm:p-6 md:p-8 shadow-2xl">
+            <div className="flex flex-col md:flex-row md:items-end gap-4 md:gap-6">
+              {/* Select Movie */}
+              <div className="flex flex-col w-full md:w-64">
+                <label className="text-xs sm:text-sm font-semibold text-gray-400 mb-1">
+                  🎬 Movie
+                </label>
 
-            {/* Select Cinema */}
-            <div className="flex flex-col w-full md:w-64">
-              <label className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-gray-300 mb-1 sm:mb-2 text-left">
-                Select Cinema
-              </label>
-              <select className="w-full p-2 sm:p-2.5 md:p-3 border border-gray-700 rounded-lg sm:rounded-xl shadow-md bg-[#1C1C1C] text-white text-xs sm:text-sm md:text-base lg:text-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 cursor-pointer appearance-none transition-all duration-300 hover:shadow-lg">
-                <option value="">-- Select Cinema --</option>
-                {renderPlanCinema()}
-              </select>
-            </div>
+                <select
+                  onChange={(e) => handleSelectMovie(e.target.value)}
+                  className="
+      w-full px-4 py-3 rounded-xl
+      bg-black text-white
+      border border-zinc-700
+      text-sm sm:text-base
+      cursor-pointer
+      transition-all
+      focus:outline-none
+      focus:border-amber-500
+      focus:ring-2 focus:ring-amber-500/40
+      hover:border-zinc-500
+    "
+                >
+                  <option value="">Select Movie</option>
+                  {renderPlanMovie()}
+                </select>
+              </div>
 
-            {/* Select Date */}
-            <div className="flex flex-col w-full md:w-64">
-              <label className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-gray-300 mb-1 sm:mb-2 text-left">
-                Select Date
-              </label>
-              <select className="w-full p-2 sm:p-2.5 md:p-3 border border-gray-700 rounded-lg sm:rounded-xl shadow-md bg-[#1C1C1C] text-white text-xs sm:text-sm md:text-base lg:text-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 cursor-pointer appearance-none transition-all duration-300 hover:shadow-lg">
-                <option value="">-- Select Date --</option>
-                <option value="option1">Option 1</option>
-                <option value="option2">Option 2</option>
-                <option value="option3">Option 3</option>
-              </select>
-            </div>
+              {/* Select Cinema */}
+              <div className="flex flex-col w-full md:w-64">
+                <label className="text-xs sm:text-sm font-semibold text-gray-400 mb-1">
+                  🏢 Cinema
+                </label>
 
-            {/* Book Button */}
-            <button className="w-full md:w-48 py-2 sm:py-2.5 md:py-3 px-4 sm:px-5 md:px-6 lg:px-6 bg-amber-500 hover:bg-orange-500 rounded-lg sm:rounded-xl font-bold text-sm sm:text-base md:text-lg lg:text-xl text-black shadow-lg transition-transform duration-300 hover:scale-105 cursor-pointer">
-              Book
-            </button>
+                <select
+                  value={selectedCinema}
+                  onChange={(e) => setSelectedCinema(e.target.value)}
+                  disabled={!dataDetail}
+                  className="
+      w-full px-4 py-3 rounded-xl
+      bg-black text-white
+      border border-zinc-700
+      text-sm sm:text-base
+      cursor-pointer
+      transition-all
+      focus:outline-none
+      focus:border-amber-500
+      focus:ring-2 focus:ring-amber-500/40
+      hover:border-zinc-500
+      disabled:opacity-40
+      disabled:cursor-not-allowed
+    "
+                >
+                  <option value="">Select Cinema</option>
+                  {dataDetail?.heThongRapChieu.flatMap(heThong =>
+                    heThong.cumRapChieu.map(cumRap => (
+                      <option key={cumRap.maCumRap} value={cumRap.maCumRap}>
+                        {heThong.tenHeThongRap} • {cumRap.tenCumRap}
+                      </option>
+                    ))
+                  )}
+                </select>
+              </div>
+
+              {/* Select Date */}
+              <div className="flex flex-col w-full md:w-64">
+                <label className="text-xs sm:text-sm font-semibold text-gray-400 mb-1">
+                  ⏰ Showtime
+                </label>
+
+                <select
+                  value={selectedShowtime?.maLichChieu || ""}
+                  onChange={(e) => {
+                    const lich = dataDetail.heThongRapChieu
+                      .flatMap(h => h.cumRapChieu)
+                      .flatMap(c => c.lichChieuPhim)
+                      .find(l => l.maLichChieu === e.target.value)
+
+                    setSelectedShowtime(lich)
+                  }}
+                  disabled={!selectedCinema}
+                  className="
+      w-full px-4 py-3 rounded-xl
+      bg-black text-white
+      border border-zinc-700
+      text-sm sm:text-base
+      cursor-pointer
+      transition-all
+      focus:outline-none
+      focus:border-amber-500
+      focus:ring-2 focus:ring-amber-500/40
+      hover:border-zinc-500
+      disabled:opacity-40
+      disabled:cursor-not-allowed
+    "
+                >
+                  <option value="">Select Time</option>
+                  {dataDetail?.heThongRapChieu.flatMap(h =>
+                    h.cumRapChieu
+                      .filter(c => c.maCumRap === selectedCinema)
+                      .flatMap(c =>
+                        c.lichChieuPhim.map(lich => (
+                          <option key={lich.maLichChieu} value={lich.maLichChieu}>
+                            {lich.ngayChieuGioChieu.slice(11, 16)}
+                          </option>
+                        ))
+                      )
+                  )}
+                </select>
+              </div>
+
+              {/* Book Button */}
+              {renderBookingButton()}
+            </div>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* MOVIES TABS */}
-      <div className="py-15">
+      <section className="py-15">
         <div className="container relative">
           <div className="md:block hidden absolute top-0 left-0">
             <div className="relative inline px-1 py-10 rounded-l-2xl text-white text-xl font-medium bg-black">
@@ -823,7 +945,7 @@ const Home = () => {
             </div>
           </div>
         )}
-      </div>
+      </section>
 
       {/* NEWS */}
       <section className="container mx-auto pb-10 sm:pb-12 md:pb-14 lg:pb-16">
