@@ -15,7 +15,7 @@ const CheckOut = () => {
 
     const location = useLocation();
 
-    const { activeSeats = [], foodOrders = [] } = location.state || {};
+    const { activeSeats = [], selectedFoods = [] } = location.state || {};
 
     const stateSeatsInformation = useSelector((state) => state.seatsReducer);
 
@@ -47,7 +47,7 @@ const CheckOut = () => {
         return totalSeatsPrice + (seats.giaVe)
     }, 0);
 
-    const totalFoodPrice = foodOrders.reduce((totalFoodPrice, i) => {
+    const totalFoodPrice = selectedFoods.reduce((totalFoodPrice, i) => {
         return totalFoodPrice + (i.price || 0) * (i.quantity || 1)
     }, 0);
 
@@ -111,7 +111,7 @@ const CheckOut = () => {
                             maLichChieu,
                             totalPayment,
                             activeSeats,
-                            foodOrders,
+                            selectedFoods,
                         }
                     }
                 );
@@ -211,9 +211,9 @@ const CheckOut = () => {
                                 </p>
                             </div>
 
-                            {foodOrders.length > 0 ? (
+                            {selectedFoods.length > 0 ? (
                                 <ul className="text-sm sm:text-base text-gray-700 space-y-1">
-                                    {foodOrders.map((item, i) => (
+                                    {selectedFoods.map((item, i) => (
                                         <li key={i}>
                                             {item.name} x{item.quantity} — {(item.price * item.quantity).toLocaleString()} VND
                                         </li>

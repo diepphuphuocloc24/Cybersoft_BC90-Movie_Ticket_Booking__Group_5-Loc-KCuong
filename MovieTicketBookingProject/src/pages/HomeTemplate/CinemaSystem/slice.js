@@ -3,7 +3,7 @@ import api from "./../../../services/api";
 
 const initialState = {
   loading: false,
-  dataCinema: null,
+  dataCinema: [],
   error: null,
 };
 

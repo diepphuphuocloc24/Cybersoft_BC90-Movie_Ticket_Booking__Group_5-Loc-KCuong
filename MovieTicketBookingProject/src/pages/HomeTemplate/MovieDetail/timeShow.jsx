@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Login from "../Login";
 
 const TimeShow = ({ propTimeShow, propShowCode, propDuration }) => {
-    const dispatch = useDispatch()
-
     const stateLogin = useSelector((state) => state.homeLoginReducer);
 
     const { dataUser } = stateLogin

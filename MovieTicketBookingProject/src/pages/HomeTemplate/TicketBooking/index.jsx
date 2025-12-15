@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSeats } from "./slice";
+import { fetchFoods, fetchSeats } from "./slice";
 import { Link, Navigate, useLocation, useParams } from "react-router-dom";
 import SeatList from "./seatList";
 import Loading from "./loading";
@@ -13,11 +13,18 @@ const TicketBooking = () => {
   const dispatch = useDispatch();
 
   const stateSeats = useSelector((state) => state.seatsReducer);
-  const { loading, dataSeats } = stateSeats;
+
+  const { loading, dataSeats, dataFoods, error } = stateSeats;
+
+  console.log(dataFoods);
 
   const [activeSeats, setActiveSeats] = useState([]);
 
   const [modalConfirmOpen, setModalConfirmOpen] = useState(false);
+
+  const [selectedFoods, setSelectedFoods] = useState([]);
+
+  const [modalFoodOpen, setModalFoodOpen] = useState(false);
 
   const [showAlert, setShowAlert] = useState(false);
 
@@ -29,6 +36,7 @@ const TicketBooking = () => {
 
   useEffect(() => {
     dispatch(fetchSeats(maLichChieu));
+    dispatch(fetchFoods())
   }, [maLichChieu, dispatch]);
 
   const getSeatsSelectedInformation = (activeSeats) => {
@@ -112,20 +120,46 @@ const TicketBooking = () => {
   const handleProceed = () => {
     if (activeSeats.length === 0) {
       setShowAlert(true);
-      setTimeout(() => {
-        setShowAlert(false)
-      }, 1500);
+      setTimeout(() => setShowAlert(false), 1500);
     } else {
-      setModalConfirmOpen(true);
+      setModalFoodOpen(true);
     }
   };
 
-  const handleCloseModal = () => {
-    setModalConfirmOpen(false)
+  const handleIncreaseFood = (food) => {
+    setSelectedFoods((prev) => {
+      const existed = prev.find((f) => f.id === food.id);
+
+      if (!existed) {
+        return [...prev, { ...food, quantity: 1 }];
+      }
+
+      return prev.map((f) =>
+        f.id === food.id ? { ...f, quantity: f.quantity + 1 } : f
+      );
+    });
   };
 
-  const handleCancel = () => {
-    setModalConfirmOpen(false);
+  const handleDecreaseFood = (foodId) => {
+    setSelectedFoods((prev) =>
+      prev
+        .map((f) =>
+          f.id === foodId ? { ...f, quantity: f.quantity - 1 } : f
+        )
+        .filter((f) => f.quantity > 0)
+    );
+  };
+
+  const snackList = dataFoods?.filter(item => item.type === "snack");
+
+  const calculateFoodTotal = () => {
+    return selectedFoods.reduce((total, f) => {
+      return total + f.price * f.quantity;
+    }, 0);
+  };
+
+  const calculateGrandTotal = () => {
+    return calculateSubTotal() + calculateFoodTotal();
   };
 
   if (loading) {
@@ -261,77 +295,279 @@ const TicketBooking = () => {
           </div>
         </div>
 
+        {/* MODAL FOODS */}
+        {modalFoodOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+            {/* CLICK OUTSIDE */}
+            <div
+              className="flex-1 cursor-pointer"
+              onClick={() => setModalFoodOpen(false)}
+            />
+
+            {/* SIDEBAR */}
+            <div
+              className="
+        w-[80%] sm:w-[60%] md:w-[50%] lg:w-[40%] xl:w-[35%]
+        h-full bg-white shadow-2xl flex flex-col
+        animate__animated animate__fadeInRight
+      "
+            >
+              {/* HEADER */}
+              <div className="px-4 sm:px-5 md:px-6 py-4 border-b flex justify-between items-center">
+                <div>
+                  <p className="text-[10px] sm:text-xs text-gray-400 tracking-wide">
+                    STEP 2 OF 3
+                  </p>
+                  <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl font-extrabold">
+                    Food & Drinks
+                  </h2>
+                </div>
+
+                <button
+                  onClick={() => setModalFoodOpen(false)}
+                  className="cursor-pointer w-8 h-8 rounded-full bg-gray-100 hover:bg-red-500 hover:text-white transition"
+                >
+                  <i className="fi fi-rr-cross-small"></i>
+                </button>
+              </div>
+
+              {/* FOOD LIST */}
+              <div className="flex-1 overflow-y-auto px-3 sm:px-4 md:px-5 py-4 space-y-2">
+                {snackList?.map(food => {
+                  const selected = selectedFoods.find(f => f.id === food.id)
+                  return (
+                    <div
+                      key={food.id}
+                      className="flex items-center gap-3 p-3 rounded-xl border hover:shadow-md transition cursor-pointer"
+                    >
+                      <img
+                        src={food.image}
+                        alt={food.name}
+                        className="w-14 h-14 sm:w-16 sm:h-16 md:w-18 md:h-18 rounded-lg object-cover border"
+                      />
+
+                      <div className="flex-1 min-w-0">
+                        <p className="font-semibold truncate text-xs sm:text-sm md:text-base">
+                          {food.name}
+                        </p>
+                        <p className="text-red-500 font-bold text-[11px] sm:text-xs md:text-sm">
+                          {food.price.toLocaleString("vi-VN")} đ
+                        </p>
+                      </div>
+
+                      {/* ACTION */}
+                      <div className="flex items-center gap-1.5">
+                        <button
+                          onClick={() => handleDecreaseFood(food.id)}
+                          className="cursor-pointer w-7 h-7 rounded-full bg-gray-200 hover:bg-gray-300 font-bold"
+                        >
+                          −
+                        </button>
+
+                        <span className="min-w-[18px] text-center font-semibold text-sm">
+                          {selected?.quantity || 0}
+                        </span>
+
+                        <button
+                          onClick={() => handleIncreaseFood(food)}
+                          className="cursor-pointer w-7 h-7 rounded-full bg-red-500 hover:bg-red-600 text-white font-bold"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+
+              {/* FOOTER */}
+              <div className="border-t px-4 sm:px-5 md:px-6 py-4 space-y-2">
+                <div className="flex justify-between text-sm sm:text-base">
+                  <span>Seats Selected</span>
+                  <span className="font-semibold">
+                    {calculateSubTotal().toLocaleString("vi-VN")} đ
+                  </span>
+                </div>
+
+                <div className="flex justify-between text-sm sm:text-base">
+                  <span>Food</span>
+                  <span className="font-semibold">
+                    {calculateFoodTotal().toLocaleString("vi-VN")} đ
+                  </span>
+                </div>
+
+                <div className="flex justify-between text-base sm:text-lg font-extrabold text-red-500">
+                  <span>Total</span>
+                  <span>{calculateGrandTotal().toLocaleString("vi-VN")} đ</span>
+                </div>
+
+                <button
+                  onClick={() => {
+                    setModalFoodOpen(false)
+                    setModalConfirmOpen(true)
+                  }}
+                  className="
+            cursor-pointer w-full mt-2 py-2.5 rounded-xl
+            bg-red-500 hover:bg-red-600 text-white font-extrabold
+            transition shadow-lg
+          "
+                >
+                  Continue
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* MODAL CONFIRM */}
         {modalConfirmOpen && (
-          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 px-4">
-            <div className="bg-white rounded-2xl shadow-3xl w-full max-w-lg p-3 sm:p-4 md:p-5 lg:p-6 xl:p-7 relative">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4 min-h-screen">
+            <div
+              className="
+        bg-white w-full max-w-xl
+        rounded-2xl shadow-2xl
+        p-4 sm:p-5 md:p-6 lg:p-7
+      "
+            >
+              {/* HEADER */}
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-lg sm:text-xl md:text-2xl font-extrabold">
+                  Confirm Booking
+                </h2>
+                <button
+                  onClick={() => setModalConfirmOpen(false)}
+                  className="cursor-pointer w-8 h-8 rounded-full bg-gray-100 hover:bg-red-500 hover:text-white"
+                >
+                  <i className="fi fi-rr-cross-small"></i>
+                </button>
+              </div>
 
-              <button
-                onClick={handleCloseModal}
-                className="absolute -top-[2%] -right-[2%] w-4 h-4 sm:w-4 sm:h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 xl:w-6 xl:h-6 flex items-center justify-center bg-black text-white rounded-full ring-2 ring-white transition duration-300 cursor-pointer hover:bg-red-500 leading-none"
-                title="Close"
-              >
-                <i className="fi fi-rr-cross-small text-[10px] sm:text-[11px] md:text-[12px] lg:text-[13px] xl:text-[14px] leading-none"></i>
-              </button>
-
-              <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold text-black mb-3 sm:mb-4 md:mb-5 lg:mb-6 tracking-wide">
-                Confirm Booking
-              </h2>
-
-              <div className="space-y-2 text-[10px] sm:text-xs md:text-sm lg:text-base xl:text-lg text-gray-700">
+              {/* MOVIE INFO */}
+              <div className="space-y-2 text-xs sm:text-sm md:text-base">
                 {[
                   { icon: "fi fi-rr-screen-play", label: "Theater", value: dataSeats.thongTinPhim.tenCumRap },
-                  { icon: "fi fi-ts-land-layer-location", label: "Address", value: dataSeats.thongTinPhim.diaChi },
                   { icon: "fa-solid fa-building", label: "Auditorium", value: dataSeats.thongTinPhim.tenRap },
-                  { icon: "fa-regular fa-clock", label: "Showtime", value: dataSeats.thongTinPhim.gioChieu },
+                  { icon: "fa-regular fa-clock", label: "Time", value: dataSeats.thongTinPhim.gioChieu },
                   { icon: "fi fi-rr-calendar", label: "Date", value: dataSeats.thongTinPhim.ngayChieu },
                 ].map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-1.5 sm:gap-2 md:gap-2.5 py-0.5 sm:py-1">
-                    <i className={`${item.icon} text-red-500 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl`}></i>
-                    <span className="w-24 sm:w-28 md:w-32 lg:w-36 xl:w-40 font-medium">{item.label}:</span>
-                    <span className="ml-auto text-right font-semibold text-orange-500 truncate max-w-[65%] sm:max-w-[70%] md:max-w-[75%] lg:max-w-[80%] xl:max-w-[85%]">
+                  <div key={idx} className="flex items-center gap-2">
+                    <i className={`${item.icon} text-red-500`}></i>
+                    <span className="font-medium">{item.label}:</span>
+                    <span className="ml-auto font-semibold truncate max-w-[60%]">
                       {item.value}
                     </span>
                   </div>
                 ))}
               </div>
 
-              <div className="pt-2 sm:pt-3 md:pt-4 border-t border-gray-200 text-[10px] sm:text-xs md:text-sm lg:text-base xl:text-lg">
-                <div className="flex justify-between items-center">
-                  <div>
-                    <p className="font-medium text-gray-600">Selected Seats</p>
-                    <p className="font-semibold text-black text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl">{renderInfoSeatSelected()}</p>
+              {/* SELECTED SEATS */}
+              <div className="border-t mt-4 pt-4">
+                <div className="flex items-center gap-2 mb-3">
+                  <i className="fi fi-ss-couch text-red-500"></i>
+                  <h3 className="font-bold text-sm sm:text-base">
+                    Selected Seats
+                  </h3>
+                </div>
+
+                <div className="flex gap-4">
+                  {/* LEFT – SEAT LIST */}
+                  <div className="flex-1 flex flex-wrap gap-2">
+                    {activeSeats.map(seat => (
+                      <span
+                        key={seat.maGhe}
+                        className="
+        px-3 py-1.5
+        rounded-lg
+        bg-blue-200
+        border border-gray-300
+        text-gray-800
+        font-semibold
+        text-xs sm:text-sm
+      "
+                      >
+                        {seat.tenGhe}
+                      </span>
+                    ))}
                   </div>
-                  <div className="text-right">
-                    <p className="font-medium text-gray-600">Subtotal</p>
-                    <p className="font-extrabold text-red-500 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl">
+
+                  {/* RIGHT – SEAT TOTAL */}
+                  <div className="flex justify-between text-xs sm:text-sm md:text-base">
+                    <span className="font-bold text-red-500">
                       {calculateSubTotal().toLocaleString("vi-VN")} đ
-                    </p>
+                    </span>
                   </div>
                 </div>
               </div>
 
-              <div className="flex justify-end gap-2 sm:gap-2.5 mt-3 sm:mt-4 md:mt-5 lg:mt-6 xl:mt-7">
+              {/* FOOD LIST */}
+              <div className="border-t mt-4 pt-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <i className="fi fi-rr-popcorn text-red-500"></i>
+                  <h3 className="font-bold text-sm sm:text-base">
+                    Food & Drinks
+                  </h3>
+                </div>
+
+                {selectedFoods.length > 0 ? (
+                  <div className="space-y-2">
+                    {selectedFoods.map(food => (
+                      <div
+                        key={food.id}
+                        className="flex justify-between text-xs sm:text-sm md:text-base"
+                      >
+                        <span className="truncate">
+                          {food.name} <span className="text-gray-400">x{food.quantity}</span>
+                        </span>
+                        <span className="font-bold text-red-500">
+                          {(food.price * food.quantity).toLocaleString("vi-VN")} đ
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="italic text-gray-400 text-xs sm:text-sm">
+                    No food selected
+                  </p>
+                )}
+              </div>
+
+              {/* TOTAL */}
+              <div className="border-t mt-4 pt-4">
+                <div className="
+    flex justify-between items-center
+    font-extrabold text-red-500
+    text-base sm:text-lg md:text-xl
+  ">
+                  <span>Total Payment</span>
+                  <span>{calculateGrandTotal().toLocaleString("vi-VN")} đ</span>
+                </div>
+              </div>
+
+
+              {/* ACTION */}
+              <div className="flex justify-end gap-2 mt-5">
                 <button
-                  onClick={handleCancel}
-                  className="px-2.5 sm:px-3 md:px-4 lg:px-5 xl:px-6 py-1 sm:py-1.5 md:py-2 lg:py-2.5 xl:py-3 rounded-lg border border-gray-300 hover:bg-gray-50 transition-all duration-300 cursor-pointer font-medium text-[10px] sm:text-xs md:text-sm lg:text-base xl:text-lg"
+                  onClick={() => setModalConfirmOpen(false)}
+                  className="cursor-pointer px-4 py-2 border rounded-lg hover:bg-gray-50"
                 >
-                  Cancel
+                  Back
                 </button>
 
                 <Link
                   to={`/check-out/${maLichChieu}`}
-                  state={{ activeSeats }}
-                  className="px-2.5 sm:px-3 md:px-4 lg:px-5 xl:px-6 py-1 sm:py-1.5 md:py-2 lg:py-2.5 xl:py-3 rounded-lg bg-red-500 text-white font-bold hover:bg-red-600 transition-all duration-300 cursor-pointer shadow-md text-[10px] sm:text-xs md:text-sm lg:text-base xl:text-lg"
+                  state={{ activeSeats, selectedFoods }}
+                  className="
+            cursor-pointer px-5 py-2 rounded-lg
+            bg-red-500 hover:bg-red-600 text-white font-bold shadow
+          "
                 >
-                  Confirm
+                  Confirm & Pay
                 </Link>
               </div>
-
             </div>
           </div>
         )}
-      </div>
+      </div >
 
       {showAlert && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
@@ -339,7 +575,8 @@ const TicketBooking = () => {
             Please select at least one seat
           </div>
         </div>
-      )}
+      )
+      }
     </>
   );
 };

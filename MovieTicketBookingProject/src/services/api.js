@@ -3,6 +3,7 @@ import axios from "axios";
 const api = axios.create({
   baseURL: "https://movienew.cybersoft.edu.vn/api/",
 });
+
 api.interceptors.request.use((config) => {
   const userAdmin = localStorage.getItem("USER_ADMIN");
   const userLogin = localStorage.getItem("USER_LOGIN");
