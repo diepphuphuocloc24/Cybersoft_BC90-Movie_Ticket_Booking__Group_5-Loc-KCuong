@@ -34,6 +34,8 @@ const TicketBooking = () => {
 
   const [redirect, setRedirect] = useState(false);
 
+  const [accordionOpen, setAccordionOpen] = useState(false);
+
   useEffect(() => {
     dispatch(fetchSeats(maLichChieu));
     dispatch(fetchFoods())
@@ -105,6 +107,10 @@ const TicketBooking = () => {
         </div>
       </div>
     );
+  };
+
+  const handleAccordionToggle = () => {
+    setAccordionOpen(prev => !prev);
   };
 
   const renderInfoSeatSelected = () => {
@@ -226,6 +232,60 @@ const TicketBooking = () => {
                   <span className="text-white lg:text-black text-xs sm:text-sm md:text-base lg:text-lg">{item.label}</span>
                 </div>
               ))}
+            </div>
+
+            {/* ACCORDION */}
+            <div className="mt-6 rounded-xl overflow-hidden bg-[#1E1E1E] border border-gray-600">
+<button
+  onClick={handleAccordionToggle}
+  className={`
+    group
+    w-full px-4 py-3
+    flex justify-between items-center
+    font-bold uppercase tracking-wide
+    transition-all duration-300
+    cursor-pointer
+    ${accordionOpen ? "bg-[#383838] text-white" : "bg-[#1C1C1C] text-white hover:bg-[#383838]"}
+  `}
+>
+  <span>Important Information</span>
+
+  <span
+    className={`
+      w-8 h-8
+      flex items-center justify-center
+      rounded-md
+      text-xl
+      transition-all duration-300
+      ${accordionOpen ? "rotate-180 text-red-500" : "text-white"}
+    `}
+  >
+    <i className="fa-solid fa-chevron-down"></i>
+  </span>
+</button>
+
+
+              <div
+                className={`
+      overflow-hidden transition-all duration-300
+      ${accordionOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"}
+    `}
+              >
+                <div className="px-4 py-4 text-sm sm:text-base text-gray-200 leading-relaxed space-y-3">
+                  <p className="font-semibold text-white">Collecting Tickets</p>
+                  <ul className="list-disc list-inside space-y-1">
+                    <li>Present booking confirmation for scanning</li>
+                    <li>Bring valid photo identification</li>
+                  </ul>
+
+                  <p className="font-semibold text-white mt-3">Disclaimer</p>
+                  <ul className="list-disc list-inside space-y-1">
+                    <li>Maximum 30 general tickets per transaction</li>
+                    <li>Refundable up to 30 minutes before session</li>
+                    <li>Seat allocation may vary by location</li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -542,7 +602,6 @@ const TicketBooking = () => {
                   <span>{calculateGrandTotal().toLocaleString("vi-VN")} đ</span>
                 </div>
               </div>
-
 
               {/* ACTION */}
               <div className="flex justify-end gap-2 mt-5">

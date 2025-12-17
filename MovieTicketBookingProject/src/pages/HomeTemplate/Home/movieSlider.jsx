@@ -1,7 +1,7 @@
-import React, { memo } from 'react'
+import React, { memo, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
-const MovieSlider = ({ propMovie, onOpenTrailer }) => {
+const MovieSlider = ({ propMovie, onOpenTrailer, onNotify }) => {
 
     const formatDate = (dateStr) => {
         const date = new Date(dateStr);
@@ -14,6 +14,15 @@ const MovieSlider = ({ propMovie, onOpenTrailer }) => {
 
     const handleOpenTrailer = () => {
         onOpenTrailer(propMovie.trailer);
+    };
+
+
+    const handleNotify = () => {
+        setShowNotify(true);
+
+        setTimeout(() => {
+            setShowNotify(false);
+        }, 1500);
     };
 
     return (
@@ -69,14 +78,50 @@ const MovieSlider = ({ propMovie, onOpenTrailer }) => {
                             <span>{formatDate(propMovie.ngayKhoiChieu)}</span>
                         </span>
 
-                        <NavLink
-                            to={`/movie-detail/${propMovie.maPhim}`}
-                            className="flex items-center justify-center gap-2 w-full py-2 rounded-2xl font-semibold text-white bg-red-500 
-          hover:bg-rose-600 shadow-md hover:shadow-lg transition-all duration-300 text-xs sm:text-sm md:text-base lg:text-base"
-                        >
-                            <i className="fi fi-rs-ticket-alt text-xs sm:text-sm md:text-base lg:text-base leading-none"></i>
-                            <span>Get Tickets</span>
-                        </NavLink>
+                        {/* BUTTON AREA */}
+                        {propMovie.dangChieu ? (
+                            <NavLink
+                                to={`/movie-detail/${propMovie.maPhim}`}
+                                className="
+            group relative overflow-hidden
+            flex items-center justify-center gap-2
+            w-full py-2.5 rounded-2xl
+            font-semibold text-white
+            bg-gradient-to-r from-red-500 via-rose-500 to-red-600
+            shadow-md shadow-red-500/30
+            hover:shadow-lg hover:shadow-red-500/40
+            transition-all duration-300
+            cursor-pointer
+            text-xs sm:text-sm md:text-base
+          "
+                            >
+                                <span className="
+            absolute inset-0 -translate-x-full
+            bg-gradient-to-r from-transparent via-white/20 to-transparent
+            group-hover:translate-x-full
+            transition-transform duration-700
+          " />
+                                <i className="fi fi-rs-ticket-alt"></i>
+                                <span className="relative z-10">Get Tickets</span>
+                            </NavLink>
+                        ) : (
+                            <button
+                                onClick={onNotify}
+                                className="
+    flex items-center justify-center gap-2
+    w-full py-2.5 rounded-2xl
+    font-semibold text-white
+    bg-gradient-to-r from-gray-700 to-gray-800
+    hover:from-gray-600 hover:to-gray-700
+    transition-all duration-300
+    cursor-pointer
+  "
+                            >
+                                <i className="fi fi-rs-bell"></i>
+                                <span>Notify Me</span>
+                            </button>
+
+                        )}
                     </div>
                 </div>
             </div>

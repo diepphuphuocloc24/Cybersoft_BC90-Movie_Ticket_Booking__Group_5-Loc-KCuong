@@ -3,6 +3,8 @@ import { NavLink } from "react-router-dom";
 import Trailer from "./trailer";
 
 const Movie = ({ propMovie }) => {
+  console.log(propMovie);
+
   const [openTrailerModal, setOpenTrailerModal] = useState(false);
 
   const handleCloseTrailer = useCallback(() => {
@@ -16,6 +18,16 @@ const Movie = ({ propMovie }) => {
       day: "numeric",
       year: "numeric"
     });
+  };
+
+  const [showNotify, setShowNotify] = useState(false);
+
+  const handleNotify = () => {
+    setShowNotify(true);
+
+    setTimeout(() => {
+      setShowNotify(false);
+    }, 1500);
   };
 
   return (
@@ -71,14 +83,53 @@ const Movie = ({ propMovie }) => {
               <span>{formatDate(propMovie.ngayKhoiChieu)}</span>
             </span>
 
-            <NavLink
-              to={`/movie-detail/${propMovie.maPhim}`}
-              className="flex items-center justify-center gap-2 w-full py-2 rounded-2xl font-semibold text-white bg-red-500 
-          hover:bg-rose-600 shadow-md hover:shadow-lg transition-all duration-300 text-xs sm:text-sm md:text-base lg:text-base"
-            >
-              <i className="fi fi-rs-ticket-alt text-xs sm:text-sm md:text-base lg:text-base leading-none"></i>
-              <span>Get Tickets</span>
-            </NavLink>
+            {/* BUTTON AREA */}
+            {propMovie.dangChieu ? (
+              <NavLink
+                to={`/movie-detail/${propMovie.maPhim}`}
+                className="
+            group relative overflow-hidden
+            flex items-center justify-center gap-2
+            w-full py-2.5 rounded-2xl
+            font-semibold text-white
+            bg-gradient-to-r from-red-500 via-rose-500 to-red-600
+            shadow-md shadow-red-500/30
+            hover:shadow-lg hover:shadow-red-500/40
+            transition-all duration-300
+            cursor-pointer
+            text-xs sm:text-sm md:text-base
+          "
+              >
+                <span className="
+            absolute inset-0 -translate-x-full
+            bg-gradient-to-r from-transparent via-white/20 to-transparent
+            group-hover:translate-x-full
+            transition-transform duration-700
+          " />
+                <i className="fi fi-rs-ticket-alt"></i>
+                <span className="relative z-10">Get Tickets</span>
+              </NavLink>
+            ) : (
+              <button
+                onClick={handleNotify}
+                className="
+            group relative
+            flex items-center justify-center gap-2
+            w-full py-2.5 rounded-2xl
+            font-semibold text-white
+            bg-gradient-to-r from-gray-700 to-gray-800
+            border border-gray-600
+            shadow-md
+            hover:bg-gradient-to-r hover:from-gray-600 hover:to-gray-700
+            transition-all duration-300
+            cursor-pointer
+            text-xs sm:text-sm md:text-base
+          "
+              >
+                <i className="fi fi-rs-bell"></i>
+                <span>Notify Me</span>
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -86,6 +137,20 @@ const Movie = ({ propMovie }) => {
       {/* Modal Trailer */}
       {openTrailerModal && (
         <Trailer propTrailer={propMovie.trailer} onClose={handleCloseTrailer} />
+      )}
+
+      {/* NOTIFY TOAST */}
+      {showNotify && (
+        <div
+          className="
+            fixed top-5 left-1/2 transform -translate-x-1/2 flex items-center gap-3 text-amber-900 font-medium
+            bg-amber-300
+            shadow-md px-5 py-3 rounded-lg shadow-2xl z-50 animate__animated animate__fadeInDown animate__fast
+          "
+        >
+          <i className="fi fi-rs-check-circle"></i>
+          <span>You’ll be notified when tickets are available</span>
+        </div>
       )}
     </>
   );
