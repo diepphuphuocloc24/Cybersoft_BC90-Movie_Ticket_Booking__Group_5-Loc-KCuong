@@ -12,6 +12,7 @@ import { fetchMovieDetail } from "../MovieDetail/slice";
 
 import MovieSlider from "./movieSlider";
 import Trailer from "../MovieList/trailer";
+import Login from "../Login";
 
 const Home = () => {
 
@@ -115,19 +116,27 @@ const Home = () => {
     }
   }
 
+  const [openModal, setOpenModal] = useState(null);
+  const handleCloseModal = () => setOpenModal(null);
+
+  const [showAlert, setShowAlert] = useState(false);
+
+  const [showNotify, setShowNotify] = useState(false);
+
+  const handlePlanBookingButton = () => {
+    setShowAlert(true);
+    setTimeout(() => {
+      setShowAlert(false)
+      setOpenModal("login");
+    }, 1500);
+  }
+
   const renderBookingButton = () => {
     if (!selectedShowtime) {
       return (
         <button
           disabled
-          className="
-    w-full md:w-48 h-[50px]
-    rounded-xl
-    bg-zinc-700
-    text-gray-400
-    font-bold
-    cursor-not-allowed
-  "
+          className="flex-1 py-3 rounded-full bg-[#555555] text-white font-bold cursor-not-allowed uppercase"
         >
           🎟 Book Ticket
         </button>
@@ -139,21 +148,21 @@ const Home = () => {
         <Link
           to={`/buy-ticket/${selectedShowtime.maLichChieu}`}
           state={{ duration: selectedShowtime.thoiLuong }}
-          className="w-full md:w-48 h-[46px] flex items-center justify-center rounded-xl bg-linear-to-r from-amber-400 to-orange-500 text-black font-bold text-sm md:text-base shadow-xl transition-all hover:scale-105 hover:shadow-amber-500/40"
+          className="flex-1 py-3 flex items-center justify-center rounded-full bg-linear-to-r from-amber-400 to-orange-500 text-white font-bold text-sm md:text-base shadow-xl transition-all hover:scale-105 hover:shadow-amber-500/40 cursor-pointer uppercase"
         >
           🎟 Book Ticket
         </Link>
       )
+    } else {
+      return (
+        <button
+          className="flex-1 py-3 flex items-center justify-center rounded-full bg-linear-to-r from-amber-400 to-orange-500 text-white font-bold text-sm md:text-base shadow-xl transition-all hover:scale-105 hover:shadow-amber-500/40 cursor-pointer uppercase"
+          onClick={handlePlanBookingButton}
+        >
+          🎟 Book Ticket
+        </button>
+      )
     }
-
-    return (
-      <Link
-        to="/login"
-        className="w-full md:w-48 h-[46px] flex items-center justify-center rounded-xl bg-linear-to-r from-amber-400 to-orange-500 text-black font-bold text-sm md:text-base shadow-xl transition-all hover:scale-105 hover:shadow-amber-500/40"
-      >
-        🎟 Book Ticket
-      </Link>
-    )
   }
 
   const renderNowMovieList = () => {
@@ -171,7 +180,16 @@ const Home = () => {
   const renderUpComingMovieList = () => {
     return data?.map((movie) => {
       if (!movie.dangChieu) {
-        return <MovieSlider key={movie.maPhim} propMovie={movie} />;
+        return (
+          <MovieSlider
+            key={movie.maPhim}
+            propMovie={movie}
+            onNotify={() => {
+              setShowNotify(true);
+              setTimeout(() => setShowNotify(false), 1500);
+            }}
+          />
+        );
       }
     });
   };
@@ -280,29 +298,27 @@ const Home = () => {
             <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
             <NavLink
               to="*"
-              className="absolute left-1/2 -translate-x-1/2 
-  bottom-10 sm:bottom-14 md:bottom-16 lg:bottom-20 xl:bottom-24
-  flex items-center justify-center gap-2 sm:gap-3
-  bg-linear-to-r from-blue-500 to-purple-600 text-white 
-  px-3 py-2 sm:px-4 sm:py-2 md:px-6 md:py-3 
-  h-9 sm:h-10 md:h-11 lg:h-12
-  rounded-full font-semibold 
-  text-sm sm:text-base md:text-lg lg:text-xl
-  shadow-lg opacity-0 translate-y-8 
-  group-hover:opacity-100 group-hover:translate-y-0
-  transition-all duration-500 ease-out 
-  hover:scale-105 hover:shadow-[0_0_25px_rgba(0,0,0,0.4)]"
+              className="
+                          group relative overflow-hidden
+                          flex items-center justify-center gap-2
+                          w-full py-2.5 rounded-2xl
+                          font-semibold text-white
+                          bg-gradient-to-r from-red-500 via-rose-500 to-red-600
+                          shadow-md shadow-red-500/30
+                          hover:shadow-lg hover:shadow-red-500/40
+                          transition-all duration-300
+                          cursor-pointer
+                          text-xs sm:text-sm md:text-base
+                        "
             >
-              <span className="flex items-center h-full">Get Tickets</span>
-
-              <span className="flex items-center justify-center 
-    w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-10 lg:h-10 
-    rounded-full border-2 border-white 
-    transition-all duration-300 hover:translate-x-1">
-                <i className="fi fi-rr-angle-double-small-right 
-      text-xs sm:text-sm md:text-base lg:text-lg 
-      flex items-center justify-center leading-none"></i>
-              </span>
+              <span className="
+                          absolute inset-0 -translate-x-full
+                          bg-gradient-to-r from-transparent via-white/20 to-transparent
+                          group-hover:translate-x-full
+                          transition-transform duration-700
+                        " />
+              <i className="fi fi-rs-ticket-alt"></i>
+              <span className="relative z-10">Get Tickets</span>
             </NavLink>
           </div>
 
@@ -479,17 +495,17 @@ const Home = () => {
           </h2>
 
           <div className="bg-zinc-900/80 backdrop-blur-xl border border-zinc-800 rounded-2xl p-4 sm:p-6 md:p-8 shadow-2xl">
-            <div className="flex flex-col md:flex-row md:items-end gap-4 md:gap-6">
+            <div className="flex flex-col lg:flex-row lg:items-end lg:flex-wrap gap-4 md:gap-6">
               {/* Select Movie */}
-              <div className="flex flex-col w-full md:w-64">
-                <label className="text-xs sm:text-sm font-semibold text-gray-400 mb-1">
-                  🎬 Movie
+              <div className="flex flex-col flex-1 ">
+                <label className="text-sm sm:text-md md:text-base lg:text-base xl:text-lg 2xl:text-xl font-semibold text-white mb-1 sm:mb-2 md:mb-3 lg:mb-4 xl:mb-5 2xl:mb-6 uppercase">
+                  Select Movie
                 </label>
 
                 <select
                   onChange={(e) => handleSelectMovie(e.target.value)}
                   className="
-      w-full px-4 py-3 rounded-xl
+      w-full px-5 py-3 rounded-full
       bg-black text-white
       border border-zinc-700
       text-sm sm:text-base
@@ -507,9 +523,9 @@ const Home = () => {
               </div>
 
               {/* Select Cinema */}
-              <div className="flex flex-col w-full md:w-64">
-                <label className="text-xs sm:text-sm font-semibold text-gray-400 mb-1">
-                  🏢 Cinema
+              <div className="flex flex-col flex-1 ">
+                <label className="text-sm sm:text-md md:text-base lg:text-base xl:text-lg 2xl:text-xl font-semibold text-white mb-1 sm:mb-2 md:mb-3 lg:mb-4 xl:mb-5 2xl:mb-6 uppercase">
+                  Select Cinema
                 </label>
 
                 <select
@@ -517,7 +533,7 @@ const Home = () => {
                   onChange={(e) => setSelectedCinema(e.target.value)}
                   disabled={!dataDetail}
                   className="
-      w-full px-4 py-3 rounded-xl
+      w-full px-5 py-3 rounded-full
       bg-black text-white
       border border-zinc-700
       text-sm sm:text-base
@@ -535,7 +551,7 @@ const Home = () => {
                   {dataDetail?.heThongRapChieu.flatMap(heThong =>
                     heThong.cumRapChieu.map(cumRap => (
                       <option key={cumRap.maCumRap} value={cumRap.maCumRap}>
-                        {heThong.tenHeThongRap} • {cumRap.tenCumRap}
+                        {cumRap.tenCumRap}
                       </option>
                     ))
                   )}
@@ -543,9 +559,9 @@ const Home = () => {
               </div>
 
               {/* Select Date */}
-              <div className="flex flex-col w-full md:w-64">
-                <label className="text-xs sm:text-sm font-semibold text-gray-400 mb-1">
-                  ⏰ Showtime
+              <div className="flex flex-col flex-1 ">
+                <label className="text-sm sm:text-md md:text-base lg:text-base xl:text-lg 2xl:text-xl font-semibold text-white mb-1 sm:mb-2 md:mb-3 lg:mb-4 xl:mb-5 2xl:mb-6 uppercase">
+                  Select Showtime
                 </label>
 
                 <select
@@ -560,7 +576,7 @@ const Home = () => {
                   }}
                   disabled={!selectedCinema}
                   className="
-      w-full px-4 py-3 rounded-xl
+      w-full px-5 py-3 rounded-full
       bg-black text-white
       border border-zinc-700
       text-sm sm:text-base
@@ -705,11 +721,27 @@ const Home = () => {
                       </span>
 
                       <button
-                        className="flex items-center justify-center gap-2 w-full py-2 rounded-2xl font-semibold text-white bg-red-500 
-                      hover:bg-rose-600 shadow-md hover:shadow-lg transition-all duration-300 text-xs sm:text-sm md:text-base lg:text-base"
+                        className="group relative overflow-hidden
+      flex items-center justify-center gap-2
+      w-full py-2.5 rounded-2xl
+      font-semibold text-white
+      bg-gradient-to-r from-red-500 via-rose-500 to-red-600
+      shadow-md shadow-red-500/30
+      hover:shadow-lg hover:shadow-red-500/40
+      transition-all duration-300
+      text-xs sm:text-sm md:text-base"
                       >
-                        <i className="fi fi-rs-ticket-alt text-xs sm:text-sm md:text-base lg:text-base leading-none"></i>
-                        <span>Get Tickets</span>
+                        <span className="
+      absolute inset-0 -translate-x-full
+      bg-gradient-to-r from-transparent via-white/20 to-transparent
+      group-hover:translate-x-full
+      transition-transform duration-700
+    " />
+
+                        <i className="fi fi-rs-ticket-alt text-sm md:text-base leading-none"></i>
+                        <span className="relative z-10 tracking-wide">
+                          Get Tickets
+                        </span>
                       </button>
                     </div>
                   </div>
@@ -762,11 +794,27 @@ const Home = () => {
                       </span>
 
                       <button
-                        className="flex items-center justify-center gap-2 w-full py-2 rounded-2xl font-semibold text-white bg-red-500 
-                      hover:bg-rose-600 shadow-md hover:shadow-lg transition-all duration-300 text-xs sm:text-sm md:text-base lg:text-base"
+                        className="group relative overflow-hidden
+      flex items-center justify-center gap-2
+      w-full py-2.5 rounded-2xl
+      font-semibold text-white
+      bg-gradient-to-r from-red-500 via-rose-500 to-red-600
+      shadow-md shadow-red-500/30
+      hover:shadow-lg hover:shadow-red-500/40
+      transition-all duration-300
+      text-xs sm:text-sm md:text-base"
                       >
-                        <i className="fi fi-rs-ticket-alt text-xs sm:text-sm md:text-base lg:text-base leading-none"></i>
-                        <span>Get Tickets</span>
+                        <span className="
+      absolute inset-0 -translate-x-full
+      bg-gradient-to-r from-transparent via-white/20 to-transparent
+      group-hover:translate-x-full
+      transition-transform duration-700
+    " />
+
+                        <i className="fi fi-rs-ticket-alt text-sm md:text-base leading-none"></i>
+                        <span className="relative z-10 tracking-wide">
+                          Get Tickets
+                        </span>
                       </button>
                     </div>
                   </div>
@@ -819,11 +867,27 @@ const Home = () => {
                       </span>
 
                       <button
-                        className="flex items-center justify-center gap-2 w-full py-2 rounded-2xl font-semibold text-white bg-red-500 
-                      hover:bg-rose-600 shadow-md hover:shadow-lg transition-all duration-300 text-xs sm:text-sm md:text-base lg:text-base"
+                        className="group relative overflow-hidden
+      flex items-center justify-center gap-2
+      w-full py-2.5 rounded-2xl
+      font-semibold text-white
+      bg-gradient-to-r from-red-500 via-rose-500 to-red-600
+      shadow-md shadow-red-500/30
+      hover:shadow-lg hover:shadow-red-500/40
+      transition-all duration-300
+      text-xs sm:text-sm md:text-base"
                       >
-                        <i className="fi fi-rs-ticket-alt text-xs sm:text-sm md:text-base lg:text-base leading-none"></i>
-                        <span>Get Tickets</span>
+                        <span className="
+      absolute inset-0 -translate-x-full
+      bg-gradient-to-r from-transparent via-white/20 to-transparent
+      group-hover:translate-x-full
+      transition-transform duration-700
+    " />
+
+                        <i className="fi fi-rs-ticket-alt text-sm md:text-base leading-none"></i>
+                        <span className="relative z-10 tracking-wide">
+                          Get Tickets
+                        </span>
                       </button>
                     </div>
                   </div>
@@ -876,11 +940,27 @@ const Home = () => {
                       </span>
 
                       <button
-                        className="flex items-center justify-center gap-2 w-full py-2 rounded-2xl font-semibold text-white bg-red-500 
-                      hover:bg-rose-600 shadow-md hover:shadow-lg transition-all duration-300 text-xs sm:text-sm md:text-base lg:text-base"
+                        className="group relative overflow-hidden
+      flex items-center justify-center gap-2
+      w-full py-2.5 rounded-2xl
+      font-semibold text-white
+      bg-gradient-to-r from-red-500 via-rose-500 to-red-600
+      shadow-md shadow-red-500/30
+      hover:shadow-lg hover:shadow-red-500/40
+      transition-all duration-300
+      text-xs sm:text-sm md:text-base"
                       >
-                        <i className="fi fi-rs-ticket-alt text-xs sm:text-sm md:text-base lg:text-base leading-none"></i>
-                        <span>Get Tickets</span>
+                        <span className="
+      absolute inset-0 -translate-x-full
+      bg-gradient-to-r from-transparent via-white/20 to-transparent
+      group-hover:translate-x-full
+      transition-transform duration-700
+    " />
+
+                        <i className="fi fi-rs-ticket-alt text-sm md:text-base leading-none"></i>
+                        <span className="relative z-10 tracking-wide">
+                          Get Tickets
+                        </span>
                       </button>
                     </div>
                   </div>
@@ -1122,6 +1202,27 @@ const Home = () => {
           onClose={() => setOpenTrailerModal(false)}
         />
       )}
+
+      {showAlert && (
+        <div className="fixed top-5 left-1/2 transform -translate-x-1/2 bg-red-500 text-white font-semibold px-6 py-3 rounded-lg shadow-lg z-50">
+          You must log in to book tickets
+        </div>
+      )}
+
+      {openModal === "login" && <Login handleClose={handleCloseModal} />}
+
+      {/* NOTIFY TOAST */}
+      {showNotify && (
+        <div className="
+            fixed top-5 left-1/2 transform -translate-x-1/2 flex items-center gap-3 text-amber-900 font-medium
+            bg-amber-300
+            shadow-md px-5 py-3 rounded-lg shadow-2xl z-50 animate__animated animate__fadeInDown animate__fast
+          ">
+          <i className="fi fi-rs-bell-ring"></i>
+          <span>You’ll be notified when tickets are available</span>
+        </div>
+      )}
+
     </>
   );
 };

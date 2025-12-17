@@ -102,7 +102,6 @@ const MovieDetail = () => {
     return (
         <div className="bg-white text-gray-800 py-4 sm:py-10">
             <div className="container mx-auto">
-                {/* DETAIL */}
                 {/* MOBILE BADGE (ONLY BELOW SM) */}
                 <div className="block sm:hidden mb-3">
                     {dataDetail?.dangChieu ? (
@@ -112,6 +111,7 @@ const MovieDetail = () => {
                     )}
                 </div>
 
+                {/* MOVIE INFORMATION */}
                 <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 md:gap-8 lg:gap-10 xl:gap-12">
                     {/* LEFT */}
                     <div className="order-3 sm:order-1 md:order-1 lg:order-1 sm:w-3/5 flex flex-col gap-4 sm:gap-5 md:gap-6 lg:gap-7 xl:gap-8">
@@ -152,7 +152,7 @@ const MovieDetail = () => {
 
                     {/* RIGHT */}
                     <div className="order-2 sm:order-2 md:order-2 lg:order-2 sm:w-2/5 flex flex-col gap-4 sm:gap-5 md:gap-6 lg:gap-7 xl:gap-8">
-                        <img src={dataDetail?.hinhAnh} alt="Movie Poster" className="rounded-lg shadow-lg w-[70%] sm:w-[80%] mx-auto object-cover" />
+                        <img src={dataDetail?.hinhAnh} alt="Movie Poster" className="rounded-lg shadow-lg w-[70%] mx-auto object-cover" />
 
                         <div className="grid grid-cols-3 gap-4 w-[90%] sm:w-full mx-auto bg-gray-100 p-2 sm:p-3 md:p-4 lg:p-5 xl:p-6 border-t-2 border-b-2 border-red-500 text-[10px] sm:text-xs md:text-xs lg:text-sm xl:text-sm">
                             <div className="flex flex-col items-center text-center space-y-1">
@@ -175,7 +175,6 @@ const MovieDetail = () => {
 
                 {/* TIME */}
                 <div className="mt-8 sm:mt-10 md:mt-12 lg:mt-14 xl:mt-16 space-y-4 sm:space-y-5 md:space-y-6 lg:space-y-7 xl:space-y-8">
-
                     <h3 className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl text-red-600 font-semibold mb-2 tracking-wide uppercase">
                         Times & Tickets
                     </h3>
