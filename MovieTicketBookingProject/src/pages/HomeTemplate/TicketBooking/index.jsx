@@ -236,9 +236,9 @@ const TicketBooking = () => {
 
             {/* ACCORDION */}
             <div className="mt-6 rounded-xl overflow-hidden bg-[#1E1E1E] border border-gray-600">
-<button
-  onClick={handleAccordionToggle}
-  className={`
+              <button
+                onClick={handleAccordionToggle}
+                className={`
     group
     w-full px-4 py-3
     flex justify-between items-center
@@ -247,11 +247,11 @@ const TicketBooking = () => {
     cursor-pointer
     ${accordionOpen ? "bg-[#383838] text-white" : "bg-[#1C1C1C] text-white hover:bg-[#383838]"}
   `}
->
-  <span>Important Information</span>
+              >
+                <span>Important Information</span>
 
-  <span
-    className={`
+                <span
+                  className={`
       w-8 h-8
       flex items-center justify-center
       rounded-md
@@ -259,10 +259,10 @@ const TicketBooking = () => {
       transition-all duration-300
       ${accordionOpen ? "rotate-180 text-red-500" : "text-white"}
     `}
-  >
-    <i className="fa-solid fa-chevron-down"></i>
-  </span>
-</button>
+                >
+                  <i className="fa-solid fa-chevron-down"></i>
+                </span>
+              </button>
 
 
               <div

@@ -303,7 +303,7 @@ const Home = () => {
                           flex items-center justify-center gap-2
                           w-full py-2.5 rounded-2xl
                           font-semibold text-white
-                          bg-gradient-to-r from-red-500 via-rose-500 to-red-600
+                          bg-linear-to-r from-red-500 via-rose-500 to-red-600
                           shadow-md shadow-red-500/30
                           hover:shadow-lg hover:shadow-red-500/40
                           transition-all duration-300
@@ -313,7 +313,7 @@ const Home = () => {
             >
               <span className="
                           absolute inset-0 -translate-x-full
-                          bg-gradient-to-r from-transparent via-white/20 to-transparent
+                          bg-linear-to-r from-transparent via-white/20 to-transparent
                           group-hover:translate-x-full
                           transition-transform duration-700
                         " />
@@ -725,7 +725,7 @@ const Home = () => {
       flex items-center justify-center gap-2
       w-full py-2.5 rounded-2xl
       font-semibold text-white
-      bg-gradient-to-r from-red-500 via-rose-500 to-red-600
+      bg-linear-to-r from-red-500 via-rose-500 to-red-600
       shadow-md shadow-red-500/30
       hover:shadow-lg hover:shadow-red-500/40
       transition-all duration-300
@@ -733,7 +733,7 @@ const Home = () => {
                       >
                         <span className="
       absolute inset-0 -translate-x-full
-      bg-gradient-to-r from-transparent via-white/20 to-transparent
+      bg-linear-to-r from-transparent via-white/20 to-transparent
       group-hover:translate-x-full
       transition-transform duration-700
     " />
@@ -798,7 +798,7 @@ const Home = () => {
       flex items-center justify-center gap-2
       w-full py-2.5 rounded-2xl
       font-semibold text-white
-      bg-gradient-to-r from-red-500 via-rose-500 to-red-600
+      bg-linear-to-r from-red-500 via-rose-500 to-red-600
       shadow-md shadow-red-500/30
       hover:shadow-lg hover:shadow-red-500/40
       transition-all duration-300
@@ -806,7 +806,7 @@ const Home = () => {
                       >
                         <span className="
       absolute inset-0 -translate-x-full
-      bg-gradient-to-r from-transparent via-white/20 to-transparent
+      bg-linear-to-r from-transparent via-white/20 to-transparent
       group-hover:translate-x-full
       transition-transform duration-700
     " />
@@ -871,7 +871,7 @@ const Home = () => {
       flex items-center justify-center gap-2
       w-full py-2.5 rounded-2xl
       font-semibold text-white
-      bg-gradient-to-r from-red-500 via-rose-500 to-red-600
+      bg-linear-to-r from-red-500 via-rose-500 to-red-600
       shadow-md shadow-red-500/30
       hover:shadow-lg hover:shadow-red-500/40
       transition-all duration-300
@@ -879,7 +879,7 @@ const Home = () => {
                       >
                         <span className="
       absolute inset-0 -translate-x-full
-      bg-gradient-to-r from-transparent via-white/20 to-transparent
+      bg-linear-to-r from-transparent via-white/20 to-transparent
       group-hover:translate-x-full
       transition-transform duration-700
     " />
@@ -944,7 +944,7 @@ const Home = () => {
       flex items-center justify-center gap-2
       w-full py-2.5 rounded-2xl
       font-semibold text-white
-      bg-gradient-to-r from-red-500 via-rose-500 to-red-600
+      bg-linear-to-r from-red-500 via-rose-500 to-red-600
       shadow-md shadow-red-500/30
       hover:shadow-lg hover:shadow-red-500/40
       transition-all duration-300
@@ -952,7 +952,7 @@ const Home = () => {
                       >
                         <span className="
       absolute inset-0 -translate-x-full
-      bg-gradient-to-r from-transparent via-white/20 to-transparent
+      bg-linear-to-r from-transparent via-white/20 to-transparent
       group-hover:translate-x-full
       transition-transform duration-700
     " />
@@ -1215,8 +1215,7 @@ const Home = () => {
       {showNotify && (
         <div className="
             fixed top-5 left-1/2 transform -translate-x-1/2 flex items-center gap-3 text-amber-900 font-medium
-            bg-amber-300
-            shadow-md px-5 py-3 rounded-lg shadow-2xl z-50 animate__animated animate__fadeInDown animate__fast
+            bg-amber-300 px-5 py-3 rounded-lg shadow-2xl z-50 animate__animated animate__fadeInDown animate__fast
           ">
           <i className="fi fi-rs-bell-ring"></i>
           <span>You’ll be notified when tickets are available</span>
