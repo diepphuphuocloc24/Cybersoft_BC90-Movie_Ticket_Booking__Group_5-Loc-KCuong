@@ -5,6 +5,7 @@ import Footer from "./_components/Footer/index.jsx";
 import BackToTopButton from "./_components/BackToTop/index.jsx";
 import Login from "./Login/index.jsx";
 import Register from "./Register/index.jsx";
+import BotChat from "./_components/BotChat/index.jsx";
 
 const HomeTemplate = () => {
   return (
@@ -18,6 +19,8 @@ const HomeTemplate = () => {
       <Footer />
 
       <BackToTopButton />
+
+      <BotChat />
     </div>
   );
 };
