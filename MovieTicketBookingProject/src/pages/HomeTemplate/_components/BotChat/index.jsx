@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchChatBot } from "./slice";
 
 const BotChat = () => {
     const dispatch = useDispatch();
+
+    const stateChatBot = useSelector((state) => state.botChatReducer);
+    const { dataBotChat } = stateChatBot;
 
     const [showChatBot, setShowChatBot] = useState(false);
     const [message, setMessage] = useState("");
@@ -14,7 +17,13 @@ const BotChat = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        if (!showChatBot || messages.length > 0) return;
+        if (!showChatBot) {
+            setMessages([]);
+            setMessage("");
+            return;
+        }
+
+        if (messages.length > 0) return;
 
         setTimeout(() => {
             setMessages([{ from: "bot", text: "Hi 👋" }]);
@@ -29,31 +38,19 @@ const BotChat = () => {
                 ]);
             }, 1000);
         }, 1000);
-    }, [showChatBot, messages.length]);
+    }, [showChatBot]);
 
     const getBotReply = (userMessage) => {
         const msg = userMessage.toLowerCase().trim();
 
-        if (msg === "hi" || msg === "hello") {
-            return "Hello! How can I help you today? 😊";
-        }
+        const intents = dataBotChat?.filter(
+            (item) => item.type === "chatbot_intent"
+        );
 
-        if (
-            msg.includes("book") ||
-            msg.includes("ticket") ||
-            msg.includes("booking")
-        ) {
-            return `🎬 Yay! Let’s book your movie ticket together 💖
-
-First, choose the movie you’re excited to watch and pick a showtime that fits your schedule.  
-Then, make sure you’re logged in as a member 🔐 so you can select your favorite seats and add some snacks or drinks if you’d like 🍿🥤  
-Finally, complete the payment and your e-ticket will be ready instantly 🎟️✨  
-
-All set! Just head to the cinema and enjoy the show. I’m here if you need anything 🤗`;
-        }
-
-        if (msg === "thanks" || msg === "thank you") {
-            return "You're very welcome! I'm happy to help you 😊";
+        for (const intent of intents || []) {
+            if (intent.keywords.some((keyword) => msg.includes(keyword))) {
+                return intent.reply;
+            }
         }
 
         return "Sorry, I didn’t quite understand that. Could you rephrase? 🤔";
@@ -108,7 +105,9 @@ All set! Just head to the cinema and enjoy the show. I’m here if you need anyt
           "
                 >
                     <div className="flex items-center justify-between px-4 py-3 bg-red-500 text-white">
-                        <span className="font-semibold select-none">FeelDiamondCine Bot</span>
+                        <span className="font-semibold select-none">
+                            FeelDiamondCine Bot
+                        </span>
                         <button
                             onClick={() => setShowChatBot(false)}
                             className="cursor-pointer"
@@ -142,7 +141,9 @@ All set! Just head to the cinema and enjoy the show. I’m here if you need anyt
                         <input
                             value={message}
                             onChange={(e) => setMessage(e.target.value)}
-                            onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+                            onKeyDown={(e) =>
+                                e.key === "Enter" && sendMessage()
+                            }
                             placeholder="Type your message..."
                             className="
                 flex-1 px-4 py-2
