@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { fetchChatBot } from "./slice";
 
 const BotChat = () => {
     const dispatch = useDispatch();
-    const dataChatBot = useSelector((state) => state.botChatReducer);
-    const { dataBotChat } = dataChatBot;
 
     const [showChatBot, setShowChatBot] = useState(false);
     const [message, setMessage] = useState("");
@@ -18,7 +16,7 @@ const BotChat = () => {
     useEffect(() => {
         if (!showChatBot || messages.length > 0) return;
 
-        const timer = setTimeout(() => {
+        setTimeout(() => {
             setMessages([{ from: "bot", text: "Hi 👋" }]);
 
             setTimeout(() => {
@@ -31,28 +29,56 @@ const BotChat = () => {
                 ]);
             }, 1000);
         }, 1000);
-
-        return () => clearTimeout(timer);
     }, [showChatBot, messages.length]);
 
-    const openBotChat = () => setShowChatBot(true);
-    const closeBotChat = () => setShowChatBot(false);
+    const getBotReply = (userMessage) => {
+        const msg = userMessage.toLowerCase().trim();
+
+        if (msg === "hi" || msg === "hello") {
+            return "Hello! How can I help you today? 😊";
+        }
+
+        if (
+            msg.includes("book") ||
+            msg.includes("ticket") ||
+            msg.includes("booking")
+        ) {
+            return `🎬 Yay! Let’s book your movie ticket together 💖
+
+First, choose the movie you’re excited to watch and pick a showtime that fits your schedule.  
+Then, make sure you’re logged in as a member 🔐 so you can select your favorite seats and add some snacks or drinks if you’d like 🍿🥤  
+Finally, complete the payment and your e-ticket will be ready instantly 🎟️✨  
+
+All set! Just head to the cinema and enjoy the show. I’m here if you need anything 🤗`;
+        }
+
+        if (msg === "thanks" || msg === "thank you") {
+            return "You're very welcome! I'm happy to help you 😊";
+        }
+
+        return "Sorry, I didn’t quite understand that. Could you rephrase? 🤔";
+    };
 
     const sendMessage = () => {
         if (!message.trim()) return;
 
-        setMessages((prev) => [
-            ...prev,
-            { from: "user", text: message },
-            { from: "bot", text: "🎬 Thanks! I’ll get back to you soon." },
-        ]);
+        const userText = message;
+
+        setMessages((prev) => [...prev, { from: "user", text: userText }]);
         setMessage("");
+
+        setTimeout(() => {
+            setMessages((prev) => [
+                ...prev,
+                { from: "bot", text: getBotReply(userText) },
+            ]);
+        }, 800);
     };
 
     return (
         <>
             <button
-                onClick={openBotChat}
+                onClick={() => setShowChatBot(true)}
                 className="
           fixed bottom-[30%] lg:bottom-[15%] right-[2.5%]
           w-12 h-12 lg:w-14 lg:h-14
@@ -72,33 +98,38 @@ const BotChat = () => {
             {showChatBot && (
                 <div
                     className="
-            fixed bottom-[40%] lg:bottom-[30%] right-[2.5%]
-            w-[85%] sm:w-[60%] md:w-[40%] lg:w-[320px]
-            bg-[#111] text-white
+            fixed bottom-[40%] lg:bottom-[25%] right-[2.5%]
+            w-[85%] sm:w-[60%] md:w-[40%]
+            bg-[#111]
             rounded-2xl
             shadow-2xl
             overflow-hidden
             z-50
           "
                 >
-                    <div className="flex items-center justify-between px-4 py-3 bg-red-500">
-                        <span className="font-semibold">FeelDiamondCine Bot</span>
-                        <button onClick={closeBotChat} className="cursor-pointer">
-                            <i className="fi fi-rr-cross text-sm"></i>
+                    <div className="flex items-center justify-between px-4 py-3 bg-red-500 text-white">
+                        <span className="font-semibold select-none">FeelDiamondCine Bot</span>
+                        <button
+                            onClick={() => setShowChatBot(false)}
+                            className="cursor-pointer"
+                        >
+                            <i className="fi fi-rr-cross text-sm cursor-pointer"></i>
                         </button>
                     </div>
 
-                    <div className="h-60 overflow-y-auto px-3 py-2 space-y-2 text-sm">
+                    <div className="h-64 overflow-y-auto px-3 py-3 space-y-3 text-sm bg-[#111]">
                         {messages.map((msg, idx) => (
                             <div
                                 key={idx}
-                                className={`flex ${msg.from === "user" ? "justify-end" : "justify-start"
+                                className={`flex ${msg.from === "user"
+                                    ? "justify-end"
+                                    : "justify-start"
                                     }`}
                             >
                                 <div
-                                    className={`px-3 py-2 rounded-xl max-w-[80%] ${msg.from === "user"
+                                    className={`px-4 py-2 rounded-2xl max-w-[80%] leading-relaxed ${msg.from === "user"
                                         ? "bg-red-500 text-white"
-                                        : "bg-gray-700 text-gray-100"
+                                        : "bg-[#2a2a2a] text-gray-100"
                                         }`}
                                 >
                                     {msg.text}
@@ -107,14 +138,14 @@ const BotChat = () => {
                         ))}
                     </div>
 
-                    <div className="flex items-center gap-2 px-3 py-2 bg-[#1a1a1a]">
+                    <div className="flex items-center gap-2 px-3 py-3 bg-[#1a1a1a]">
                         <input
                             value={message}
                             onChange={(e) => setMessage(e.target.value)}
                             onKeyDown={(e) => e.key === "Enter" && sendMessage()}
                             placeholder="Type your message..."
                             className="
-                flex-1 px-3 py-2
+                flex-1 px-4 py-2
                 rounded-xl
                 bg-[#222] text-white
                 text-sm
@@ -124,13 +155,14 @@ const BotChat = () => {
                         <button
                             onClick={sendMessage}
                             className="
-                px-3 py-2
+                px-4 py-2
                 bg-red-500 rounded-xl
                 hover:bg-red-600
+                transition
                 cursor-pointer
               "
                         >
-                            <i className="fi fi-rr-paper-plane"></i>
+                            <i className="fi fi-rr-paper-plane cursor-pointer"></i>
                         </button>
                     </div>
                 </div>
