@@ -19,7 +19,7 @@ const BackToTopButton = () => {
     const scrollToTop = () => {
         window.scrollTo({
             top: 0,
-            behavior: 'smooth' // Provides a smooth scrolling animation
+            behavior: 'smooth'
         });
     };
 

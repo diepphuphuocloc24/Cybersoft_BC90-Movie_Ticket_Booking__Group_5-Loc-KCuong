@@ -13,6 +13,7 @@ import { fetchMovieDetail } from "../MovieDetail/slice";
 import MovieSlider from "./movieSlider";
 import Trailer from "../MovieList/trailer";
 import Login from "../Login";
+import Register from "../Register";
 
 const Home = () => {
 
@@ -298,27 +299,29 @@ const Home = () => {
             <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
             <NavLink
               to="*"
-              className="
-                          group relative overflow-hidden
-                          flex items-center justify-center gap-2
-                          w-full py-2.5 rounded-2xl
-                          font-semibold text-white
-                          bg-linear-to-r from-red-500 via-rose-500 to-red-600
-                          shadow-md shadow-red-500/30
-                          hover:shadow-lg hover:shadow-red-500/40
-                          transition-all duration-300
-                          cursor-pointer
-                          text-xs sm:text-sm md:text-base
-                        "
+              className="absolute left-1/2 -translate-x-1/2 
+  bottom-10 sm:bottom-14 md:bottom-16 lg:bottom-20 xl:bottom-24
+  flex items-center justify-center gap-2 sm:gap-3
+  bg-linear-to-r from-blue-500 to-purple-600 text-white 
+  px-3 py-2 sm:px-4 sm:py-2 md:px-6 md:py-3 
+  h-9 sm:h-10 md:h-11 lg:h-12
+  rounded-full font-semibold 
+  text-sm sm:text-base md:text-lg lg:text-xl
+  shadow-lg opacity-0 translate-y-8 
+  group-hover:opacity-100 group-hover:translate-y-0
+  transition-all duration-500 ease-out 
+  hover:scale-105 hover:shadow-[0_0_25px_rgba(0,0,0,0.4)]"
             >
-              <span className="
-                          absolute inset-0 -translate-x-full
-                          bg-linear-to-r from-transparent via-white/20 to-transparent
-                          group-hover:translate-x-full
-                          transition-transform duration-700
-                        " />
-              <i className="fi fi-rs-ticket-alt"></i>
-              <span className="relative z-10">Get Tickets</span>
+              <span className="flex items-center h-full">Get Tickets</span>
+
+              <span className="flex items-center justify-center 
+    w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-10 lg:h-10 
+    rounded-full border-2 border-white 
+    transition-all duration-300 hover:translate-x-1">
+                <i className="fi fi-rr-angle-double-small-right 
+      text-xs sm:text-sm md:text-base lg:text-lg 
+      flex items-center justify-center leading-none"></i>
+              </span>
             </NavLink>
           </div>
 
@@ -1209,7 +1212,19 @@ const Home = () => {
         </div>
       )}
 
-      {openModal === "login" && <Login handleClose={handleCloseModal} />}
+      {openModal === "login" && (
+        <Login
+          onClose={handleCloseModal}
+          onSwitch={() => setOpenModal("register")}
+        />
+      )}
+
+      {openModal === "register" && (
+        <Register
+          onClose={handleCloseModal}
+          onSwitch={() => setOpenModal("login")}
+        />
+      )}
 
       {/* NOTIFY TOAST */}
       {showNotify && (

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { homeUserRegister } from "./slice";
 import Login from "../Login";
 
-const Register = ({ handleClose }) => {
+const Register = ({ onClose, onSwitch }) => {
   const dispatch = useDispatch();
 
   const stateRegister = useSelector((state) => state.homeRegisterReducer);
@@ -32,44 +32,19 @@ const Register = ({ handleClose }) => {
     }
   )
 
-  const [valid, setValid] = useState(
-    {
-      taiKhoan: "",
-      matKhau: "",
-      email: "",
-      soDt: "",
-      hoTen: "",
-    }
-  )
-
   const [successMsg, setSuccessMsg] = useState(false);
 
-  const [openModal, setOpenModal] = useState(null);
-  const handleCloseModal = () => setOpenModal(null);
-
-  const handleChangeToLogin = () => {
-    setOpenModal("login");
-  }
-
-  if (loading) {
-    return (
-      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-        <div className="bg-white rounded-lg p-6 flex flex-col items-center justify-center shadow-lg">
-          <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4 animate-spin"></div>
-          <span className="text-gray-700 font-medium">Logging in...</span>
-        </div>
-      </div>
-    );
-  }
-
   useEffect(() => {
-    if (dataUser) {
-      setSuccessMsg(true);
-      const timer = setTimeout(() => {
-        setSuccessMsg(false);
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
+    if (!dataUser) return;
+
+    setSuccessMsg(true);
+
+    const timer = setTimeout(() => {
+      setSuccessMsg(false);
+      onClose();
+    }, 3000);
+
+    return () => clearTimeout(timer);
   }, [dataUser]);
 
   const handleOnChange = (e) => {
@@ -85,8 +60,8 @@ const Register = ({ handleClose }) => {
     // REGEX
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneRegex = /^[0-9]{10}$/;
-    const fullNameRegex = /^[A-Za-z\s]+$/;        // Only letters + spaces
-    const noSpaceUsernameRegex = /^\S+$/;         // No whitespace
+    const fullNameRegex = /^[\p{L}\s]+$/u;
+    const noSpaceUsernameRegex = /^\S+$/;
 
     // --- REAL-TIME VALIDATION ---
     if (value.trim() === "") {
@@ -132,7 +107,7 @@ const Register = ({ handleClose }) => {
     // REGEX
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneRegex = /^[0-9]{10}$/;
-    const fullNameRegex = /^[A-Za-z\s]+$/;
+    const fullNameRegex = /^[\p{L}\s]+$/u;
     const noSpaceUsernameRegex = /^\S+$/;
 
     // EMPTY CHECK + FULL VALIDATION
@@ -171,12 +146,23 @@ const Register = ({ handleClose }) => {
     dispatch(homeUserRegister(userRegister));
   };
 
+  if (loading) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div className="bg-white rounded-lg p-6 flex flex-col items-center justify-center shadow-lg">
+          <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4 animate-spin"></div>
+          <span className="text-gray-700 font-medium">Logging in...</span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="fixed inset-0 z-50 flex justify-end items-center bg-black/60">
         <div className="relative w-[70%] sm:w-[50%] md:w-[40%] h-screen flex flex-col justify-center animate__animated animate__fadeInRight">
           <button
-            onClick={handleClose}
+            onClick={() => onClose()}
             className="absolute top-2 left-2 w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 flex items-center justify-center rounded-full bg-[#383838] border border-white/60 text-white hover:bg-red-500 transition cursor-pointer"
           >
             <i className="fa-solid fa-xmark text-xs sm:text-sm md:text-base lg:text-base xl:text-base"></i>
@@ -270,7 +256,7 @@ const Register = ({ handleClose }) => {
             <p className="text-gray-400 text-center mt-2 sm:mt-3 md:mt-4 lg:mt-5 xl:mt-5 text-[10px] sm:text-xs md:text-sm lg:text-sm">
               Already have an account?{" "}
               <button className="text-red-500 font-semibold hover:underline cursor-pointer text-[10px] sm:text-xs md:text-sm lg:text-sm"
-                onClick={handleChangeToLogin}
+                onClick={() => onSwitch("login")}
               >
                 Login
               </button>
@@ -280,12 +266,10 @@ const Register = ({ handleClose }) => {
       </div>
 
       {successMsg && (
-        <div className="fixed top-10 right-10 bg-green-600 text-white px-4 py-2 rounded shadow-lg z-50">
+        <div className="fixed top-5 left-1/2 -translate-x-1/2 bg-green-600 text-white px-4 py-2 rounded shadow-lg z-50 animate__animated animate__fadeInDown">
           Registration successful!
         </div>
       )}
-
-      {openModal === "login" && <Login handleClose={handleCloseModal} />}
     </>
   );
 };

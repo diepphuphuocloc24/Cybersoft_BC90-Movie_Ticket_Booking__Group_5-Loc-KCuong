@@ -203,26 +203,46 @@ const CheckOut = () => {
                             </div>
                         </div>
 
-                        <div className="mt-10 bg-green-50 border border-green-200 hover:bg-green-100 transition rounded-3xl shadow-sm hover:shadow-md p-6 sm:p-8">
-                            <div className="flex justify-between items-center mb-5">
-                                <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Food & Drinks Ordered</h2>
-                                <p className="text-sm sm:text-base text-gray-700 font-medium">
-                                    Subtotal: {totalFoodPrice.toLocaleString()} VND
+                        <div className="mt-10 rounded-3xl bg-linear-to-br from-red-300 via-amber-200 to-yellow-100 p-6 sm:p-8 shadow-sm hover:shadow-md transition">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-6">
+                                <h2 className="text-xl sm:text-2xl font-semibold text-gray-900">
+                                    Food & Drinks Ordered
+                                </h2>
+                                <p className="text-sm sm:text-base text-gray-800">
+                                    Subtotal&nbsp;
+                                    <span className="font-semibold text-green-700">
+                                        {totalFoodPrice.toLocaleString()} VND
+                                    </span>
                                 </p>
                             </div>
 
                             {selectedFoods.length > 0 ? (
-                                <ul className="text-sm sm:text-base text-gray-700 space-y-1">
+                                <ul className="space-y-3 text-sm sm:text-base">
                                     {selectedFoods.map((item, i) => (
-                                        <li key={i}>
-                                            {item.name} x{item.quantity} — {(item.price * item.quantity).toLocaleString()} VND
+                                        <li
+                                            key={i}
+                                            className="flex items-center justify-between"
+                                        >
+                                            <span className="text-gray-800">
+                                                {item.name}
+                                                <span className="ml-2 text-xs text-gray-500">
+                                                    x{item.quantity}
+                                                </span>
+                                            </span>
+
+                                            <span className="font-medium text-gray-900">
+                                                {(item.price * item.quantity).toLocaleString()} VND
+                                            </span>
                                         </li>
                                     ))}
                                 </ul>
                             ) : (
-                                <p className="text-gray-500 text-sm">No food or drinks ordered.</p>
+                                <p className="text-sm text-gray-500 italic">
+                                    No food or drinks selected
+                                </p>
                             )}
                         </div>
+
                     </div>
 
                     {/* RIGHT */}

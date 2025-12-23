@@ -3,8 +3,6 @@ import { NavLink } from "react-router-dom";
 import Trailer from "./trailer";
 
 const Movie = ({ propMovie }) => {
-  console.log(propMovie);
-
   const [openTrailerModal, setOpenTrailerModal] = useState(false);
 
   const handleCloseTrailer = useCallback(() => {
@@ -92,7 +90,7 @@ const Movie = ({ propMovie }) => {
             flex items-center justify-center gap-2
             w-full py-2.5 rounded-2xl
             font-semibold text-white
-            bg-gradient-to-r from-red-500 via-rose-500 to-red-600
+            bg-linear-to-r from-red-500 via-rose-500 to-red-600
             shadow-md shadow-red-500/30
             hover:shadow-lg hover:shadow-red-500/40
             transition-all duration-300
@@ -102,12 +100,12 @@ const Movie = ({ propMovie }) => {
               >
                 <span className="
             absolute inset-0 -translate-x-full
-            bg-gradient-to-r from-transparent via-white/20 to-transparent
+            bg-linear-to-r from-transparent via-white/20 to-transparent
             group-hover:translate-x-full
             transition-transform duration-700
           " />
                 <i className="fi fi-rs-ticket-alt"></i>
-                <span className="relative z-10">Get Tickets</span>
+                <span className="relative z-1">Get Tickets</span>
               </NavLink>
             ) : (
               <button
@@ -117,10 +115,10 @@ const Movie = ({ propMovie }) => {
             flex items-center justify-center gap-2
             w-full py-2.5 rounded-2xl
             font-semibold text-white
-            bg-gradient-to-r from-gray-700 to-gray-800
+            bg-linear-to-r from-gray-700 to-gray-800
             border border-gray-600
             shadow-md
-            hover:bg-gradient-to-r hover:from-gray-600 hover:to-gray-700
+            hover:bg-linear-to-r hover:from-gray-600 hover:to-gray-700
             transition-all duration-300
             cursor-pointer
             text-xs sm:text-sm md:text-base
@@ -145,7 +143,7 @@ const Movie = ({ propMovie }) => {
           className="
             fixed top-5 left-1/2 transform -translate-x-1/2 flex items-center gap-3 text-amber-900 font-medium
             bg-amber-300
-            shadow-md px-5 py-3 rounded-lg shadow-2xl z-50 animate__animated animate__fadeInDown animate__fast
+            shadow-md px-5 py-3 rounded-lg z-50 animate__animated animate__fadeInDown animate__fast
           "
         >
           <i className="fi fi-rs-check-circle"></i>

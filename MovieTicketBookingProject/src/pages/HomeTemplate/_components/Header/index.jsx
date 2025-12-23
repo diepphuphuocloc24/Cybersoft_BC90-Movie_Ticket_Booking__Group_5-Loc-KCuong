@@ -24,6 +24,10 @@ const HomeHeader = () => {
 
   const dropdownRef = useRef();
 
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  const [openUserInfo, setOpenUserInfo] = useState(false);
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -41,6 +45,19 @@ const HomeHeader = () => {
       setIsLogin(false);
     }
   }, [dataUser]);
+
+  useEffect(() => {
+    if (dataUser) {
+      setShowSuccess(true);
+      setTimeout(() => setShowSuccess(false), 3000);
+    }
+  }, [dataUser]);
+
+  const handleOpenUserInformation = () => {
+    setOpenUserInfo(true);
+    setDropdownOpen(false);
+    console.log(dataUser);
+  };
 
   const renderUserMenu = () => {
     if (dataUser) {
@@ -89,7 +106,7 @@ const HomeHeader = () => {
           text-sm sm:text-base md:text-base lg:text-lg text-white 
           hover:bg-amber-500 hover:text-gray-900 transition-colors duration-300 
           cursor-pointer font-medium"
-                  onClick={() => alert("No profile page available.")}
+                  onClick={handleOpenUserInformation}
                 >
                   View Profile
                 </button>
@@ -128,150 +145,220 @@ const HomeHeader = () => {
     }
   };
 
+  const handleSwitchModal = (type) => {
+    setOpenModal(type);
+  };
+
   return (
-    <header className="bg-black text-white fixed w-full z-50 shadow-lg shadow-red-900/10 py-4 lg:py-6">
-      <div className="container mx-auto flex flex-wrap items-center justify-between gap-4 lg:flex-nowrap">
-        {/* LOGO */}
-        <NavLink
-          to="/"
-          className="order-1 w-full sm:max-w-[40%] lg:max-w-[23%] flex justify-center lg:justify-start"
-        >
-          <img src="/img/logo.png" alt="Logo" className="w-[60%] sm:w-full" />
-        </NavLink>
-
-        {/* TOGGLE MOBILE */}
-        <div className="flex sm:hidden items-center justify-between w-full order-2 gap-2">
-          <button
-            onClick={() => {
-              setNavOpen(!navOpen);
-              setUserOpen(false);
-            }}
-            className={`w-full h-8 bg-gray-200 border border-amber-500 rounded-xl flex items-center justify-center cursor-pointer text-black font-semibold hover:bg-gray-300 hover:border-gray-500 hover:text-red-600 transition-all duration-300
-      ${navOpen ? "text-red-500 border-amber-500" : ""}`}
-          >
-            <i className="fa-solid fa-bars text-lg"></i>
-          </button>
-
-          <Link
-            to="/movie-list"
-            className="w-full h-8 bg-gray-200 border border-amber-500 rounded-xl flex items-center justify-center cursor-pointer text-black font-semibold hover:bg-gray-300 hover:border-gray-500 hover:text-red-600 transition-all duration-300"
-          >
-            <i className="fa-solid fa-ticket text-lg"></i>
-          </Link>
-
-          <Link
+    <>
+      <header className="bg-black text-white fixed w-full z-50 shadow-lg shadow-red-900/10 py-4 lg:py-6">
+        <div className="container mx-auto flex flex-wrap items-center justify-between gap-4 lg:flex-nowrap">
+          {/* LOGO */}
+          <NavLink
             to="/"
-            className="w-full h-8 bg-gray-200 border border-amber-500 rounded-xl flex items-center justify-center cursor-pointer text-black font-semibold hover:bg-gray-300 hover:border-gray-500 hover:text-red-600 transition-all duration-300"
+            className="order-1 w-full sm:max-w-[40%] lg:max-w-[23%] flex justify-center lg:justify-start"
           >
-            <i className="fa-solid fa-earth-africa text-lg"></i>
-          </Link>
+            <img src="/img/logo.png" alt="Logo" className="w-[60%] sm:w-full" />
+          </NavLink>
 
-          <button
-            onClick={() => {
-              setUserOpen(!userOpen);
-              setNavOpen(false);
-            }}
-            className={`w-full h-8 bg-gray-200 border border-amber-500 rounded-xl flex items-center justify-center cursor-pointer text-black font-semibold hover:bg-gray-300 hover:border-gray-500 hover:text-red-600 transition-all duration-300
+          {/* TOGGLE MOBILE */}
+          <div className="flex sm:hidden items-center justify-between w-full order-2 gap-2">
+            <button
+              onClick={() => {
+                setNavOpen(!navOpen);
+                setUserOpen(false);
+              }}
+              className={`w-full h-8 bg-gray-200 border border-amber-500 rounded-xl flex items-center justify-center cursor-pointer text-black font-semibold hover:bg-gray-300 hover:border-gray-500 hover:text-red-600 transition-all duration-300
+      ${navOpen ? "text-red-500 border-amber-500" : ""}`}
+            >
+              <i className="fa-solid fa-bars text-lg"></i>
+            </button>
+
+            <Link
+              to="/movie-list"
+              className="w-full h-8 bg-gray-200 border border-amber-500 rounded-xl flex items-center justify-center cursor-pointer text-black font-semibold hover:bg-gray-300 hover:border-gray-500 hover:text-red-600 transition-all duration-300"
+            >
+              <i className="fa-solid fa-ticket text-lg"></i>
+            </Link>
+
+            <Link
+              to="/"
+              className="w-full h-8 bg-gray-200 border border-amber-500 rounded-xl flex items-center justify-center cursor-pointer text-black font-semibold hover:bg-gray-300 hover:border-gray-500 hover:text-red-600 transition-all duration-300"
+            >
+              <i className="fa-solid fa-earth-africa text-lg"></i>
+            </Link>
+
+            <button
+              onClick={() => {
+                setUserOpen(!userOpen);
+                setNavOpen(false);
+              }}
+              className={`w-full h-8 bg-gray-200 border border-amber-500 rounded-xl flex items-center justify-center cursor-pointer text-black font-semibold hover:bg-gray-300 hover:border-gray-500 hover:text-red-600 transition-all duration-300
       ${userOpen ? "text-red-500 border-amber-500" : ""}`}
-          >
-            <i className="fi fi-sr-user text-lg"></i>
-          </button>
-        </div>
+            >
+              <i className="fi fi-sr-user text-lg"></i>
+            </button>
+          </div>
 
-        {/* NAVBAR */}
-        <nav
-          className={`order-4 md:order-3 lg:order-2
+          {/* NAVBAR */}
+          <nav
+            className={`order-4 md:order-3 lg:order-2
             ${navOpen ? "flex" : "hidden"} sm:flex
             flex-col lg:flex-row w-full lg:w-auto
             transition-all duration-300`}
-        >
-          <ul className="flex flex-row justify-between items-center gap-2 sm:gap-4 md:gap-6 lg:gap-10 w-full">
-            <li>
-              <NavLink
-                to="/"
-                className={({ isActive }) =>
-                  `group flex flex-col items-center transition-all duration-300 ${isActive ? "text-red-400" : "text-gray-300 hover:text-red-400"
-                  }`
-                }
-              >
-                <i className="fa-solid fa-house text-xl sm:text-2xl lg:text-2xl group-hover:text-red-400"></i>
-                <span className="text-xs sm:text-sm lg:text-sm mt-1 group-hover:text-red-400">
-                  Home
-                </span>
-              </NavLink>
-            </li>
+          >
+            <ul className="flex flex-row justify-between items-center gap-2 sm:gap-4 md:gap-6 lg:gap-10 w-full">
+              <li>
+                <NavLink
+                  to="/"
+                  className={({ isActive }) =>
+                    `group flex flex-col items-center transition-all duration-300 ${isActive ? "text-red-400" : "text-gray-300 hover:text-red-400"
+                    }`
+                  }
+                >
+                  <i className="fa-solid fa-house text-xl sm:text-2xl lg:text-2xl group-hover:text-red-400"></i>
+                  <span className="text-xs sm:text-sm lg:text-sm mt-1 group-hover:text-red-400">
+                    Home
+                  </span>
+                </NavLink>
+              </li>
 
-            <li>
-              <NavLink
-                to="/movie-list"
-                className={({ isActive }) =>
-                  `group flex flex-col items-center transition-all duration-300 ${isActive ? "text-red-400" : "text-gray-300 hover:text-red-400"
-                  }`
-                }
-              >
-                <i className="fa-solid fa-film text-xl sm:text-2xl lg:text-2xl group-hover:text-red-400"></i>
-                <span className="text-xs sm:text-sm lg:text-sm mt-1 group-hover:text-red-400">
-                  Movies
-                </span>
-              </NavLink>
-            </li>
+              <li>
+                <NavLink
+                  to="/movie-list"
+                  className={({ isActive }) =>
+                    `group flex flex-col items-center transition-all duration-300 ${isActive ? "text-red-400" : "text-gray-300 hover:text-red-400"
+                    }`
+                  }
+                >
+                  <i className="fa-solid fa-film text-xl sm:text-2xl lg:text-2xl group-hover:text-red-400"></i>
+                  <span className="text-xs sm:text-sm lg:text-sm mt-1 group-hover:text-red-400">
+                    Movies
+                  </span>
+                </NavLink>
+              </li>
 
-            <li>
-              <NavLink
-                to="/cinema-system"
-                className={({ isActive }) =>
-                  `group flex flex-col items-center transition-all duration-300 ${isActive ? "text-red-400" : "text-gray-300 hover:text-red-400"
-                  }`
-                }
-              >
-                <i className="fi fi-sr-land-layer-location text-xl sm:text-2xl lg:text-2xl group-hover:text-red-400"></i>
-                <span className="text-xs sm:text-sm lg:text-sm mt-1 group-hover:text-red-400">
-                  Cinemas
-                </span>
-              </NavLink>
-            </li>
+              <li>
+                <NavLink
+                  to="/cinema-system"
+                  className={({ isActive }) =>
+                    `group flex flex-col items-center transition-all duration-300 ${isActive ? "text-red-400" : "text-gray-300 hover:text-red-400"
+                    }`
+                  }
+                >
+                  <i className="fi fi-sr-land-layer-location text-xl sm:text-2xl lg:text-2xl group-hover:text-red-400"></i>
+                  <span className="text-xs sm:text-sm lg:text-sm mt-1 group-hover:text-red-400">
+                    Cinemas
+                  </span>
+                </NavLink>
+              </li>
 
-            <li>
-              <Link
-                to="/movie-list"
-                className="group flex flex-col items-center transition-all duration-300 text-gray-300 hover:text-red-400"
-              >
-                <i className="fi fi-rs-ticket text-xl sm:text-2xl lg:text-2xl text-transparent bg-clip-text bg-linear-to-r from-yellow-300 to-yellow-500"></i>
-                <span className="text-xs sm:text-sm lg:text-sm mt-1 group-hover:text-red-400">
-                  Buy Tickets
-                </span>
-              </Link>
-            </li>
+              <li>
+                <Link
+                  to="/movie-list"
+                  className="group flex flex-col items-center transition-all duration-300 text-gray-300 hover:text-red-400"
+                >
+                  <i className="fi fi-rs-ticket text-xl sm:text-2xl lg:text-2xl text-transparent bg-clip-text bg-linear-to-r from-yellow-300 to-yellow-500"></i>
+                  <span className="text-xs sm:text-sm lg:text-sm mt-1 group-hover:text-red-400">
+                    Buy Tickets
+                  </span>
+                </Link>
+              </li>
 
-            <li>
-              <NavLink
-                to="*"
-                className={({ isActive }) =>
-                  `group flex flex-col items-center transition-all duration-300 ${isActive ? "text-red-400" : "text-gray-300 hover:text-red-400"
-                  }`
-                }
-              >
-                <i className="fi fi-rs-gift-box-benefits text-xl sm:text-2xl lg:text-2xl group-hover:text-red-400"></i>
-                <span className="text-xs sm:text-sm lg:text-sm mt-1 group-hover:text-red-400">
-                  Promotions
-                </span>
-              </NavLink>
-            </li>
-          </ul>
-        </nav>
+              <li>
+                <NavLink
+                  to="*"
+                  className={({ isActive }) =>
+                    `group flex flex-col items-center transition-all duration-300 ${isActive ? "text-red-400" : "text-gray-300 hover:text-red-400"
+                    }`
+                  }
+                >
+                  <i className="fi fi-rs-gift-box-benefits text-xl sm:text-2xl lg:text-2xl group-hover:text-red-400"></i>
+                  <span className="text-xs sm:text-sm lg:text-sm mt-1 group-hover:text-red-400">
+                    Promotions
+                  </span>
+                </NavLink>
+              </li>
+            </ul>
+          </nav>
 
-        {/* USER MENU */}
-        <div className="order-5 sm:order-2 lg:order-3 mt-2 lg:mt-0 gap-2 w-full sm:w-auto transition-all duration-300">
-          <div className={`${userOpen ? "flex flex-col gap-2" : "hidden"} sm:flex sm:flex-row sm:gap-2`}>
-            {renderUserMenu()}
+          {/* USER MENU */}
+          <div className="order-5 sm:order-2 lg:order-3 mt-2 lg:mt-0 gap-2 w-full sm:w-auto transition-all duration-300">
+            <div className={`${userOpen ? "flex flex-col gap-2" : "hidden"} sm:flex sm:flex-row sm:gap-2`}>
+              {renderUserMenu()}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* MODALS */}
-      {openModal === "login" && <Login handleClose={handleCloseModal} />}
-      {openModal === "register" && <Register handleClose={handleCloseModal} />}
-    </header>
+        {/* MODALS */}
+        {openModal === "login" && (
+          <Login
+            onClose={handleCloseModal}
+            onSwitch={handleSwitchModal}
+          />
+        )}
+
+        {openModal === "register" && (
+          <Register
+            onClose={handleCloseModal}
+            onSwitch={handleSwitchModal}
+          />
+        )}
+      </header>
+
+      {showSuccess && (
+        <div className="fixed top-5 left-1/2 -translate-x-1/2 bg-green-600 text-white px-4 py-2 rounded shadow-lg z-50 animate__animated animate__fadeInDown">
+          Login successful!
+        </div>
+      )}
+
+      {openUserInfo && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+          <div className="relative w-[90%] sm:w-[400px] bg-[#1C1C1C] rounded-xl p-6 text-white shadow-2xl animate__animated animate__flipInX">
+
+            {/* CLOSE */}
+            <button
+              onClick={() => setOpenUserInfo(false)}
+              className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full bg-gray-700 hover:bg-red-500 transition cursor-pointer"
+            >
+              <i className="fa-solid fa-xmark"></i>
+            </button>
+
+            {/* HEADER */}
+            <div className="flex items-center gap-4 mb-5">
+              <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-amber-500">
+                <img
+                  src="/img/avatarLogo.jpg"
+                  alt="avatar"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-amber-500">
+                  {dataUser?.hoTen}
+                </h3>
+                <p className="text-sm text-gray-400">
+                  @{dataUser?.taiKhoan}
+                </p>
+              </div>
+            </div>
+
+            {/* INFO */}
+            <div className="space-y-3 text-sm">
+              <div className="flex justify-between border-b border-gray-700 pb-2">
+                <span className="text-gray-400">Email</span>
+                <span>{dataUser?.email}</span>
+              </div>
+
+              <div className="flex justify-between border-b border-gray-700 pb-2">
+                <span className="text-gray-400">Phone</span>
+                <span>{dataUser?.soDT}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
