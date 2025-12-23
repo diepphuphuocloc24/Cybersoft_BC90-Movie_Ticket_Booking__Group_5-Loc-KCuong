@@ -65,15 +65,41 @@ const CinemaSystem = () => {
         slidesToShow: 1,
         slidesToScroll: 1,
         arrows: false,
+        autoplay: true,
+        autoplaySpeed: 4000,
     };
 
     const experienceItems = [
-        { title: "Seamless Booking Experience", text: "Book your movie tickets in seconds with a smooth, modern, and user-friendly platform made for every cinema lover." },
-        { title: "Your Gateway to the Best Movies", text: "Explore the latest blockbusters, trending titles, and exclusive screenings tailored just for you." },
-        { title: "Modern & Advanced Cinemas", text: "Enjoy top-tier sound, crystal-clear screens, and premium seating across leading cinema chains in Southern Vietnam." },
-        { title: "Snacks That Elevate Your Movie Night", text: "Treat yourself to delicious popcorn, drinks, and exclusive combos available at partnered theaters." },
-        { title: "Powered by Leading Cinema Brands", text: "In partnership with BHD, CGV, Cinestar, Galaxy Cinema, Lotte Cinema, and MegaGS for the best and widest choices." },
-        { title: "Your Perfect Cinema Journey", text: "Comfort, convenience, and unforgettable moments—all in one place with FeelDiamondCine." },
+        {
+            title: "Seamless Booking Experience",
+            text: "Book your movie tickets in seconds with a smooth, modern, and user-friendly platform made for every cinema lover.",
+            image: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba"
+        },
+        {
+            title: "Your Gateway to the Best Movies",
+            text: "Explore the latest blockbusters, trending titles, and exclusive screenings tailored just for you.",
+            image: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c"
+        },
+        {
+            title: "Modern & Advanced Cinemas",
+            text: "Enjoy top-tier sound, crystal-clear screens, and premium seating across leading cinema chains in Southern Vietnam.",
+            image: "https://images.unsplash.com/photo-1598899134739-24c46f58b8c0"
+        },
+        {
+            title: "Snacks That Elevate Your Movie Night",
+            text: "Treat yourself to delicious popcorn, drinks, and exclusive combos available at partnered theaters.",
+            image: "https://images.unsplash.com/photo-1585647347384-2593bc35786b"
+        },
+        {
+            title: "Powered by Leading Cinema Brands",
+            text: "In partnership with BHD, CGV, Cinestar, Galaxy Cinema, Lotte Cinema, and MegaGS for the best and widest choices.",
+            image: "https://images.unsplash.com/photo-1524985069026-dd778a71c7b4"
+        },
+        {
+            title: "Your Perfect Cinema Journey",
+            text: "Comfort, convenience, and unforgettable moments—all in one place with FeelDiamondCine.",
+            image: "https://images.unsplash.com/photo-1608178398319-48f814d0750c"
+        }
     ];
 
     const renderCinemaList = () => {
@@ -111,19 +137,19 @@ const CinemaSystem = () => {
         <section className="bg-[#1C1C1C] text-white py-20 space-y-32 animate__animated animate__fadeIn">
             <div className='container mx-auto flex flex-col gap-15'>
                 <div className="space-y-6">
-                    <h1 className="text-3xl md:text-4xl font-extrabold leading-snug bg-linear-to-r from-red-500 to-amber-400 bg-clip-text text-transparent drop-shadow-xl text-center animate__animated animate__fadeInDown animate__slow wow" data-wow-duration="1.5s" data-wow-delay="0.3s">
+                    <h1 className="text-3xl md:text-4xl font-extrabold leading-snug bg-linear-to-r from-red-500 to-amber-400 bg-clip-text text-transparent drop-shadow-xl text-center animate__animated animate__fadeInDown animate__slow">
                         <span className='text-2xl md:text-4xl'>FeelDiamondCine</span><br />
                         Elevating Your Movie Experience in Southern Vietnam
                     </h1>
-                    <p className="text-white text-lg md:text-xl animate__animated animate__fadeInLeft animate__slow wow" data-wow-duration="1.5s" data-wow-delay="0.3s">
+                    <p className="text-white text-lg md:text-xl animate__animated animate__fadeInLeft animate__slow">
                         FeelDiamondCine is a modern online movie ticketing platform designed to bring cinema lovers across Southern Vietnam closer to the films they love.
                     </p>
-                    <p className="text-white text-lg md:text-xl animate__animated animate__fadeInLeft animate__slow wow" data-wow-duration="1.5s" data-wow-delay="0.3s">
+                    <p className="text-white text-lg md:text-xl animate__animated animate__fadeInLeft animate__slow">
                         From finding the nearest cinema to browsing detailed movie information and selecting the perfect showtime, everything is crafted to make your booking journey fast, simple, and enjoyable.
                     </p>
                 </div>
 
-                <div className='flex flex-wrap items-center justify-start gap-3 sm:gap-4 md:gap-6 animate__animated animate__backInRight animate__slow wow' data-wow-duration="1.5s" data-wow-delay="0.3s">
+                <div className='flex flex-wrap items-center justify-start gap-3 sm:gap-4 md:gap-6 animate__animated animate__backInRight animate__slow'>
                     {renderButtonCinemaList()}
                 </div>
 
@@ -131,15 +157,29 @@ const CinemaSystem = () => {
                     {renderEachCinema()}
                 </div>
 
-                <div className="animate__animated animate__fadeInUp animate__slow wow" data-wow-duration="1.5s" data-wow-delay="0.3s">
+                <div className="animate__animated animate__backInLeft animate__slow">
                     <Slider {...experienceSlider}>
                         {experienceItems.map((item, i) => (
                             <div
                                 key={i}
-                                className="p-10 bg-white/5 rounded-2xl backdrop-blur-md space-y-4 shadow-lg border border-white/10 animate__animated animate__fadeInUp animate__slow wow" data-wow-duration="1.5s" data-wow-delay="0.3s"
+                                className="relative overflow-hidden rounded-2xl shadow-lg border border-white/10"
                             >
-                                <h3 className="text-2xl font-bold text-amber-400 drop-shadow-md">{item.title}</h3>
-                                <p className="text-gray-300">{item.text}</p>
+                                <img
+                                    src={item.image}
+                                    alt={item.title}
+                                    className="w-full h-[420px] object-cover"
+                                />
+
+                                <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent" />
+
+                                <div className="absolute bottom-0 p-8 space-y-3">
+                                    <h3 className="text-2xl font-bold text-amber-400 drop-shadow-md">
+                                        {item.title}
+                                    </h3>
+                                    <p className="text-gray-200 max-w-xl">
+                                        {item.text}
+                                    </p>
+                                </div>
                             </div>
                         ))}
                     </Slider>

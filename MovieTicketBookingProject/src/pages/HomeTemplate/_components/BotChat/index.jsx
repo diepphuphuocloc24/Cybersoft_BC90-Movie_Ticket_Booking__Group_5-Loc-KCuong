@@ -86,7 +86,7 @@ const BotChat = () => {
           hover:bg-red-600 hover:scale-110
           transition-all duration-300
           cursor-pointer
-          z-50
+          z-2
         "
             >
                 <i className="fi fi-rr-chatbot-speech-bubble text-2xl cursor-pointer"></i>
@@ -101,7 +101,7 @@ const BotChat = () => {
             rounded-2xl
             shadow-2xl
             overflow-hidden
-            z-50
+            z-2
           "
                 >
                     <div className="flex items-center justify-between px-4 py-3 bg-red-500 text-white">
