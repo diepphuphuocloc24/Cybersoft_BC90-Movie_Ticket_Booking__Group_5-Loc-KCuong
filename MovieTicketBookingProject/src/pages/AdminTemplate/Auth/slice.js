@@ -23,7 +23,7 @@ export const authService = createAsyncThunk(
       if (roles === "KhachHang") {
         return rejectWithValue({
           response: {
-            data: { content: "Bạn không có quyền truy cập vào trang này." },
+            data: { content: "You do not have permission to access this page." },
           },
         });
       }
@@ -41,7 +41,14 @@ export const authService = createAsyncThunk(
 const authenticationSlice = createSlice({
   name: "authenticationSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    
+    logout: (state) => {
+      state.data = null;
+      state.error = null;
+      localStorage.removeItem("USER_ADMIN");
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(authService.pending, (state) => {
       state.loading = true;
@@ -59,4 +66,5 @@ const authenticationSlice = createSlice({
   },
 });
 
+export const { logout } = authenticationSlice.actions;
 export default authenticationSlice.reducer;
