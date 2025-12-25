@@ -12,7 +12,9 @@ export const fetchUserData = createAsyncThunk(
   "users/fetchUserData",
   async (_, { rejectWithValue }) => {
     try {
-      const result = await api.get("QuanLyNguoiDung/LayDanhSachNguoiDung?MaNhom=GP03");
+      const result = await api.get(
+        "QuanLyNguoiDung/LayDanhSachNguoiDung?MaNhom=GP03"
+      );
       return result.data.content;
     } catch (error) {
       return rejectWithValue(error.response?.data?.content || error.message);
@@ -36,7 +38,9 @@ export const deleteUserService = createAsyncThunk(
   "users/deleteUserService",
   async (taiKhoan, { rejectWithValue }) => {
     try {
-      const response = await api.delete(`QuanLyNguoiDung/XoaNguoiDung?TaiKhoan=${taiKhoan}`);
+      const response = await api.delete(
+        `QuanLyNguoiDung/XoaNguoiDung?TaiKhoan=${taiKhoan}`
+      );
       return response.data.content;
     } catch (error) {
       return rejectWithValue(error.response?.data?.content || error.message);
@@ -48,7 +52,10 @@ export const updateUserService = createAsyncThunk(
   "users/updateUserService",
   async (user, { rejectWithValue }) => {
     try {
-      const response = await api.put("QuanLyNguoiDung/CapNhatThongTinNguoiDung", user);
+      const response = await api.put(
+        "QuanLyNguoiDung/CapNhatThongTinNguoiDung",
+        user
+      );
       return response.data.content;
     } catch (error) {
       return rejectWithValue(error.response?.data?.content || error.message);
@@ -62,7 +69,9 @@ const userManageSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchUserData.pending, (state) => { state.loading = true; })
+      .addCase(fetchUserData.pending, (state) => {
+        state.loading = true;
+      })
       .addCase(fetchUserData.fulfilled, (state, action) => {
         state.loading = false;
         state.dataUsers = action.payload;
@@ -72,7 +81,9 @@ const userManageSlice = createSlice({
         state.error = action.payload;
       })
 
-      .addCase(addUserService.pending, (state) => { state.loading = true; })
+      .addCase(addUserService.pending, (state) => {
+        state.loading = true;
+      })
       .addCase(addUserService.fulfilled, (state) => {
         state.loading = false;
         state.error = null;
@@ -82,7 +93,9 @@ const userManageSlice = createSlice({
         state.error = action.payload;
       })
 
-      .addCase(deleteUserService.pending, (state) => { state.loading = true; })
+      .addCase(deleteUserService.pending, (state) => {
+        state.loading = true;
+      })
       .addCase(deleteUserService.fulfilled, (state) => {
         state.loading = false;
       })
@@ -91,7 +104,9 @@ const userManageSlice = createSlice({
         state.error = action.payload;
       })
 
-      .addCase(updateUserService.pending, (state) => { state.loading = true; })
+      .addCase(updateUserService.pending, (state) => {
+        state.loading = true;
+      })
       .addCase(updateUserService.fulfilled, (state) => {
         state.loading = false;
         state.error = null;
