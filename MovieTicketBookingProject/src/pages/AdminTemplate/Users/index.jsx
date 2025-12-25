@@ -9,7 +9,7 @@ const Users = () => {
     const dispatch = useDispatch()
     const [showUserModal, setShowUserModal] = useState(false);
     const [isEditMode, setIsEditMode] = useState(false);
-    
+
     const [searchTerm, setSearchTerm] = useState("");
 
     const initialUser = {
@@ -28,13 +28,13 @@ const Users = () => {
     const filteredUsers = dataUsers?.filter((u) => {
         const search = searchTerm.toLowerCase();
         return (
-            u.hoTen.toLowerCase().includes(search) || 
+            u.hoTen.toLowerCase().includes(search) ||
             u.taiKhoan.toLowerCase().includes(search)
         );
     });
 
     const formik = useFormik({
-        enableReinitialize: true, 
+        enableReinitialize: true,
         initialValues: initialUser,
         validate: (values) => validateUser(values, isEditMode),
         onSubmit: (values) => {
@@ -87,116 +87,195 @@ const Users = () => {
     };
 
     return (
-        <div className="p-6">
-            <h1 className="text-3xl font-bold text-black mb-6">User Management</h1>
+        <>
+            <div className="p-6">
+                <h1 className="text-3xl font-bold text-black mb-6">User Management</h1>
 
-            <div className="flex justify-between mb-6">
-            
-                <input 
-                    type="text" 
-                    placeholder="Search by name or account..." 
-                    className="p-3 rounded-xl border w-1/2" 
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                <button className="bg-green-500 text-white py-3 px-6 rounded-xl cursor-pointer" onClick={handleOpenAddModal}>
-                    Add User
-                </button>
+                <div className="flex justify-between mb-6">
+
+                    <input
+                        type="text"
+                        placeholder="Search by name or account..."
+                        className="p-3 rounded-xl border w-1/2"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                    <button className="bg-green-500 text-white py-3 px-6 rounded-xl cursor-pointer" onClick={handleOpenAddModal}>
+                        Add User
+                    </button>
+                </div>
+
+                <div className="bg-white rounded-xl shadow-md overflow-hidden">
+                    <div className="overflow-x-auto">
+                        <table className="min-w-full border-collapse">
+                            <thead className="bg-gray-100 hidden sm:table-header-group">
+                                <tr>
+                                    <th className="th">Account</th>
+                                    <th className="th hidden md:table-cell">Full Name</th>
+                                    <th className="th hidden lg:table-cell">Email</th>
+                                    <th className="th hidden xl:table-cell">Phone</th>
+                                    <th className="th">Role</th>
+                                    <th className="th text-center">Actions</th>
+                                </tr>
+                            </thead>
+
+                            <tbody className="divide-y">
+                                {filteredUsers?.map((u) => (
+                                    <User
+                                        key={u.taiKhoan}
+                                        propUser={u}
+                                        onEdit={handleEditClick}
+                                    />
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
             </div>
 
             {showUserModal && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-                    <div className="bg-white rounded-2xl w-full max-w-3xl overflow-hidden">
+                    <div className="bg-white rounded-2xl w-full max-w-3xl shadow-xl overflow-hidden">
                         <form onSubmit={formik.handleSubmit}>
-                            <div className="flex justify-between p-6 border-b">
-                                <h3 className="text-2xl font-bold">{isEditMode ? "Edit User" : "Add New User"}</h3>
-                                <button type="button" onClick={() => setShowUserModal(false)}>✕</button>
+
+                            {/* Header */}
+                            <div className="flex justify-between items-center px-6 py-4 border-b">
+                                <h3 className="text-xl font-semibold">
+                                    {isEditMode ? "Edit User" : "Add New User"}
+                                </h3>
+                                <button
+                                    type="button"
+                                    onClick={() => setShowUserModal(false)}
+                                    className="text-gray-500 hover:text-red-500 cursor-pointer transition"
+                                >
+                                    <i className="fa-solid fa-xmark text-lg"></i>
+                                </button>
                             </div>
 
-                            <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {/* Body */}
+                            <div className="px-6 py-5 grid grid-cols-1 md:grid-cols-2 gap-5">
+                                {/* Username */}
                                 <div>
-                                    <label className="block mb-1 font-medium">Username</label>
-                                    <input 
-                                        name="taiKhoan" 
-                                        {...formik.getFieldProps('taiKhoan')} 
-                                        disabled={isEditMode} 
-                                        className={`w-full px-4 py-2 border rounded-lg ${isEditMode ? 'bg-gray-100' : ''}`} 
+                                    <label className="block mb-1 text-sm font-medium text-gray-700">
+                                        Username
+                                    </label>
+                                    <input
+                                        name="taiKhoan"
+                                        {...formik.getFieldProps('taiKhoan')}
+                                        disabled={isEditMode}
+                                        className={`w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400
+                        ${isEditMode ? "bg-gray-100 cursor-not-allowed" : ""}`}
                                     />
                                     {formik.touched.taiKhoan && formik.errors.taiKhoan && (
                                         <p className="text-red-500 text-sm mt-1">{formik.errors.taiKhoan}</p>
                                     )}
                                 </div>
+
+                                {/* Full name */}
                                 <div>
-                                    <label className="block mb-1 font-medium">Full Name</label>
-                                    <input name="hoTen" {...formik.getFieldProps('hoTen')} className="w-full px-4 py-2 border rounded-lg" />
+                                    <label className="block mb-1 text-sm font-medium text-gray-700">
+                                        Full Name
+                                    </label>
+                                    <input
+                                        name="hoTen"
+                                        {...formik.getFieldProps('hoTen')}
+                                        className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                    />
                                     {formik.touched.hoTen && formik.errors.hoTen && (
                                         <p className="text-red-500 text-sm mt-1">{formik.errors.hoTen}</p>
                                     )}
                                 </div>
+
+                                {/* Email */}
                                 <div>
-                                    <label className="block mb-1 font-medium">Email</label>
-                                    <input name="email" {...formik.getFieldProps('email')} className="w-full px-4 py-2 border rounded-lg" />
+                                    <label className="block mb-1 text-sm font-medium text-gray-700">
+                                        Email
+                                    </label>
+                                    <input
+                                        name="email"
+                                        {...formik.getFieldProps('email')}
+                                        className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                    />
                                     {formik.touched.email && formik.errors.email && (
                                         <p className="text-red-500 text-sm mt-1">{formik.errors.email}</p>
                                     )}
                                 </div>
+
+                                {/* Phone */}
                                 <div>
-                                    <label className="block mb-1 font-medium">Phone</label>
-                                    <input name="soDt" {...formik.getFieldProps('soDt')} className="w-full px-4 py-2 border rounded-lg" />
+                                    <label className="block mb-1 text-sm font-medium text-gray-700">
+                                        Phone
+                                    </label>
+                                    <input
+                                        name="soDt"
+                                        {...formik.getFieldProps('soDt')}
+                                        className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                    />
                                     {formik.touched.soDt && formik.errors.soDt && (
                                         <p className="text-red-500 text-sm mt-1">{formik.errors.soDt}</p>
                                     )}
                                 </div>
+
+                                {/* Password */}
                                 {!isEditMode && (
                                     <div>
-                                        <label className="block mb-1 font-medium">Password</label>
-                                        <input name="matKhau" type="password" {...formik.getFieldProps('matKhau')} className="w-full px-4 py-2 border rounded-lg" />
+                                        <label className="block mb-1 text-sm font-medium text-gray-700">
+                                            Password
+                                        </label>
+                                        <input
+                                            name="matKhau"
+                                            type="password"
+                                            {...formik.getFieldProps('matKhau')}
+                                            className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                        />
                                         {formik.touched.matKhau && formik.errors.matKhau && (
                                             <p className="text-red-500 text-sm mt-1">{formik.errors.matKhau}</p>
                                         )}
                                     </div>
                                 )}
+
+                                {/* Role */}
                                 <div>
-                                    <label className="block mb-1 font-medium">Role</label>
-                                    <select name="maLoaiNguoiDung" {...formik.getFieldProps('maLoaiNguoiDung')} className="w-full px-4 py-2 border rounded-lg">
+                                    <label className="block mb-1 text-sm font-medium text-gray-700">
+                                        Role
+                                    </label>
+                                    <select
+                                        name="maLoaiNguoiDung"
+                                        {...formik.getFieldProps('maLoaiNguoiDung')}
+                                        className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                    >
                                         <option value="KhachHang">Customer</option>
                                         <option value="QuanTri">Admin</option>
                                     </select>
                                 </div>
                             </div>
 
-                            <div className="flex justify-end gap-3 p-6 border-t">
-                                <button type="button" className="px-5 py-2 bg-gray-300 rounded-lg" onClick={() => setShowUserModal(false)}>Close</button>
-                                <button type="submit" className={`px-5 py-2 rounded-lg text-white ${isEditMode ? 'bg-blue-500' : 'bg-green-500'}`}>
+                            {/* Footer */}
+                            <div className="flex justify-end gap-3 px-6 py-4 border-t">
+                                <button
+                                    type="button"
+                                    onClick={() => setShowUserModal(false)}
+                                    className="cursor-pointer px-5 py-2 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 transition"
+                                >
+                                    Close
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    className={`cursor-pointer px-5 py-2 rounded-lg text-white font-semibold transition
+                    ${isEditMode ? "bg-blue-500 hover:bg-blue-600" : "bg-green-500 hover:bg-green-600"}`}
+                                >
                                     {isEditMode ? "Save Changes" : "Add User"}
                                 </button>
                             </div>
+
                         </form>
                     </div>
                 </div>
             )}
+        </>
 
-            <div className="bg-white p-6 rounded-lg shadow-lg overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gray-100">
-                        <tr>
-                            <th className="px-6 py-3">Account</th>
-                            <th className="px-6 py-3">Full Name</th>
-                            <th className="px-6 py-3">Email</th>
-                            <th className="px-6 py-3">Phone</th>
-                            <th className="px-6 py-3">Role</th>
-                            <th className="px-6 py-3">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y">
-                        
-                        {filteredUsers?.map((u) => (
-                            <User key={u.taiKhoan} propUser={u} onEdit={handleEditClick} />
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-        </div>
     )
 }
 

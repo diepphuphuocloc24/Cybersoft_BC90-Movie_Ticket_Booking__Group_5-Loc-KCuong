@@ -1,12 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 
 import CountUp from 'react-countup';
 
 import {
     BarChart, Bar,
-    LineChart, Line,
-    PieChart, Pie, Cell,
-    AreaChart, Area,
     XAxis, YAxis,
     CartesianGrid, Tooltip
 } from "recharts";
@@ -23,8 +20,6 @@ const Dashboard = () => {
         { day: 'Sat', value: 5000 },
         { day: 'Sun', value: 6500 }
     ];
-
-    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -103,4 +98,4 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default memo(Dashboard);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, memo } from "react";
 import { Outlet, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import AdminHeader from "./_components/Header";
@@ -152,4 +152,4 @@ const AdminTemplate = () => {
     );
 };
 
-export default AdminTemplate;
+export default memo(AdminTemplate);
