@@ -1,24 +1,33 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { authService } from './slice'
 import { Navigate } from 'react-router-dom'
+import { useFormik } from 'formik'
 
 const AuthTemplate = () => {
     const dispatch = useDispatch()
-
     const authState = useSelector((state) => state.authLoginReducer)
-
     const { loading, data, error } = authState
 
-    console.log(data);
-
-    const [user, setUser] = useState({
-        taiKhoan: "",
-        matKhau: ""
+    const formik = useFormik({
+        initialValues: {
+            taiKhoan: "",
+            matKhau: ""
+        },
+        validate: (values) => {
+            const errors = {};
+            if (!values.taiKhoan.trim()) {
+                errors.taiKhoan = "(*) Please enter your account";
+            }
+            if (!values.matKhau.trim()) {
+                errors.matKhau = "(*) Please enter your password";
+            }
+            return errors;
+        },
+        onSubmit: (values) => {
+            dispatch(authService(values))
+        },
     })
-    console.log(user);
-
-    const [errorBlank, setErrorBlank] = useState(null)
 
     if (loading) {
         return (
@@ -33,22 +42,7 @@ const AuthTemplate = () => {
         )
     }
 
-    if (data) {
-        return <Navigate to="/admin" />;
-    }
-
-    const handleOnchange = (event) => {
-        const { name, value } = event.target
-        setUser({
-            ...user,
-            [name]: value
-        })
-    }
-
-    const handleSubmit = (event) => {
-        event.preventDefault()
-        dispatch(authService(user))
-    }
+    if (data) return <Navigate to="/admin" />;
 
     return (
         <div
@@ -61,12 +55,12 @@ const AuthTemplate = () => {
                 </div>
 
                 <form
-                    name="authForm"
                     className="w-full max-w-xl mx-auto flex flex-col"
-                    onSubmit={handleSubmit}
+                    onSubmit={formik.handleSubmit}
                 >
                     <div className="z-1 w-full flex flex-col gap-6 bg-white px-10 pt-20 pb-10 rounded-3xl border border-white/30">
                         <div className="flex flex-col gap-4">
+                            
                             <div className="flex flex-col">
                                 <div className="flex items-center bg-black rounded-xl p-4 shadow-md hover:shadow-lg transition-shadow duration-300">
                                     <div className="w-10 h-10 flex items-center justify-center bg-gray-700 rounded-full">
@@ -76,11 +70,15 @@ const AuthTemplate = () => {
                                         name="taiKhoan"
                                         type="text"
                                         className="flex-1 ml-4 bg-[#1C1C1C] text-white placeholder-gray-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500 transition-all duration-300"
-                                        placeholder="Enter your email"
-                                        onChange={handleOnchange}
+                                        placeholder="Enter your account"
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={formik.values.taiKhoan}
                                     />
                                 </div>
-                                <p className="text-red-500 text-sm mt-1">(*) Please enter your email</p>
+                                {formik.touched.taiKhoan && formik.errors.taiKhoan && (
+                                    <p className="text-red-500 text-sm mt-1">{formik.errors.taiKhoan}</p>
+                                )}
                             </div>
 
                             <div className="flex flex-col">
@@ -93,10 +91,14 @@ const AuthTemplate = () => {
                                         type="password"
                                         className="flex-1 ml-4 bg-[#1C1C1C] text-white placeholder-gray-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500 transition-all duration-300"
                                         placeholder="Enter your password"
-                                        onChange={handleOnchange}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={formik.values.matKhau}
                                     />
                                 </div>
-                                <p className="text-red-500 text-sm mt-1">(*) Please enter your password</p>
+                                {formik.touched.matKhau && formik.errors.matKhau && (
+                                    <p className="text-red-500 text-sm mt-1">{formik.errors.matKhau}</p>
+                                )}
                             </div>
                         </div>
 
@@ -104,31 +106,30 @@ const AuthTemplate = () => {
                             <input
                                 name="agree"
                                 type="checkbox"
+                                required
                                 className="mt-1 w-5 h-5 rounded border-gray-400 text-indigo-600 focus:ring-indigo-500 cursor-pointer"
                             />
                             <label htmlFor="agree" className="text-gray-700 text-sm leading-relaxed">
-                                I agree to the
-                                <span className="text-blue-700 font-medium underline hover:text-blue-800 transition-colors"> Terms of Service</span>
-                                and
-                                <span className="text-blue-700 font-medium underline hover:text-blue-800 transition-colors"> Privacy Policy</span>.
+                                I agree to the{" "}
+                                <span className="text-blue-700 font-medium underline hover:text-blue-800 transition-colors">Terms of Service</span>
+                                {" "}and{" "}
+                                <span className="text-blue-700 font-medium underline hover:text-blue-800 transition-colors">Privacy Policy</span>.
                             </label>
                         </div>
                     </div>
 
                     <button
-                        name="loginBtn"
                         type="submit"
                         className="mt-0.5 w-[75%] mx-auto border border-white/30 bg-white text-xl text-red-600 font-semibold py-2 rounded-b-4xl shadow-lg hover:bg-pink-600 hover:text-white hover:border-pink-600 transition duration-300 cursor-pointer"
                     >
                         Sign In
                     </button>
 
-                    {/* ERROR */}
                     {error && (
-                        <div className="mt-4 w-[75%] mx-auto bg-red-500 text-white px-5 py-4 rounded-xl shadow-lg flex items-center gap-3 transform transition-all duration-500 ease-out">
+                        <div className="mt-4 w-[75%] mx-auto bg-red-500 text-white px-5 py-4 rounded-xl shadow-lg flex items-center gap-3">
                             <i className="fa-solid fa-triangle-exclamation text-xl"></i>
                             <div>
-                                <span className="font-medium">Error!</span> {error.response.data.content}
+                                <span className="font-medium">Error!</span> {error.response?.data?.content || "Something went wrong"}
                             </div>
                         </div>
                     )}
