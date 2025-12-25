@@ -12,16 +12,24 @@ const AuthTemplate = () => {
     const formik = useFormik({
         initialValues: {
             taiKhoan: "",
-            matKhau: ""
+            matKhau: "",
+            agree: false
         },
         validate: (values) => {
             const errors = {};
+
             if (!values.taiKhoan.trim()) {
-                errors.taiKhoan = "(*) Please enter your account";
+                errors.taiKhoan = "(*) Please enter username";
             }
+
             if (!values.matKhau.trim()) {
-                errors.matKhau = "(*) Please enter your password";
+                errors.matKhau = "(*) Please enter password";
             }
+
+            if (!values.agree) {
+                errors.agree = "(*) You must agree to the terms";
+            }
+
             return errors;
         },
         onSubmit: (values) => {
@@ -76,7 +84,7 @@ const AuthTemplate = () => {
                                         value={formik.values.taiKhoan}
                                     />
                                 </div>
-                                {formik.touched.taiKhoan && formik.errors.taiKhoan && (
+                                {(formik.touched.taiKhoan || formik.submitCount > 0) && formik.errors.taiKhoan && (
                                     <p className="text-red-500 text-sm mt-1">{formik.errors.taiKhoan}</p>
                                 )}
                             </div>
@@ -96,25 +104,40 @@ const AuthTemplate = () => {
                                         value={formik.values.matKhau}
                                     />
                                 </div>
-                                {formik.touched.matKhau && formik.errors.matKhau && (
+                                {(formik.touched.matKhau || formik.submitCount > 0) && formik.errors.matKhau && (
                                     <p className="text-red-500 text-sm mt-1">{formik.errors.matKhau}</p>
                                 )}
                             </div>
                         </div>
 
-                        <div className="flex items-start gap-3">
-                            <input
-                                name="agree"
-                                type="checkbox"
-                                required
-                                className="mt-1 w-5 h-5 rounded border-gray-400 text-indigo-600 focus:ring-indigo-500 cursor-pointer"
-                            />
-                            <label htmlFor="agree" className="text-gray-700 text-sm leading-relaxed">
-                                I agree to the{" "}
-                                <span className="text-blue-700 font-medium underline hover:text-blue-800 transition-colors">Terms of Service</span>
-                                {" "}and{" "}
-                                <span className="text-blue-700 font-medium underline hover:text-blue-800 transition-colors">Privacy Policy</span>.
-                            </label>
+                        <div className="flex flex-col gap-1">
+                            <div className="flex items-start gap-3">
+                                <input
+                                    name="agree"
+                                    type="checkbox"
+                                    checked={formik.values.agree}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    className="mt-1 w-4 h-4 cursor-pointer"
+                                />
+
+                                <label className="text-gray-700 text-sm leading-relaxed select-none">
+                                    I agree to the{" "}
+                                    <span className="text-blue-600 underline">
+                                        Terms of Service
+                                    </span>{" "}
+                                    and{" "}
+                                    <span className="text-blue-600 underline">
+                                        Privacy Policy
+                                    </span>
+                                </label>
+                            </div>
+
+                            {(formik.touched.agree || formik.submitCount > 0) && formik.errors.agree && (
+                                <p className="text-red-500 text-sm ml-6">
+                                    {formik.errors.agree}
+                                </p>
+                            )}
                         </div>
                     </div>
 

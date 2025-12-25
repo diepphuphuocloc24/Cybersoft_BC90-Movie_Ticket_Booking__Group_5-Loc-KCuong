@@ -23,7 +23,9 @@ export const authService = createAsyncThunk(
       if (roles === "KhachHang") {
         return rejectWithValue({
           response: {
-            data: { content: "You do not have permission to access this page." },
+            data: {
+              content: "You do not have permission to access this page.",
+            },
           },
         });
       }
@@ -42,7 +44,6 @@ const authenticationSlice = createSlice({
   name: "authenticationSlice",
   initialState,
   reducers: {
-    
     logout: (state) => {
       state.data = null;
       state.error = null;

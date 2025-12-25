@@ -212,6 +212,28 @@ body {
     }
 }
 
+/* ADMIN */
+.th {
+    @apply px-4 py-3 text-left text-sm font-semibold text-gray-600;
+}
+
+.td {
+    @apply px-4 py-3 text-sm text-gray-700 block sm:table-cell;
+}
+
+.label {
+    @apply block text-xs text-gray-400 mb-1;
+}
+
+.btn-edit {
+    @apply px-3 py-1 rounded-md text-sm font-medium bg-indigo-50 text-indigo-600 hover:bg-indigo-100 transition;
+}
+
+.btn-delete {
+    @apply px-3 py-1 rounded-md text-sm font-medium bg-red-50 text-red-600 hover:bg-red-100 transition;
+}
+
+
 /* ANIMATIONS */
 @keyframes bell {
 

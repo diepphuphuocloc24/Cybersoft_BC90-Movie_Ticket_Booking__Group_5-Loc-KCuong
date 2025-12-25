@@ -9,7 +9,7 @@ import { useFormik } from 'formik'
 const Movies = () => {
     const [showModal, setShowModal] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
-    
+
     const dispatch = useDispatch()
     const state = useSelector((state) => state.movieListReducer)
     const { data, loading } = state
@@ -74,7 +74,7 @@ const Movies = () => {
         if (file) formik.setFieldValue('hinhAnh', file);
     };
 
-    const filteredMovies = data?.filter((movie) => 
+    const filteredMovies = data?.filter((movie) =>
         movie.tenPhim.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
@@ -106,35 +106,87 @@ const Movies = () => {
     }
 
     return (
-        <div className="p-6">
-            <h1 className="text-3xl font-bold text-black mb-6">Movies Management</h1>
+        <>
+            <div className="p-6">
+                <h1 className="text-3xl font-bold text-black mb-6">Movies Management</h1>
 
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-                <div className="flex flex-col md:flex-row md:items-center gap-4 w-full md:w-2/3">
-                    <input
-                        type="text"
-                        placeholder="Search Movie by Title..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="flex-1 p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition shadow-sm"
-                    />
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+                    <div className="flex flex-col md:flex-row md:items-center gap-4 w-full md:w-2/3">
+                        <input
+                            type="text"
+                            placeholder="Search Movie by Title..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="flex-1 p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition shadow-sm"
+                        />
+                    </div>
+
+                    <button
+                        className="w-full md:w-auto bg-linear-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-semibold py-3 px-6 rounded-xl shadow-lg transition-all cursor-pointer"
+                        onClick={() => setShowModal(true)}>
+                        Add Movie
+                    </button>
                 </div>
 
-                <button
-                    className="w-full md:w-auto bg-linear-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-semibold py-3 px-6 rounded-xl shadow-lg transition-all cursor-pointer"
-                    onClick={() => setShowModal(true)}>
-                    Add Movie
-                </button>
+                <div className="space-y-8">
+                    {/* NOW SHOWING */}
+                    <div className="bg-white rounded-xl shadow-md overflow-hidden">
+                        <div className="px-6 py-4 border-b">
+                            <h2 className="text-xl font-semibold text-gray-800">
+                                Now Showing Movies
+                            </h2>
+                        </div>
+
+                        <div className="overflow-x-auto">
+                            <table className="min-w-full">
+                                <thead className="bg-gray-100 hidden sm:table-header-group">
+                                    <tr>
+                                        <th className="th">ID</th>
+                                        <th className="th">Poster</th>
+                                        <th className="th">Title</th>
+                                        <th className="th hidden md:table-cell">Release</th>
+                                        <th className="th hidden lg:table-cell">Showtime</th>
+                                        <th className="th text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y">
+                                    {renderNowMovieList()}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    {/* UPCOMING */}
+                    <div className="bg-white rounded-xl shadow-md overflow-hidden">
+                        <div className="px-6 py-4 border-b">
+                            <h2 className="text-xl font-semibold text-gray-800">
+                                Upcoming Movies
+                            </h2>
+                        </div>
+
+                        <div className="overflow-x-auto">
+                            <table className="min-w-full">
+                                <tbody className="divide-y">
+                                    {renderUpComingMovieList()}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             {showModal && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-                    <div className="bg-white rounded-2xl shadow-xl w-full max-w-4xl relative overflow-y-auto max-h-[90vh]">
+                    <div className="bg-white rounded-2xl shadow-xl w-full max-w-4xl relative overflow-y-auto max-h-[95%] ">
                         <form onSubmit={formik.handleSubmit}>
                             <div className="flex justify-between items-center p-6 border-b border-gray-200">
                                 <h3 className="text-2xl font-bold text-gray-800">Add New Movie</h3>
-                                <button type="button" onClick={() => setShowModal(false)} className="text-gray-500 hover:text-red-500">
-                                    <i className="fa-solid fa-xmark text-lg" />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowModal(false)}
+                                    className="cursor-pointer text-gray-500 hover:text-red-500 transition-colors duration-200"
+                                >
+                                    <i className="fa-solid fa-xmark text-xl"></i>
                                 </button>
                             </div>
 
@@ -201,48 +253,26 @@ const Movies = () => {
                             </div>
 
                             <div className="flex justify-end gap-3 p-6 border-t border-gray-200">
-                                <button type="button" className="px-5 py-2 rounded-lg bg-gray-300 hover:bg-gray-400 transition" onClick={() => setShowModal(false)}>Close</button>
-                                <button type="submit" className="px-5 py-2 rounded-lg bg-red-500 text-white hover:bg-rose-600 transition shadow-md font-bold">Add Movie</button>
+                                <button
+                                    type="button"
+                                    onClick={() => setShowModal(false)}
+                                    className="cursor-pointer px-5 py-2 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 transition duration-200"
+                                >
+                                    Close
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    className="cursor-pointer px-5 py-2 rounded-lg bg-red-500 text-white font-semibold hover:bg-rose-600 transition duration-200 active:scale-95 shadow-sm"
+                                >
+                                    Add Movie
+                                </button>
                             </div>
                         </form>
                     </div>
                 </div>
             )}
-
-            <div className="space-y-6">
-                <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
-                    <h2 className="text-2xl font-semibold mb-6 border-b pb-2 text-gray-800">Now Showing Movies</h2>
-                    <div className="overflow-x-auto">
-                        <table className="min-w-full divide-y divide-gray-200">
-                            <thead className="bg-gray-50">
-                                <tr>
-                                    <th className="px-6 py-3 text-xs font-semibold text-gray-500 uppercase text-center">Movie ID</th>
-                                    <th className="px-6 py-3 text-xs font-semibold text-gray-500 uppercase text-center">Poster</th>
-                                    <th className="px-6 py-3 text-xs font-semibold text-gray-500 uppercase text-center">Movie Title</th>
-                                    <th className="px-6 py-3 text-xs font-semibold text-gray-500 uppercase text-center">Release Date</th>
-                                    <th className="px-6 py-3 text-xs font-semibold text-gray-500 uppercase text-center">Showtime</th>
-                                    <th className="px-6 py-3 text-xs font-semibold text-gray-500 uppercase text-center">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody className="bg-white divide-y divide-gray-200">
-                                {renderNowMovieList()}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
-                    <h2 className="text-2xl font-semibold mb-6 border-b pb-2 text-gray-800">Upcoming Movies</h2>
-                    <div className="overflow-x-auto">
-                        <table className="min-w-full divide-y divide-gray-200">
-                            <tbody className="bg-white divide-y divide-gray-200">
-                                {renderUpComingMovieList()}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </>
     )
 }
 

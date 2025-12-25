@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 const AdminFooter = () => {
     return (
@@ -10,4 +10,4 @@ const AdminFooter = () => {
     )
 }
 
-export default AdminFooter
+export default memo(AdminFooter)
