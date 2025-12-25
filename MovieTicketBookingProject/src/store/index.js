@@ -10,6 +10,7 @@ import homeRegisterReducer from "./../pages/HomeTemplate/Register/slice";
 
 import authLoginReducer from "./../pages/AdminTemplate/Auth/slice";
 import userManageReducer from "./../pages/AdminTemplate/Users/slice";
+import moviesManageReducer from "./../pages/AdminTemplate/Movies/slice";
 
 const Store = configureStore({
   reducer: {
@@ -23,6 +24,7 @@ const Store = configureStore({
     userManageReducer,
     homeLoginReducer,
     homeRegisterReducer,
+    moviesManageReducer,
   },
 });
 

@@ -1,7 +1,20 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom"; 
+import { useDispatch } from "react-redux";
+import { logout } from "./../../Auth/slice";
 
 const AdminHeader = ({ collapsed = false }) => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const handleLogout = (e) => {
+        e.preventDefault();
+        if (window.confirm("Are you sure you want to logout?")) {
+            dispatch(logout());
+            navigate("/auth");
+        }
+    }
+
     return (
         <aside className="h-full bg-black text-white flex flex-col shadow-2xl">
             <div className="py-6 flex items-center justify-center">
@@ -13,8 +26,7 @@ const AdminHeader = ({ collapsed = false }) => {
                     to="/admin"
                     end
                     className={({ isActive }) =>
-                        `flex items-center gap-3 p-4 text-lg transition ${isActive ? "bg-white text-black" : "hover:bg-[#AAAAAA] hover:text-black"
-                        }`
+                        `flex items-center gap-3 p-4 text-lg transition ${isActive ? "bg-white text-black" : "hover:bg-[#AAAAAA] hover:text-black"}`
                     }
                 >
                     <i className="fi fi-br-stats"></i>
@@ -24,8 +36,7 @@ const AdminHeader = ({ collapsed = false }) => {
                 <NavLink
                     to="/admin/movies"
                     className={({ isActive }) =>
-                        `flex items-center gap-3 p-4 text-lg transition ${isActive ? "bg-white text-black" : "hover:bg-[#AAAAAA] hover:text-black"
-                        }`
+                        `flex items-center gap-3 p-4 text-lg transition ${isActive ? "bg-white text-black" : "hover:bg-[#AAAAAA] hover:text-black"}`
                     }
                 >
                     <i className="fi fi-ss-clapper-open"></i>
@@ -35,8 +46,7 @@ const AdminHeader = ({ collapsed = false }) => {
                 <NavLink
                     to="/admin/users"
                     className={({ isActive }) =>
-                        `flex items-center gap-3 p-4 text-lg transition ${isActive ? "bg-white text-black" : "hover:bg-[#AAAAAA] hover:text-black"
-                        }`
+                        `flex items-center gap-3 p-4 text-lg transition ${isActive ? "bg-white text-black" : "hover:bg-[#AAAAAA] hover:text-black"}`
                     }
                 >
                     <i className="fi fi-sr-user"></i>
@@ -46,19 +56,19 @@ const AdminHeader = ({ collapsed = false }) => {
                 <NavLink
                     to="/admin/settings"
                     className={({ isActive }) =>
-                        `flex items-center gap-3 p-4 text-lg transition ${isActive ? "bg-white text-black" : "hover:bg-[#AAAAAA] hover:text-black"
-                        }`
+                        `flex items-center gap-3 p-4 text-lg transition ${isActive ? "bg-white text-black" : "hover:bg-[#AAAAAA] hover:text-black"}`
                     }
                 >
                     <i className="fi fi-rr-settings-sliders"></i>
                     {!collapsed && <span>Settings</span>}
                 </NavLink>
 
+                {}
                 <NavLink
                     to="*"
+                    onClick={handleLogout}
                     className={({ isActive }) =>
-                        `flex items-center gap-3 p-4 text-lg transition ${isActive ? "bg-white text-black" : "hover:bg-[#AAAAAA] hover:text-black"
-                        }`
+                        `flex items-center gap-3 p-4 text-lg transition ${isActive ? "bg-white text-black" : "hover:bg-[#AAAAAA] hover:text-black"}`
                     }
                 >
                     <i className="fi fi-rs-sign-out-alt"></i>
