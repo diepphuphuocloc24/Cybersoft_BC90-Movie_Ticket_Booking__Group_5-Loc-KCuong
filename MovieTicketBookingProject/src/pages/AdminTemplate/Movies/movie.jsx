@@ -34,7 +34,8 @@ const Movie = ({ propMovie }) => {
                 />
             </td>
 
-            <td className="px-6 py-4 text-sm text-black max-w-[200px] wrap-break-word whitespace-normal font-bold">
+            {/* Title */}
+            <td className="td font-semibold max-w-xs">
                 {propMovie.tenPhim}
             </td>
 
