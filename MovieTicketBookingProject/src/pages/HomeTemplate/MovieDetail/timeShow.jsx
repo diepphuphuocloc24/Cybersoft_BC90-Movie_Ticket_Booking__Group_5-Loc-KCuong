@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Login from "../Login";
+import Register from "../Register";
+
 
 const TimeShow = ({ propTimeShow, propShowCode, propDuration }) => {
     const stateLogin = useSelector((state) => state.homeLoginReducer);
@@ -76,7 +78,20 @@ const TimeShow = ({ propTimeShow, propShowCode, propDuration }) => {
                 </div>
             )}
 
-            {openModal === "login" && <Login handleClose={handleCloseModal} />}
+            {openModal === "login" && (
+                <Login
+                    onClose={handleCloseModal}
+                    onSwitch={setOpenModal}
+                />
+            )}
+
+            {openModal === "register" && (
+                <Register
+                    onClose={handleCloseModal}
+                    onSwitch={setOpenModal}
+                />
+            )}
+
         </>
     );
 };

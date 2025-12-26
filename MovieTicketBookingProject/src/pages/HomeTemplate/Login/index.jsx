@@ -68,7 +68,10 @@ const Login = ({ onClose, onSwitch }) => {
     }
 
     dispatch(homeUserLogin(userLogin));
-    handleClose()
+    dispatch(homeUserLogin(userLogin));
+    if (typeof onClose === "function") {
+      onClose();
+    }
   };
 
   if (loading) {
