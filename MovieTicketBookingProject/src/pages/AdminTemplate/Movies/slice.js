@@ -15,6 +15,21 @@ export const addMovie = createAsyncThunk(
   }
 );
 
+export const deleteMovie = createAsyncThunk(
+  "adminMovies/deleteMovie",
+  async (maPhim, { rejectWithValue }) => {
+    try {
+      const result = await api.delete(`QuanLyPhim/XoaPhim?MaPhim=${maPhim}`);
+      alert("Delete movie success!");
+      
+      return result.data.content;
+    } catch (error) {
+      alert(error.response.data.content);
+      return rejectWithValue(error.response.data.content);
+    }
+  }
+);
+
 const moviesManageSlice = createSlice({
   name: "moviesManageSlice",
   initialState: {

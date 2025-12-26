@@ -1,6 +1,23 @@
 import React from 'react'
+import { useDispatch } from 'react-redux';
+import { deleteMovie } from './slice';
+import { fetchMovieList } from './../../HomeTemplate/MovieList/slice'
 
 const Movie = ({ propMovie }) => {
+    const dispatch = useDispatch();
+
+    const handleDelete = async () => {
+        if (window.confirm(`Are you sure you want to delete ${propMovie.tenPhim}?`)) {
+            try {
+                await dispatch(deleteMovie(propMovie.maPhim)).unwrap();
+
+                dispatch(fetchMovieList());
+            } catch (error) {
+                console.error("Delete failed", error);
+            }
+        }
+    };
+
     return (
         <tr className="block sm:table-row hover:bg-gray-50 transition">
             {/* ID */}
@@ -38,45 +55,16 @@ const Movie = ({ propMovie }) => {
                 7:00 PM
             </td>
 
-            {/* Actions */}
-            <td className="px-4 py-4 text-sm text-gray-700 block sm:table-cell">
-                <div className="flex sm:justify-center gap-2">
-                    <button
-                        className="
-        px-3 py-1 rounded-md
-        bg-indigo-50 text-indigo-600
-        hover:bg-indigo-100
-        transition cursor-pointer
-        active:scale-95
-      "
-                    >
-                        Edit
-                    </button>
-
-                    <button
-                        className="
-        px-3 py-1 rounded-md
-        bg-red-50 text-red-600
-        hover:bg-red-100
-        transition cursor-pointer
-        active:scale-95
-      "
-                    >
-                        Delete
-                    </button>
-
-                    <button
-                        className="
-        p-2 rounded-full
-        bg-green-50 text-green-600
-        hover:bg-green-100
-        transition cursor-pointer
-        active:scale-95
-      "
-                    >
-                        <i className="fa-regular fa-calendar"></i>
-                    </button>
-                </div>
+            <td className="px-6 py-4 text-center space-x-2">
+                <button className="text-indigo-600 hover:text-indigo-900 px-3 py-1 rounded-md bg-gray-100 hover:bg-indigo-50 transition">
+                    Edit
+                </button>
+                <button className="text-red-600 hover:text-red-900 px-3 py-1 rounded-md bg-gray-100 hover:bg-red-50 transition">
+                    Delete
+                </button>
+                <button className="text-green-600 hover:text-green-800 p-1 rounded-full cursor-pointer bg-gray-100 hover:bg-green-50 transition">
+                    <i className="fa-regular fa-calendar"></i>
+                </button>
             </td>
         </tr>
     )
