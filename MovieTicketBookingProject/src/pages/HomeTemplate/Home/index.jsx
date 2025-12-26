@@ -712,7 +712,7 @@ const Home = () => {
                       </div>
                     </div>
 
-                    <div className="pt-2 sm:pt-3 md:pt-4 flex flex-col justify-between h-[90px] sm:h-[110px] md:h-[130px] lg:h-[150px]">
+                    <div className="pt-2 sm:pt-3 md:pt-4 flex flex-col justify-between h-22.5 sm:h-27.5 md:h-32.5 lg:h-37.5">
                       <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-white leading-tight line-clamp-2">
                         Predator: Badlands (2025)
                       </h3>
@@ -785,7 +785,7 @@ const Home = () => {
                       </div>
                     </div>
 
-                    <div className="pt-2 sm:pt-3 md:pt-4 flex flex-col justify-between h-[90px] sm:h-[110px] md:h-[130px] lg:h-[150px]">
+                    <div className="pt-2 sm:pt-3 md:pt-4 flex flex-col justify-between h-22.5 sm:h-27.5 md:h-32.5 lg:h-37.5">
                       <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-white leading-tight line-clamp-2">
                         Wicked For Good
                       </h3>
@@ -858,7 +858,7 @@ const Home = () => {
                       </div>
                     </div>
 
-                    <div className="pt-2 sm:pt-3 md:pt-4 flex flex-col justify-between h-[90px] sm:h-[110px] md:h-[130px] lg:h-[150px]">
+                    <div className="pt-2 sm:pt-3 md:pt-4 flex flex-col justify-between h-22.5 sm:h-27.5 md:h-32.5 lg:h-37.5">
                       <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-white leading-tight line-clamp-2">
                         Disney's Zootopia 2
                       </h3>
@@ -931,7 +931,7 @@ const Home = () => {
                       </div>
                     </div>
 
-                    <div className="pt-2 sm:pt-3 md:pt-4 flex flex-col justify-between h-[90px] sm:h-[110px] md:h-[130px] lg:h-[150px]">
+                    <div className="pt-2 sm:pt-3 md:pt-4 flex flex-col justify-between h-22.5 sm:h-27.5 md:h-32.5 lg:h-37.5">
                       <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-white leading-tight line-clamp-2">
                         Now You See Me Now You Don't
                       </h3>
@@ -1085,7 +1085,7 @@ const Home = () => {
           className="flex flex-wrap gap-6 sm:gap-8 justify-center md:flex-col lg:flex-row"
         >
           {/* LEFT BIG CARD */}
-          <div className="w-full sm:w-[90%] md:w-full lg:flex-1 min-w-[260px]">
+          <div className="w-full sm:w-[90%] md:w-full lg:flex-1 min-w-65">
             <div className="flex flex-col bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer">
               <div className="h-48 sm:h-60 md:h-64 lg:h-72 xl:h-80 bg-gray-300 overflow-hidden">
                 <img
@@ -1118,7 +1118,7 @@ const Home = () => {
           </div>
 
           {/* RIGHT THREE CARDS */}
-          <div className="w-full sm:w-[90%] md:w-full lg:flex-1 flex flex-col gap-6 sm:gap-8 min-w-[260px]">
+          <div className="w-full sm:w-[90%] md:w-full lg:flex-1 flex flex-col gap-6 sm:gap-8 min-w-65">
             {/* CARD 1 */}
             <div className="flex bg-white shadow-lg overflow-hidden rounded-xl cursor-pointer">
               <div className="overflow-hidden shrink-0 w-40 sm:w-44 md:w-48 lg:w-52 h-24 sm:h-28 md:h-32 lg:h-36">
