@@ -1,6 +1,23 @@
 import React from 'react'
+import { useDispatch } from 'react-redux';
+import { deleteMovie } from './slice';
+import { fetchMovieList } from './../../HomeTemplate/MovieList/slice'
 
 const Movie = ({ propMovie }) => {
+    const dispatch = useDispatch();
+
+    const handleDelete = async () => {
+        if (window.confirm(`Are you sure you want to delete ${propMovie.tenPhim}?`)) {
+            try {
+                await dispatch(deleteMovie(propMovie.maPhim)).unwrap();
+                
+                dispatch(fetchMovieList());
+            } catch (error) {
+                console.error("Delete failed", error);
+            }
+        }
+    };
+
     return (
         <tr key={propMovie.maPhim} className="hover:bg-gray-50 transition-colors duration-300">
             <td className="px-6 py-4 text-sm text-black text-center font-bold">{propMovie.maPhim}</td>
@@ -13,7 +30,7 @@ const Movie = ({ propMovie }) => {
                 />
             </td>
 
-            <td className="px-6 py-4 text-sm text-black max-w-[200px] wrap-break-word whitespace-normal font-bold">
+            <td className="px-6 py-4 text-sm text-black max-w-50 wrap-break-word whitespace-normal font-bold">
                 {propMovie.tenPhim}
             </td>
 
@@ -33,7 +50,9 @@ const Movie = ({ propMovie }) => {
                 <button className="text-indigo-600 hover:text-indigo-900 px-3 py-1 rounded-md bg-gray-100 hover:bg-indigo-50 transition">
                     Edit
                 </button>
-                <button className="text-red-600 hover:text-red-900 px-3 py-1 rounded-md bg-gray-100 hover:bg-red-50 transition">
+                <button
+                    onClick={handleDelete}
+                    className="text-red-600 hover:text-red-900 px-3 py-1 rounded-md bg-gray-100 hover:bg-red-50 transition">
                     Delete
                 </button>
                 <button className="text-green-600 hover:text-green-800 p-1 rounded-full cursor-pointer bg-gray-100 hover:bg-green-50 transition">
