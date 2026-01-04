@@ -21,11 +21,55 @@ export const deleteMovie = createAsyncThunk(
     try {
       const result = await api.delete(`QuanLyPhim/XoaPhim?MaPhim=${maPhim}`);
       alert("Delete movie success!");
-      
+
       return result.data.content;
     } catch (error) {
       alert(error.response.data.content);
       return rejectWithValue(error.response.data.content);
+    }
+  }
+);
+
+export const updateMovie = createAsyncThunk(
+  "adminMovies/updateMovie",
+  async (formData, { rejectWithValue }) => {
+    try {
+      const result = await api.post("QuanLyPhim/CapNhatPhimUpload", formData);
+      alert("Update movie success!");
+      return result.data.content;
+    } catch (error) {
+      alert(error.response.data.content);
+      return rejectWithValue(error.response.data.content);
+    }
+  }
+);
+
+export const fetchHeThongRap = createAsyncThunk(
+  "adminMovies/fetchHeThongRap",
+  async () => {
+    const result = await api.get("QuanLyRap/LayThongTinHeThongRap");
+    return result.data.content;
+  }
+);
+
+export const fetchCumRap = createAsyncThunk(
+  "adminMovies/fetchCumRap",
+  async (maHeThong) => {
+    const result = await api.get(
+      `QuanLyRap/LayThongTinCumRapTheoHeThong?maHeThongRap=${maHeThong}`
+    );
+    return result.data.content;
+  }
+);
+
+export const createShowtime = createAsyncThunk(
+  "adminMovies/createShowtime",
+  async (showtimeData, { rejectWithValue }) => {
+    try {
+      const result = await api.post("QuanLyDatVe/TaoLichChieu", showtimeData);
+      return result.data.content;
+    } catch (error) {
+      return rejectWithValue(error);
     }
   }
 );

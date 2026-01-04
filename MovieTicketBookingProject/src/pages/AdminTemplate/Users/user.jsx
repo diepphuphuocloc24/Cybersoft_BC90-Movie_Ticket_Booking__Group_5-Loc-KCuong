@@ -19,9 +19,9 @@ const User = ({ propUser, onEdit }) => {
 
     return (
         <tr className="
-  block sm:table-row
-  hover:bg-gray-50 transition
-">
+                        block sm:table-row
+                        hover:bg-gray-50 transition
+                        ">
             {/* Account */}
             <td className="td font-semibold">
                 {propUser.taiKhoan}
@@ -60,12 +60,12 @@ const User = ({ propUser, onEdit }) => {
                     <button
                         onClick={() => onEdit(propUser)}
                         className="
-        px-3 py-1 rounded-md
-        bg-indigo-50 text-indigo-600
-        hover:bg-indigo-100
-        transition cursor-pointer
-        active:scale-95
-      "
+                                    px-3 py-1 rounded-md
+                                    bg-indigo-50 text-indigo-600
+                                    hover:bg-indigo-100
+                                    transition cursor-pointer
+                                    active:scale-95
+                                "
                     >
                         Edit
                     </button>
@@ -73,12 +73,12 @@ const User = ({ propUser, onEdit }) => {
                     <button
                         onClick={handleDelete}
                         className="
-        px-3 py-1 rounded-md
-        bg-red-50 text-red-600
-        hover:bg-red-100
-        transition cursor-pointer
-        active:scale-95
-      "
+                                    px-3 py-1 rounded-md
+                                    bg-red-50 text-red-600
+                                    hover:bg-red-100
+                                    transition cursor-pointer
+                                    active:scale-95
+                                "
                     >
                         Delete
                     </button>
